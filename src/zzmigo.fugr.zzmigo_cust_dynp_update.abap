@@ -23,8 +23,18 @@ FUNCTION zzmigo_cust_dynp_update.
 
   DO.
     ADD 1 TO num.
-    SELECT SINGLE * FROM mseg
-      WHERE mblnr EQ i_mblnr.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE * FROM mseg
+*      WHERE mblnr EQ i_mblnr.
+*
+* NEW CODE
+    SELECT *
+    UP TO 1 ROWS  FROM mseg
+      WHERE mblnr EQ i_mblnr ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     IF sy-subrc EQ 0.
       EXIT.
     ENDIF.
@@ -42,19 +52,45 @@ FUNCTION zzmigo_cust_dynp_update.
 *  se agrega el dato en la bseg
 *--------------------------------------------------------------------*
       IF sy-subrc EQ 0.
-        SELECT SINGLE bukrs gjahr lifnr  INTO (v_bukrs, v_gjahr, v_lifnr)
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*        SELECT SINGLE bukrs gjahr lifnr  INTO (v_bukrs, v_gjahr, v_lifnr)
+*        FROM mseg
+*        WHERE mblnr      EQ i_mblnr
+*        AND line_id      EQ wa_mseg-line_id.
+*
+* NEW CODE
+        SELECT bukrs gjahr lifnr
+        UP TO 1 ROWS   INTO (v_bukrs, v_gjahr, v_lifnr)
         FROM mseg
         WHERE mblnr      EQ i_mblnr
-        AND line_id      EQ wa_mseg-line_id.
+        AND line_id      EQ wa_mseg-line_id ORDER BY PRIMARY KEY.
+
+        ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
         CONCATENATE i_mblnr i_gjahr INTO v_awkey.
 *buscamos el belnr en la bkpf
-        SELECT SINGLE belnr
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*        SELECT SINGLE belnr
+*          INTO v_belnr
+*          FROM bkpf
+*          WHERE awtyp EQ 'MKPF'
+*            AND awkey EQ v_awkey
+*            AND awsys EQ ''.
+*
+* NEW CODE
+        SELECT belnr
+        UP TO 1 ROWS 
           INTO v_belnr
           FROM bkpf
           WHERE awtyp EQ 'MKPF'
             AND awkey EQ v_awkey
-            AND awsys EQ ''.
+            AND awsys EQ '' ORDER BY PRIMARY KEY.
+
+        ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
         IF sy-subrc EQ 0.
           UPDATE mseg SET zzunid_pro = wa_mseg-zzunid_pro
                                zzrut_terc = v_lifnr

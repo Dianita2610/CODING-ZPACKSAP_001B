@@ -19,7 +19,15 @@ rel_ind = i_ekko-frgke.
 *IF sy-tcode EQ 'ME29N' AND rel_ind EQ 2.
 IF sy-tcode IN tcode AND rel_ind EQ 2.
   CLEAR rg_bsart_mail.
-  SELECT * INTO TABLE gt_tvarvc FROM tvarvc WHERE name = gc_bsart_mail.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT * INTO TABLE gt_tvarvc FROM tvarvc WHERE name = gc_bsart_mail.
+*
+* NEW CODE
+  SELECT *
+ INTO TABLE gt_tvarvc FROM tvarvc WHERE name = gc_bsart_mail ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
   IF sy-subrc EQ 0.
     LOOP AT gt_tvarvc INTO gs_tvarvc.
       rg_bsart_mail-sign   = 'I'.

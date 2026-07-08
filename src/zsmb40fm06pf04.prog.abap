@@ -9,8 +9,18 @@ CHANGING p_adrnr.
   DATA: l_adrnr LIKE kna1-adrnr.
 
   CHECK NOT p_kunnr IS INITIAL.
-  SELECT SINGLE adrnr FROM  kna1 INTO (l_adrnr)
-  WHERE  kunnr  = p_kunnr.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE adrnr FROM  kna1 INTO (l_adrnr)
+*  WHERE  kunnr  = p_kunnr.
+*
+* NEW CODE
+  SELECT adrnr
+  UP TO 1 ROWS  FROM  kna1 INTO (l_adrnr)
+  WHERE  kunnr  = p_kunnr ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
   IF sy-subrc EQ 0.
     p_adrnr = l_adrnr.
   ELSE.

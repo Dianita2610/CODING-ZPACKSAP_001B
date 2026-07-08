@@ -17,10 +17,22 @@ FUNCTION zzmigo_cust_dynp_get.
   DATA : v_mtart TYPE mara-mtart.
   CLEAR: v_mtart, var.
 
-  SELECT SINGLE mtart
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE mtart
+*    INTO v_mtart
+*    FROM mara
+*    WHERE matnr EQ i_matnr.
+*
+* NEW CODE
+  SELECT mtart
+  UP TO 1 ROWS 
     INTO v_mtart
     FROM mara
-    WHERE matnr EQ i_matnr.
+    WHERE matnr EQ i_matnr ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
   IF v_mtart EQ 'ZSSV' OR v_mtart EQ 'ZREA' OR
      v_mtart EQ 'ZPRO' OR v_mtart EQ 'ZAFI'.
@@ -30,9 +42,20 @@ FUNCTION zzmigo_cust_dynp_get.
  "     message e016(z1) with 'EL CAMPO UNID/PRO' 'NO VALIDO  LINEA' i_line_id.
 
     ELSE.
-      SELECT SINGLE * FROM zunid_prod
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*      SELECT SINGLE * FROM zunid_prod
+*                      WHERE bukrs = i_bukrs
+*                      AND  zzcod_unidad = gs_mseg-zzunid_pro.
+*
+* NEW CODE
+      SELECT *
+      UP TO 1 ROWS  FROM zunid_prod
                       WHERE bukrs = i_bukrs
-                      AND  zzcod_unidad = gs_mseg-zzunid_pro.
+                      AND  zzcod_unidad = gs_mseg-zzunid_pro ORDER BY PRIMARY KEY.
+
+      ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
       IF sy-subrc = 0.
         var = 'X'.
       ELSE.

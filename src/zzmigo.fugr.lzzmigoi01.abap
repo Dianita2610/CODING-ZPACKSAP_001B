@@ -45,11 +45,24 @@ ENDMODULE.                 " FORMAT_LECTURA  INPUT
 MODULE cargar_zzunid_pro OUTPUT.
 
   IF v_action = 'A04'.
-    SELECT SINGLE zzunid_pro INTO (zzunid_pro)
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE zzunid_pro INTO (zzunid_pro)
+*        FROM mseg
+*        WHERE mblnr EQ migo_badi_header-mblnr
+*        AND mjahr EQ migo_badi_header-mjahr
+*        AND zeile EQ migo_badi_header-zeile.
+*
+* NEW CODE
+    SELECT zzunid_pro
+    UP TO 1 ROWS  INTO (zzunid_pro)
         FROM mseg
         WHERE mblnr EQ migo_badi_header-mblnr
         AND mjahr EQ migo_badi_header-mjahr
-        AND zeile EQ migo_badi_header-zeile.
+        AND zeile EQ migo_badi_header-zeile ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     IF sy-subrc NE 0.
       CLEAR zzunid_pro.

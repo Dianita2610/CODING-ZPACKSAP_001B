@@ -37,8 +37,18 @@ FORM get_addr_key
 CHANGING l_addr_key LIKE addr_key.
 
   DATA: l_lfa1 LIKE lfa1.
-  SELECT SINGLE * FROM lfa1 INTO l_lfa1
-  WHERE lifnr = nast-parnr.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE * FROM lfa1 INTO l_lfa1
+*  WHERE lifnr = nast-parnr.
+*
+* NEW CODE
+  SELECT *
+  UP TO 1 ROWS  FROM lfa1 INTO l_lfa1
+  WHERE lifnr = nast-parnr ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
   IF sy-subrc = 0.
     MOVE l_lfa1-adrnr TO l_addr_key.
   ENDIF.

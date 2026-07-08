@@ -20,14 +20,36 @@ FUNCTION zzmigo_cust_dynp_detail.
     READ TABLE gt_mseg INTO gs_mseg WITH KEY line_id = i_line_id.
     IF sy-subrc EQ 0 .
       zzunid_pro = gs_mseg-zzunid_pro.
-      SELECT SINGLE mtart INTO v_mtart
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*      SELECT SINGLE mtart INTO v_mtart
+*                          FROM mara
+*                          WHERE matnr EQ i_matnr.
+*
+* NEW CODE
+      SELECT mtart
+      UP TO 1 ROWS  INTO v_mtart
                           FROM mara
-                          WHERE matnr EQ i_matnr.
+                          WHERE matnr EQ i_matnr ORDER BY PRIMARY KEY.
+
+      ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
       IF v_mtart EQ 'ZSSV' OR v_mtart EQ 'ZREA' OR
          v_mtart EQ 'ZPRO' OR v_mtart EQ 'ZAFI'.
-        SELECT SINGLE * FROM zunid_prod
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*        SELECT SINGLE * FROM zunid_prod
+*                     WHERE bukrs = i_bukrs
+*                     AND  zzcod_unidad = zzunid_pro.
+*
+* NEW CODE
+        SELECT *
+        UP TO 1 ROWS  FROM zunid_prod
                      WHERE bukrs = i_bukrs
-                     AND  zzcod_unidad = zzunid_pro.
+                     AND  zzcod_unidad = zzunid_pro ORDER BY PRIMARY KEY.
+
+        ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
         IF sy-subrc <> 0.
           MESSAGE w016(z1) WITH 'EL CAMPO UNID/PRO' 'NO EXSITE  LINEA' i_line_id.
         ENDIF.

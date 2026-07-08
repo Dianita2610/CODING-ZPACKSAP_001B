@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>WEB SERVICES PAGO</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZ_WEB_SERVICES_PAGOTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZ_WEB_SERVICES_PAGO</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZACTIV_PAGO</FUNCNAME>
+     <REMOTE_CALL>R</REMOTE_CALL>
+     <SHORT_TEXT>Verifica activacion de pagos</SHORT_TEXT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>MENSAJE</PARAMETER>
+       <TYP>CHAR30</TYP>
+      </RSEXP>
+     </EXPORT>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>TI_ENTRADA</PARAMETER>
+       <DBSTRUCT>ZACTIVPAGO</DBSTRUCT>
+      </RSTBL>
+     </TABLES>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>MENSAJE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>30 caracteres</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>TI_ENTRADA</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>estructura para funcion pago sin cobro</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+    <item>
+     <FUNCNAME>Z_PAGOS</FUNCNAME>
+     <REMOTE_CALL>R</REMOTE_CALL>
+     <SHORT_TEXT>FUNCION PARA PAGOS WEB SERVICE</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>P_BUKRS</PARAMETER>
+       <TYP>BUKRS</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>P_STCD1</PARAMETER>
+       <TYP>STCD1</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>MENSAJE</PARAMETER>
+       <TYP>CHAR20</TYP>
+      </RSEXP>
+     </EXPORT>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>TI_SALIDA</PARAMETER>
+       <DBSTRUCT>ZPAGOSINCOBRO</DBSTRUCT>
+      </RSTBL>
+     </TABLES>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>P_BUKRS</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Sociedad</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>P_STCD1</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Rut</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>MENSAJE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>20 caract.</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>TI_SALIDA</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>estructura para funcion pago sin cobro</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+    <item>
+     <FUNCNAME>Z_PAGOS_01</FUNCNAME>
+     <REMOTE_CALL>R</REMOTE_CALL>
+     <SHORT_TEXT>FUNCION PARA PAGOS WEB SERVICE</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>P_BUKRS</PARAMETER>
+       <TYP>BUKRS</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>P_STCD1</PARAMETER>
+       <TYP>STCD1</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>MENSAJE</PARAMETER>
+       <TYP>CHAR20</TYP>
+      </RSEXP>
+     </EXPORT>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>TI_SALIDA</PARAMETER>
+       <DBSTRUCT>ZPAGOSPROVEEDOR</DBSTRUCT>
+      </RSTBL>
+     </TABLES>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>P_BUKRS</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Sociedad</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>P_STCD1</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Rut</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>MENSAJE</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>20 caract.</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>TI_SALIDA</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Estructura - Funcion pagos proveedor</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

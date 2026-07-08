@@ -1,0 +1,124 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Modulo de Funciones de busqueda por rut</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZBUSCARUTTOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZBUSCARUT</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZBUSCARUT</FUNCNAME>
+     <REMOTE_CALL>R</REMOTE_CALL>
+     <SHORT_TEXT>Busca acreedores o deudores</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>LAND1</PARAMETER>
+       <TYP>LAND1</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>STCD3</PARAMETER>
+       <TYP>STCD3</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>GKOAR_I</PARAMETER>
+       <TYP>GKOAR</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>BUKRS</PARAMETER>
+       <TYP>BUKRS</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>KUNNR</PARAMETER>
+       <TYP>KUNNR</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>NAME1</PARAMETER>
+       <TYP>NAME1_GP</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>NAME2</PARAMETER>
+       <TYP>NAME2_GP</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>ADRNR</PARAMETER>
+       <TYP>ADRNR</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>NAME3</PARAMETER>
+       <TYP>NAME3_GP</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>NAME4</PARAMETER>
+       <TYP>NAME4_GP</TYP>
+      </RSEXP>
+      <RSEXP>
+       <PARAMETER>LIFNR</PARAMETER>
+       <TYP>LIFNR</TYP>
+      </RSEXP>
+     </EXPORT>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>LAND1</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Clave de país</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>STCD3</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Número identificación fiscal 3</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>GKOAR_I</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Clase de cuenta de la cuenta de contrapartida</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>BUKRS</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Sociedad</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>KUNNR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Nº de cliente 1</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>NAME1</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Nombre 1</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>NAME2</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Nombre 2</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>ADRNR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Dirección</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>NAME3</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Nombre 3</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>NAME4</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Nombre 4</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>LIFNR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Número de cuenta del proveedor o acreedor</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

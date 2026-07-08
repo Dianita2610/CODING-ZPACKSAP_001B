@@ -1,0 +1,27 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TABL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD02V>
+    <TABNAME>ZNFOLIO</TABNAME>
+    <DDLANGUAGE>S</DDLANGUAGE>
+    <TABCLASS>APPEND</TABCLASS>
+    <SQLTAB>MSEG</SQLTAB>
+    <DDTEXT>creación campo z numero de folio SII</DDTEXT>
+    <EXCLASS>2</EXCLASS>
+   </DD02V>
+   <DD03P_TABLE>
+    <DD03P>
+     <FIELDNAME>ZZNFOLIO</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>N</INTTYPE>
+     <INTLEN>000020</INTLEN>
+     <DATATYPE>NUMC</DATATYPE>
+     <LENG>000010</LENG>
+     <MASK>  NUMC</MASK>
+     <DDTEXT>Numero de folio SII - asignación impresion</DDTEXT>
+    </DD03P>
+   </DD03P_TABLE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

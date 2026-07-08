@@ -1,0 +1,47 @@
+
+SELECT single *
+  into CORRESPONDING FIELDS Of wa_ekko
+  from ekko
+  where ebeln eq v_ebeln.
+
+SELECT SINGLE *
+INTO CORRESPONDING FIELDS OF wa_lfa1
+FROM lfa1
+WHERE lifnr EQ wa_ekko-lifnr.
+
+SELECT SINGLE *
+INTO CORRESPONDING FIELDS OF wa_KNVK
+FROM KNVK
+WHERE lifnr EQ wa_ekko-lifnr.
+
+SELECT SINGLE *
+INTO CORRESPONDING FIELDS OF wa_LFM1
+FROM LFM1
+WHERE lifnr EQ wa_ekko-lifnr.
+
+SELECT SINGLE *
+INTO CORRESPONDING FIELDS OF wa_T052
+FROM T052
+WHERE ZTERM EQ wa_lfm1-ZTERM.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

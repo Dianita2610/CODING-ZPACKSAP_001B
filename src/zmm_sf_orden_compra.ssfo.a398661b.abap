@@ -1,0 +1,23 @@
+CONCATENATE 'FIRMA_OC_' ZXEKKO-BUKRS INTO V_LOGO_FIRMA.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

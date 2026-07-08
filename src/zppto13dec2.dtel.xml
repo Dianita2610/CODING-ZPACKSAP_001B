@@ -1,0 +1,25 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_DTEL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD04V>
+    <ROLLNAME>ZPPTO13DEC2</ROLLNAME>
+    <DDLANGUAGE>S</DDLANGUAGE>
+    <HEADLEN>17</HEADLEN>
+    <SCRLEN1>10</SCRLEN1>
+    <SCRLEN2>17</SCRLEN2>
+    <SCRLEN3>20</SCRLEN3>
+    <DDTEXT>Cantidad Presupuesto x Mes</DDTEXT>
+    <REPTEXT>Cant. ppto</REPTEXT>
+    <SCRTEXT_S>Cant. ppto</SCRTEXT_S>
+    <SCRTEXT_M>Cant. Presupuesto</SCRTEXT_M>
+    <SCRTEXT_L>Cantidad Presupuesto</SCRTEXT_L>
+    <DTELMASTER>S</DTELMASTER>
+    <DATATYPE>DEC</DATATYPE>
+    <LENG>000013</LENG>
+    <DECIMALS>000002</DECIMALS>
+    <OUTPUTLEN>000017</OUTPUTLEN>
+   </DD04V>
+  </asx:values>
+ </asx:abap>
+</abapGit>

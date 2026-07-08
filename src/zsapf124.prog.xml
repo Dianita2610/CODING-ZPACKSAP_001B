@@ -1,0 +1,3392 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_PROG" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <PROGDIR>
+    <NAME>ZSAPF124</NAME>
+    <SQLX>X</SQLX>
+    <DBAPL>S</DBAPL>
+    <DBNA>$$</DBNA>
+    <CLAS>AREP</CLAS>
+    <SUBC>1</SUBC>
+    <APPL>F</APPL>
+    <SECU>F_001</SECU>
+    <RSTAT>P</RSTAT>
+    <RLOAD>D</RLOAD>
+    <LDBNAME>$$S</LDBNAME>
+    <UCCHECK>X</UCCHECK>
+   </PROGDIR>
+   <CUA>
+    <TIT>
+     <RSMPE_TITT>
+      <CODE>001</CODE>
+      <TEXT>&amp;</TEXT>
+     </RSMPE_TITT>
+    </TIT>
+   </CUA>
+   <TPOOL>
+    <item>
+     <ID>I</ID>
+     <KEY>001</KEY>
+     <ENTRY>Deudores</ENTRY>
+     <LENGTH>9</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>002</KEY>
+     <ENTRY>Acreedores</ENTRY>
+     <LENGTH>10</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>003</KEY>
+     <ENTRY>Ctas.mayor</ENTRY>
+     <LENGTH>15</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>004</KEY>
+     <ENTRY>Sin autorización p.modificar</ENTRY>
+     <LENGTH>31</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>005</KEY>
+     <ENTRY>Falta autorización para visualizar</ENTRY>
+     <LENGTH>34</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>007</KEY>
+     <ENTRY>Ejec.act. &quot;</ENTRY>
+     <LENGTH>18</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>008</KEY>
+     <ENTRY>Ejec.test &quot;</ENTRY>
+     <LENGTH>18</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>020</KEY>
+     <ENTRY>Lista breve de posiciones abiertas y compensadas                 &quot;</ENTRY>
+     <LENGTH>66</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>030</KEY>
+     <ENTRY>Lista detallada de posiciones abiertas y compensadas             &quot;</ENTRY>
+     <LENGTH>66</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>041</KEY>
+     <ENTRY>Nº doc.compensación:</ENTRY>
+     <LENGTH>22</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>042</KEY>
+     <ENTRY>Fe.compensación:</ENTRY>
+     <LENGTH>16</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>043</KEY>
+     <ENTRY>Sin compensación</ENTRY>
+     <LENGTH>16</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>044</KEY>
+     <ENTRY>Período</ENTRY>
+     <LENGTH>7</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>045</KEY>
+     <ENTRY>Fe.compensación</ENTRY>
+     <LENGTH>15</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>046</KEY>
+     <ENTRY>Sin compensación (dif.dem.grande)</ENTRY>
+     <LENGTH>34</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>051</KEY>
+     <ENTRY>Cuenta bloqueada: Sin compensación &quot;</ENTRY>
+     <LENGTH>36</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>098</KEY>
+     <ENTRY>Log de errores</ENTRY>
+     <LENGTH>15</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>099</KEY>
+     <ENTRY>Log adicional</ENTRY>
+     <LENGTH>15</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>101</KEY>
+     <ENTRY>Sin selección operaciones cuentas mayor especial en clase &quot;W&quot;</ENTRY>
+     <LENGTH>67</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>104</KEY>
+     <ENTRY>Partida con importe retención distinto cero</ENTRY>
+     <LENGTH>44</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>105</KEY>
+     <ENTRY>Partidas con ID retención impuestos p.deudor sujeto a retención</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>110</KEY>
+     <ENTRY>Ningún documento de deudor seleccionado</ENTRY>
+     <LENGTH>39</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>111</KEY>
+     <ENTRY>Ningún documento de acreedor seleccionado</ENTRY>
+     <LENGTH>41</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>112</KEY>
+     <ENTRY>Ningún documento cuenta de mayor seleccionado</ENTRY>
+     <LENGTH>45</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>113</KEY>
+     <ENTRY>Error al leer la cabecera de documento: &amp;1, &amp;2</ENTRY>
+     <LENGTH>80</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>114</KEY>
+     <ENTRY>Error al leer posiciones de documento: &amp;1, &amp;2, &amp;3</ENTRY>
+     <LENGTH>80</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>120</KEY>
+     <ENTRY>La cuenta está bloqueada.</ENTRY>
+     <LENGTH>25</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>121</KEY>
+     <ENTRY>Error de sistema al bloquear.</ENTRY>
+     <LENGTH>29</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>122</KEY>
+     <ENTRY>Cuenta bloqueada por la propuesta de pago (tabla REGUS)</ENTRY>
+     <LENGTH>56</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>125</KEY>
+     <ENTRY>Cuenta seleccionada pero sin entradas en la tabla TF123</ENTRY>
+     <LENGTH>58</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>126</KEY>
+     <ENTRY>Sociedad bloqueada mediante programa pagos (tabla T042X)</ENTRY>
+     <LENGTH>57</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>127</KEY>
+     <ENTRY>Sólo se consideran cuentas con contabilizaciones en Debe y en Haber</ENTRY>
+     <LENGTH>67</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>128</KEY>
+     <ENTRY>No se ha producido ningún error al compensar</ENTRY>
+     <LENGTH>45</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>129</KEY>
+     <ENTRY>En ejecución test no se graban en log los errores de compensación</ENTRY>
+     <LENGTH>65</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>130</KEY>
+     <ENTRY>No se han realizado operaciones de compensación</ENTRY>
+     <LENGTH>47</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>131</KEY>
+     <ENTRY>Nuevo grupo de documentos que se pueden compensar</ENTRY>
+     <LENGTH>120</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>132</KEY>
+     <ENTRY>Mon.compensación transferida de campo &quot;Asignación&quot;</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>133</KEY>
+     <ENTRY>Activa verificación autorización en división</ENTRY>
+     <LENGTH>82</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>134</KEY>
+     <ENTRY>Activa verificación autorización en clase documento</ENTRY>
+     <LENGTH>82</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>140</KEY>
+     <ENTRY>***** Mensaje del sistema               &quot;</ENTRY>
+     <LENGTH>41</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>141</KEY>
+     <ENTRY>***** Tenga en cuenta:</ENTRY>
+     <LENGTH>25</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>200</KEY>
+     <ENTRY>Soc. &quot;                                           Sociedad</ENTRY>
+     <LENGTH>62</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>203</KEY>
+     <ENTRY>ClCta&quot;                                           Clase de cuenta</ENTRY>
+     <LENGTH>64</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>204</KEY>
+     <ENTRY>Nº cta.   &quot;                                      Nº de cuenta</ENTRY>
+     <LENGTH>61</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>205</KEY>
+     <ENTRY>Nº doc.   &quot;                                      Nº documento</ENTRY>
+     <LENGTH>61</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>206</KEY>
+     <ENTRY>Pos.</ENTRY>
+     <LENGTH>4</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>207</KEY>
+     <ENTRY>Texto de log                                                &quot;</ENTRY>
+     <LENGTH>61</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>208</KEY>
+     <ENTRY>Ctd.PAs</ENTRY>
+     <LENGTH>10</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>209</KEY>
+     <ENTRY>Ctd.PCs</ENTRY>
+     <LENGTH>10</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>210</KEY>
+     <ENTRY>PCs/PAs en %</ENTRY>
+     <LENGTH>12</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>212</KEY>
+     <ENTRY>Mon. &quot;</ENTRY>
+     <LENGTH>6</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>213</KEY>
+     <ENTRY>D/H  &quot;</ENTRY>
+     <LENGTH>6</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>214</KEY>
+     <ENTRY>Importe</ENTRY>
+     <LENGTH>17</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>215</KEY>
+     <ENTRY>Cta.asoc.</ENTRY>
+     <LENGTH>10</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>216</KEY>
+     <ENTRY>CME  &quot;                   Indicador de operación en cuenta de mayor especial</ENTRY>
+     <LENGTH>75</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>218</KEY>
+     <ENTRY>NrDy</ENTRY>
+     <LENGTH>4</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>219</KEY>
+     <ENTRY>TipM</ENTRY>
+     <LENGTH>4</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>220</KEY>
+     <ENTRY>Mid</ENTRY>
+     <LENGTH>3</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>221</KEY>
+     <ENTRY>NrM</ENTRY>
+     <LENGTH>3</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>222</KEY>
+     <ENTRY>Criterio 1</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>223</KEY>
+     <ENTRY>Criterio 2</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>224</KEY>
+     <ENTRY>Criterio 3</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>225</KEY>
+     <ENTRY>Criterio 4</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>226</KEY>
+     <ENTRY>Texto mensaje</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>227</KEY>
+     <ENTRY>PC correctas (PCC)</ENTRY>
+     <LENGTH>19</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>228</KEY>
+     <ENTRY>PCC/PA en %</ENTRY>
+     <LENGTH>13</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>229</KEY>
+     <ENTRY>NomDy</ENTRY>
+     <LENGTH>7</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>230</KEY>
+     <ENTRY>Criterio 5</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>231</KEY>
+     <ENTRY>No todas las PC compensadas</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>300</KEY>
+     <ENTRY>Programa lanzado por:         &quot;</ENTRY>
+     <LENGTH>31</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>301</KEY>
+     <ENTRY>Fecha inicio   &quot;</ENTRY>
+     <LENGTH>16</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>302</KEY>
+     <ENTRY>Hora de inicio &quot;</ENTRY>
+     <LENGTH>16</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>303</KEY>
+     <ENTRY>Fecha parada   &quot;</ENTRY>
+     <LENGTH>16</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>304</KEY>
+     <ENTRY>Hora parada    &quot;</ENTRY>
+     <LENGTH>16</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>305</KEY>
+     <ENTRY>No se han considerado doc.las siguientes monedas no válidas:</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>306</KEY>
+     <ENTRY>Active el flag para &quot;monedas a reemplazar&quot; o especifique la moneda de compensación.</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>307</KEY>
+     <ENTRY>A continuación caducan mon.siguientes:</ENTRY>
+     <LENGTH>40</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>312</KEY>
+     <ENTRY>Error al leer la tabla T100 (&amp;,&amp;)</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>320</KEY>
+     <ENTRY>Partidas con vía de pago EBPP no se seleccionan</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>499</KEY>
+     <ENTRY>Total en moneda de actualización</ENTRY>
+     <LENGTH>132</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>500</KEY>
+     <ENTRY>Total en moneda del documento</ENTRY>
+     <LENGTH>82</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>P01</KEY>
+     <ENTRY>Delimitaciones generales</ENTRY>
+     <LENGTH>24</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>P02</KEY>
+     <ENTRY>Parám.contabiliz.</ENTRY>
+     <LENGTH>20</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>P03</KEY>
+     <ENTRY>Control de salida</ENTRY>
+     <LENGTH>17</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>T01</KEY>
+     <ENTRY>Compensac.automática específica grupo de ledgers</ENTRY>
+     <LENGTH>50</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>T02</KEY>
+     <ENTRY>Docu.programa</ENTRY>
+     <LENGTH>21</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>T03</KEY>
+     <ENTRY>Ning.compensac.específica de grupo de ledgers p.cuenta</ENTRY>
+     <LENGTH>56</LENGTH>
+    </item>
+    <item>
+     <ID>I</ID>
+     <KEY>T04</KEY>
+     <ENTRY>Sólo posible compensac.específica de grupo de ledgers p.cuenta</ENTRY>
+     <LENGTH>63</LENGTH>
+    </item>
+    <item>
+     <ID>R</ID>
+     <ENTRY>Compensación automática</ENTRY>
+     <LENGTH>70</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>AUGDT</KEY>
+     <ENTRY>Fecha de compensación</ENTRY>
+     <LENGTH>29</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>BMONAT</KEY>
+     <ENTRY>Período</ENTRY>
+     <LENGTH>15</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>BUKRX</KEY>
+     <ENTRY>Sociedad</ENTRY>
+     <LENGTH>22</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>DOCNR</KEY>
+     <ENTRY>Número de documento</ENTRY>
+     <LENGTH>27</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>GJAHX</KEY>
+     <ENTRY>Ejercicio</ENTRY>
+     <LENGTH>22</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>KONTD</KEY>
+     <ENTRY>Deudores</ENTRY>
+     <LENGTH>17</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>KONTK</KEY>
+     <ENTRY>Acreedores</ENTRY>
+     <LENGTH>18</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>KONTS</KEY>
+     <ENTRY>Cuentas de mayor</ENTRY>
+     <LENGTH>24</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>MIN_BEL</KEY>
+     <ENTRY>Ctd.mín.posiciones documento</ENTRY>
+     <LENGTH>36</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>POSTDATE</KEY>
+     <ENTRY>Fecha de contabilización</ENTRY>
+     <LENGTH>32</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>PZBSISGR</KEY>
+     <ENTRY>Cantidad máxima de grupos</ENTRY>
+     <LENGTH>33</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>SHBKD</KEY>
+     <ENTRY>ID CME deudores</ENTRY>
+     <LENGTH>33</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>SHBKK</KEY>
+     <ENTRY>ID CME acreedores</ENTRY>
+     <LENGTH>34</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>XAUGDT</KEY>
+     <ENTRY>Fecha documento más reciente</ENTRY>
+     <LENGTH>36</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>XAUSBEL</KEY>
+     <ENTRY>Doc.compensables</ENTRY>
+     <LENGTH>32</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>XAUSLW</KEY>
+     <ENTRY>Monedas a reemplazar</ENTRY>
+     <LENGTH>29</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>XNAUSBEL</KEY>
+     <ENTRY>Documentos no compensables</ENTRY>
+     <LENGTH>34</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>XNKON</KEY>
+     <ENTRY>Tener en cuenta postimputación</ENTRY>
+     <LENGTH>38</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>XSOBEBVK</KEY>
+     <ENTRY>Moneda compens.de asignación</ENTRY>
+     <LENGTH>37</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>XSOBWERE</KEY>
+     <ENTRY>Tratam.especial cuentas EM/RF</ENTRY>
+     <LENGTH>38</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>XTOL</KEY>
+     <ENTRY>Tener en cuenta tolerancias</ENTRY>
+     <LENGTH>35</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>XTOLEB</KEY>
+     <ENTRY>Permitir pos.doc.individuales</ENTRY>
+     <LENGTH>37</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>X_AVISD</KEY>
+     <ENTRY>Agrupación mediante nº avisos</ENTRY>
+     <LENGTH>37</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>X_FEHLER</KEY>
+     <ENTRY>Mensajes de error</ENTRY>
+     <LENGTH>25</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>X_KUNNR</KEY>
+     <ENTRY>Seleccionar deudores</ENTRY>
+     <LENGTH>28</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>X_LIFNR</KEY>
+     <ENTRY>Seleccionar acreedores</ENTRY>
+     <LENGTH>30</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>X_SAKNR</KEY>
+     <ENTRY>Seleccionar ctas.mayor</ENTRY>
+     <LENGTH>30</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>X_SHBKN</KEY>
+     <ENTRY>Operaciones CME</ENTRY>
+     <LENGTH>23</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>X_SHBLF</KEY>
+     <ENTRY>Operaciones CME</ENTRY>
+     <LENGTH>23</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>X_TESTL</KEY>
+     <ENTRY>Ejecución de test</ENTRY>
+     <LENGTH>25</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>ZWAERS</KEY>
+     <ENTRY>Moneda de compensación</ENTRY>
+     <LENGTH>30</LENGTH>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>P_LG</KEY>
+     <ENTRY>.</ENTRY>
+     <LENGTH>21</LENGTH>
+     <SPLIT>D</SPLIT>
+    </item>
+    <item>
+     <ID>S</ID>
+     <KEY>SO_ZUONR</KEY>
+     <ENTRY>.</ENTRY>
+     <LENGTH>17</LENGTH>
+     <SPLIT>D</SPLIT>
+    </item>
+   </TPOOL>
+   <I18N_TPOOL>
+    <item>
+     <LANGUAGE>D</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>001</KEY>
+       <ENTRY>Debitoren</ENTRY>
+       <LENGTH>9</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>002</KEY>
+       <ENTRY>Kreditoren</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>003</KEY>
+       <ENTRY>Sachkonten</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>004</KEY>
+       <ENTRY>Keine Änderungsberechtigung für</ENTRY>
+       <LENGTH>31</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>005</KEY>
+       <ENTRY>Keine Anzeigeberechtigung für</ENTRY>
+       <LENGTH>29</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>007</KEY>
+       <ENTRY>Echtlauf  &quot;</ENTRY>
+       <LENGTH>18</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>008</KEY>
+       <ENTRY>Testlauf  &quot;</ENTRY>
+       <LENGTH>18</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>020</KEY>
+       <ENTRY>Kurzliste offener und ausgeglichener Positionen                  &quot;</ENTRY>
+       <LENGTH>66</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>030</KEY>
+       <ENTRY>Detailliste offener und ausgeglichener Positionen                &quot;</ENTRY>
+       <LENGTH>66</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>041</KEY>
+       <ENTRY>Ausgleichsbelegnummer:</ENTRY>
+       <LENGTH>22</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>042</KEY>
+       <ENTRY>Ausgleichsdatum:</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>043</KEY>
+       <ENTRY>Kein Ausgleich</ENTRY>
+       <LENGTH>14</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>044</KEY>
+       <ENTRY>Periode</ENTRY>
+       <LENGTH>7</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>045</KEY>
+       <ENTRY>Ausgleichsdatum</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>046</KEY>
+       <ENTRY>Kein Ausgleich (Differenz zu groß)</ENTRY>
+       <LENGTH>34</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>051</KEY>
+       <ENTRY>Konto gesperrt- kein Ausgleich!    &quot;</ENTRY>
+       <LENGTH>36</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>098</KEY>
+       <ENTRY>Fehlerprotokoll</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>099</KEY>
+       <ENTRY>Zusatzprotokoll</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>101</KEY>
+       <ENTRY>Keine Selektion von Sonderhauptbuchvorgängen der Klasse &apos;W&apos;</ENTRY>
+       <LENGTH>67</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>102</KEY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>104</KEY>
+       <ENTRY>Posten mit Quellensteuerbetrag ungleich Null</ENTRY>
+       <LENGTH>44</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>105</KEY>
+       <ENTRY>Posten mit Quellensteuerkennzeichen für quellensteuerpflichtigen Debitor</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>110</KEY>
+       <ENTRY>Keine Debitorenbelege selektiert</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>111</KEY>
+       <ENTRY>Keine Kreditorenbelege selektiert</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>112</KEY>
+       <ENTRY>Keine Sachkontenbelege selektiert</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>113</KEY>
+       <ENTRY>Fehler beim Lesen vom Belegkopf (BKPF): &amp;1, &amp;2</ENTRY>
+       <LENGTH>80</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>114</KEY>
+       <ENTRY>Fehler beim Lesen von Belegpositionen (BSEG): &amp;1, &amp;2, &amp;3</ENTRY>
+       <LENGTH>80</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>120</KEY>
+       <ENTRY>Konto ist gesperrt</ENTRY>
+       <LENGTH>18</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>121</KEY>
+       <ENTRY>Systemfehler beim Sperren</ENTRY>
+       <LENGTH>25</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>122</KEY>
+       <ENTRY>Durch Zahlungsvorschlag gesperrtes Konto (Tabelle REGUS)</ENTRY>
+       <LENGTH>56</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>125</KEY>
+       <ENTRY>Konto selektiert, hat aber keinen Eintrag in Tabelle TF123</ENTRY>
+       <LENGTH>58</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>126</KEY>
+       <ENTRY>Buchungskreis durch Zahlprogramm gesperrt (Tabelle T042X)</ENTRY>
+       <LENGTH>57</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>127</KEY>
+       <ENTRY>Es werden nur Konten mit Buchungen im Soll und Haben berücksichtigt</ENTRY>
+       <LENGTH>67</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>128</KEY>
+       <ENTRY>Beim Ausgleichen ist kein Fehler aufgetreten</ENTRY>
+       <LENGTH>45</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>129</KEY>
+       <ENTRY>Im Testlauf werden keine Fehler beim Ausgleichen protokolliert</ENTRY>
+       <LENGTH>62</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>130</KEY>
+       <ENTRY>Es wurden keine Ausgleichsvorgänge durchgeführt</ENTRY>
+       <LENGTH>47</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>131</KEY>
+       <ENTRY>Neue Gruppe von ausgleichbaren Belegen</ENTRY>
+       <LENGTH>120</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>132</KEY>
+       <ENTRY>Ausgleichswährung wurde aus Feld &quot;Zuordnung&quot; übernommen</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>133</KEY>
+       <ENTRY>Berechtigungsprüfung auf Geschäftsbereich ist aktiv.</ENTRY>
+       <LENGTH>82</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>134</KEY>
+       <ENTRY>Berechtigungsprüfung auf Belegart ist aktiv.</ENTRY>
+       <LENGTH>82</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>140</KEY>
+       <ENTRY>***** Systemmeldung                     &quot;</ENTRY>
+       <LENGTH>41</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>141</KEY>
+       <ENTRY>***** Bitte beachten Sie:</ENTRY>
+       <LENGTH>25</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>200</KEY>
+       <ENTRY>Bukrs&quot;                                           Buchungskreis</ENTRY>
+       <LENGTH>62</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>203</KEY>
+       <ENTRY>Koart&quot;                                           Kontoart</ENTRY>
+       <LENGTH>57</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>204</KEY>
+       <ENTRY>Kontonr   &quot;                                      Kontonummer</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>205</KEY>
+       <ENTRY>Belegnr   &quot;                                      Belegnummer</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>206</KEY>
+       <ENTRY>Buz</ENTRY>
+       <LENGTH>3</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>207</KEY>
+       <ENTRY>Protokolltext                                               &quot;</ENTRY>
+       <LENGTH>61</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>208</KEY>
+       <ENTRY>Anzahl OPs</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>209</KEY>
+       <ENTRY>Anzahl APs</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>210</KEY>
+       <ENTRY>APs/OPs in %</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>212</KEY>
+       <ENTRY>Währ &quot;</ENTRY>
+       <LENGTH>6</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>213</KEY>
+       <ENTRY>S/H  &quot;</ENTRY>
+       <LENGTH>6</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>214</KEY>
+       <ENTRY>Betrag</ENTRY>
+       <LENGTH>17</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>215</KEY>
+       <ENTRY>Abst.konto</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>216</KEY>
+       <ENTRY>SHB  &quot;                                           Sonderhauptbuchkennzeichen</ENTRY>
+       <LENGTH>75</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>218</KEY>
+       <ENTRY>Dynr</ENTRY>
+       <LENGTH>4</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>219</KEY>
+       <ENTRY>Mtyp</ENTRY>
+       <LENGTH>4</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>220</KEY>
+       <ENTRY>Mid</ENTRY>
+       <LENGTH>3</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>221</KEY>
+       <ENTRY>Mnr</ENTRY>
+       <LENGTH>3</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>222</KEY>
+       <ENTRY>Kriterium 1</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>223</KEY>
+       <ENTRY>Kriterium 2</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>224</KEY>
+       <ENTRY>Kriterium 3</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>225</KEY>
+       <ENTRY>Kriterium 4</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>226</KEY>
+       <ENTRY>Nachrichtentext</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>227</KEY>
+       <ENTRY>Erfolgr. APs (EAPs)</ENTRY>
+       <LENGTH>19</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>228</KEY>
+       <ENTRY>EAPs/OPs in %</ENTRY>
+       <LENGTH>13</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>229</KEY>
+       <ENTRY>Dyname</ENTRY>
+       <LENGTH>7</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>230</KEY>
+       <ENTRY>Kriterium 5</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>231</KEY>
+       <ENTRY>Nicht alle APs ausgegl.</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>300</KEY>
+       <ENTRY>Programm gestartet von:       &quot;</ENTRY>
+       <LENGTH>31</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>301</KEY>
+       <ENTRY>Startdatum     &quot;</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>302</KEY>
+       <ENTRY>Startzeit      &quot;</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>303</KEY>
+       <ENTRY>Stoppdatum     &quot;</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>304</KEY>
+       <ENTRY>Stoppzeit      &quot;</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>305</KEY>
+       <ENTRY>Belege in folgenden auslaufenden Währungen wurden nicht mehr berücksichtigt:</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>306</KEY>
+       <ENTRY>Bitte setzen Sie den Schalter für &quot;Auslaufende Währungen&quot; oder legen Sie die Ausgleichswährung fest.</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>307</KEY>
+       <ENTRY>Folgende Währungen laufen demnächst aus:</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>312</KEY>
+       <ENTRY>Fehler beim Lesen von Tabelle T100 (&amp;,&amp;)</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>320</KEY>
+       <ENTRY>Posten mit EBPP-Zahlweg werden nicht selektiert</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>499</KEY>
+       <ENTRY>Summe in Fortschreibewährung</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>500</KEY>
+       <ENTRY>Summe in Belegwährung</ENTRY>
+       <LENGTH>82</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>G01</KEY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>P01</KEY>
+       <ENTRY>Allgemeine Abgrenzungen</ENTRY>
+       <LENGTH>23</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>P02</KEY>
+       <ENTRY>Buchungsparameter</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>P03</KEY>
+       <ENTRY>Ausgabesteuerung</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>T01</KEY>
+       <ENTRY>Maschinelles ledgergruppenspezifisches Ausgleichen</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>T02</KEY>
+       <ENTRY>Programmdokumentation</ENTRY>
+       <LENGTH>21</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>T03</KEY>
+       <ENTRY>Kein ledgergruppenspezifisches Ausgleichen für das Konto</ENTRY>
+       <LENGTH>56</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>T04</KEY>
+       <ENTRY>Nur ledgergruppenspezifisches Ausgleichen für das Konto möglich</ENTRY>
+       <LENGTH>63</LENGTH>
+      </item>
+      <item>
+       <ID>R</ID>
+       <ENTRY>Maschinelles Ausgleichen</ENTRY>
+       <LENGTH>24</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AUGDT</KEY>
+       <ENTRY>Ausgleichsdatum</ENTRY>
+       <LENGTH>23</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>BMONAT</KEY>
+       <ENTRY>Periode</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>BUKRX</KEY>
+       <ENTRY>Buchungskreis</ENTRY>
+       <LENGTH>22</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>DOCNR</KEY>
+       <ENTRY>Belegnummer</ENTRY>
+       <LENGTH>19</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>GJAHX</KEY>
+       <ENTRY>Geschäftsjahr</ENTRY>
+       <LENGTH>22</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>KONTD</KEY>
+       <ENTRY>Debitoren</ENTRY>
+       <LENGTH>17</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>KONTK</KEY>
+       <ENTRY>Kreditoren</ENTRY>
+       <LENGTH>18</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>KONTS</KEY>
+       <ENTRY>Sachkonten</ENTRY>
+       <LENGTH>18</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MIN_BEL</KEY>
+       <ENTRY>Mindestanzahl Belegzeilen</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>POSTDATE</KEY>
+       <ENTRY>Buchungsdatum</ENTRY>
+       <LENGTH>31</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PZBSISGR</KEY>
+       <ENTRY>Maximale Anzahl Gruppen</ENTRY>
+       <LENGTH>31</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_LG</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>21</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SHBKD</KEY>
+       <ENTRY>SHB-Kennzeichen Debitoren</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SHBKK</KEY>
+       <ENTRY>SHB-Kennzeichen Kreditoren</ENTRY>
+       <LENGTH>34</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SO_ZUONR</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>17</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>XAUGDT</KEY>
+       <ENTRY>Datum aus jüngstem Beleg</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>XAUSBEL</KEY>
+       <ENTRY>Ausgleichbare Belege</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>XAUSLW</KEY>
+       <ENTRY>Auslaufende Währungen</ENTRY>
+       <LENGTH>29</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>XNAUSBEL</KEY>
+       <ENTRY>Nicht ausgleichbare Belege</ENTRY>
+       <LENGTH>34</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>XNKON</KEY>
+       <ENTRY>Nachkontierung berücksichtigen</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>XSOBEBVK</KEY>
+       <ENTRY>Ausgleichswährung aus Zuordn.</ENTRY>
+       <LENGTH>37</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>XSOBWERE</KEY>
+       <ENTRY>Sonderbearbeitung WE/RE-Konten</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>XTOL</KEY>
+       <ENTRY>Toleranzen berücksichtigen</ENTRY>
+       <LENGTH>34</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>XTOLEB</KEY>
+       <ENTRY>Einzelne Belegpos. zulassen</ENTRY>
+       <LENGTH>35</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>X_AVISD</KEY>
+       <ENTRY>Gruppierung über Avisnummer</ENTRY>
+       <LENGTH>35</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>X_FEHLER</KEY>
+       <ENTRY>Fehlermeldungen</ENTRY>
+       <LENGTH>23</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>X_KUNNR</KEY>
+       <ENTRY>Debitoren auswählen</ENTRY>
+       <LENGTH>27</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>X_LIFNR</KEY>
+       <ENTRY>Kreditoren auswählen</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>X_SAKNR</KEY>
+       <ENTRY>Sachkonten auswählen</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>X_SHBKN</KEY>
+       <ENTRY>SHB-Vorgänge</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>X_SHBLF</KEY>
+       <ENTRY>SHB-Vorgänge</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>X_TESTL</KEY>
+       <ENTRY>Testlauf</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>ZWAERS</KEY>
+       <ENTRY>Ausgleichswährung</ENTRY>
+       <LENGTH>25</LENGTH>
+      </item>
+     </TEXTPOOL>
+    </item>
+    <item>
+     <LANGUAGE>E</LANGUAGE>
+     <TEXTPOOL>
+      <item>
+       <ID>I</ID>
+       <KEY>001</KEY>
+       <ENTRY>Customers</ENTRY>
+       <LENGTH>9</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>002</KEY>
+       <ENTRY>Vendors</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>003</KEY>
+       <ENTRY>G/L accounts</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>004</KEY>
+       <ENTRY>No change authorization for</ENTRY>
+       <LENGTH>31</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>005</KEY>
+       <ENTRY>No display authorization for</ENTRY>
+       <LENGTH>29</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>007</KEY>
+       <ENTRY>Update run&quot;</ENTRY>
+       <LENGTH>18</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>008</KEY>
+       <ENTRY>Test run  &quot;</ENTRY>
+       <LENGTH>18</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>020</KEY>
+       <ENTRY>Short list of open and cleared items</ENTRY>
+       <LENGTH>66</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>030</KEY>
+       <ENTRY>Detail list of open and cleared items                            &quot;</ENTRY>
+       <LENGTH>66</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>041</KEY>
+       <ENTRY>Clearing document no.:</ENTRY>
+       <LENGTH>22</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>042</KEY>
+       <ENTRY>Clearing date:</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>043</KEY>
+       <ENTRY>No clearing</ENTRY>
+       <LENGTH>14</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>044</KEY>
+       <ENTRY>Period</ENTRY>
+       <LENGTH>7</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>045</KEY>
+       <ENTRY>Clearing date</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>046</KEY>
+       <ENTRY>No clearing (difference too large)</ENTRY>
+       <LENGTH>34</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>051</KEY>
+       <ENTRY>Account blocked - no clearing      &quot;</ENTRY>
+       <LENGTH>36</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>098</KEY>
+       <ENTRY>Error Log</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>099</KEY>
+       <ENTRY>Additional Log</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>101</KEY>
+       <ENTRY>Category &apos;W&apos; special G/L transactions were not selected</ENTRY>
+       <LENGTH>67</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>104</KEY>
+       <ENTRY>Item&apos;s withholding tax amount is not zero</ENTRY>
+       <LENGTH>44</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>105</KEY>
+       <ENTRY>Items with withholding tax code for customer subject to withholding tax</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>110</KEY>
+       <ENTRY>No customer documents selected</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>111</KEY>
+       <ENTRY>No vendor documents selected</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>112</KEY>
+       <ENTRY>No G/L account documents selected</ENTRY>
+       <LENGTH>33</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>113</KEY>
+       <ENTRY>Error in reading document header(BKPF): &amp;1, &amp;2</ENTRY>
+       <LENGTH>80</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>114</KEY>
+       <ENTRY>Error in reading line items (BSEG): &amp;1, &amp;2, &amp;3</ENTRY>
+       <LENGTH>80</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>120</KEY>
+       <ENTRY>Account is blocked</ENTRY>
+       <LENGTH>18</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>121</KEY>
+       <ENTRY>System error in blocking</ENTRY>
+       <LENGTH>25</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>122</KEY>
+       <ENTRY>Account blocked by payment proposal (table REGUS)</ENTRY>
+       <LENGTH>56</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>125</KEY>
+       <ENTRY>Account was selected, but is not entered in table TF123</ENTRY>
+       <LENGTH>58</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>126</KEY>
+       <ENTRY>Company code blocked by payment program (table T042X)</ENTRY>
+       <LENGTH>57</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>127</KEY>
+       <ENTRY>Only accounts with debit and credit postings are included</ENTRY>
+       <LENGTH>67</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>128</KEY>
+       <ENTRY>No error occurred during clearing</ENTRY>
+       <LENGTH>45</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>129</KEY>
+       <ENTRY>No errors were logged during clearing in test run</ENTRY>
+       <LENGTH>62</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>130</KEY>
+       <ENTRY>No clearing procedures were carried out</ENTRY>
+       <LENGTH>47</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>131</KEY>
+       <ENTRY>New group of documents which can be cleared</ENTRY>
+       <LENGTH>120</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>132</KEY>
+       <ENTRY>Clearing currency copied from assignment field</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>133</KEY>
+       <ENTRY>Authorization Check for Business Area Active</ENTRY>
+       <LENGTH>82</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>134</KEY>
+       <ENTRY>Authorization Check for Document Type Active</ENTRY>
+       <LENGTH>82</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>140</KEY>
+       <ENTRY>***** System message                    &quot;</ENTRY>
+       <LENGTH>41</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>141</KEY>
+       <ENTRY>***** Please note:</ENTRY>
+       <LENGTH>25</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>200</KEY>
+       <ENTRY>CoCde&quot;                                           Company code</ENTRY>
+       <LENGTH>62</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>203</KEY>
+       <ENTRY>AcTyp&quot;                                          Acct type</ENTRY>
+       <LENGTH>57</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>204</KEY>
+       <ENTRY>Acct no.  &quot;                                      Account no.</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>205</KEY>
+       <ENTRY>Doc. no.  &quot;                                     Document no.</ENTRY>
+       <LENGTH>60</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>206</KEY>
+       <ENTRY>Itm</ENTRY>
+       <LENGTH>3</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>207</KEY>
+       <ENTRY>Log text                                                    &quot;</ENTRY>
+       <LENGTH>61</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>208</KEY>
+       <ENTRY>No. of OIs</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>209</KEY>
+       <ENTRY>No. of CIs</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>210</KEY>
+       <ENTRY>OIs/CIs in %</ENTRY>
+       <LENGTH>12</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>212</KEY>
+       <ENTRY>Crcy &quot;</ENTRY>
+       <LENGTH>6</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>213</KEY>
+       <ENTRY>D/C  &quot;</ENTRY>
+       <LENGTH>6</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>214</KEY>
+       <ENTRY>Amount</ENTRY>
+       <LENGTH>17</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>215</KEY>
+       <ENTRY>Recon.acct</ENTRY>
+       <LENGTH>10</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>216</KEY>
+       <ENTRY>S.G/L&quot;                                           Special G/L indicator</ENTRY>
+       <LENGTH>75</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>218</KEY>
+       <ENTRY>Scr.</ENTRY>
+       <LENGTH>4</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>219</KEY>
+       <ENTRY>Mtyp</ENTRY>
+       <LENGTH>4</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>220</KEY>
+       <ENTRY>Mid</ENTRY>
+       <LENGTH>3</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>221</KEY>
+       <ENTRY>Mno</ENTRY>
+       <LENGTH>3</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>222</KEY>
+       <ENTRY>Criterion 1</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>223</KEY>
+       <ENTRY>Criterion 2</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>224</KEY>
+       <ENTRY>Criterion 3</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>225</KEY>
+       <ENTRY>Criterion 4</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>226</KEY>
+       <ENTRY>Message text</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>227</KEY>
+       <ENTRY>Success. CIs (SCIs)</ENTRY>
+       <LENGTH>19</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>228</KEY>
+       <ENTRY>SCIs/OIs in %</ENTRY>
+       <LENGTH>13</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>229</KEY>
+       <ENTRY>ScName</ENTRY>
+       <LENGTH>7</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>230</KEY>
+       <ENTRY>Criterion 5</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>231</KEY>
+       <ENTRY>Not all CIs cleared</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>300</KEY>
+       <ENTRY>Program started by:           &quot;</ENTRY>
+       <LENGTH>31</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>301</KEY>
+       <ENTRY>Start date     &quot;</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>302</KEY>
+       <ENTRY>Start time     &quot;</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>303</KEY>
+       <ENTRY>Stop date      &quot;</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>304</KEY>
+       <ENTRY>Stop time      &quot;</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>305</KEY>
+       <ENTRY>Documents in the following expiring currencies were not considered:</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>306</KEY>
+       <ENTRY>Set the &quot;Expiring Currencies&quot; switch or define the clearing currency</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>307</KEY>
+       <ENTRY>Following currencies will expire soon:</ENTRY>
+       <LENGTH>40</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>312</KEY>
+       <ENTRY>Error in reading table T100 (&amp;,&amp;)</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>320</KEY>
+       <ENTRY>Items with EBPP payment method not selected</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>499</KEY>
+       <ENTRY>Total in recording currency</ENTRY>
+       <LENGTH>132</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>500</KEY>
+       <ENTRY>Total in document currency</ENTRY>
+       <LENGTH>82</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>P01</KEY>
+       <ENTRY>General selections</ENTRY>
+       <LENGTH>23</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>P02</KEY>
+       <ENTRY>Posting parameters</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>P03</KEY>
+       <ENTRY>Output Control</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>T01</KEY>
+       <ENTRY>Automatic Clearing Specific to Ledger Groups</ENTRY>
+       <LENGTH>50</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>T02</KEY>
+       <ENTRY>Program Documentation</ENTRY>
+       <LENGTH>21</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>T03</KEY>
+       <ENTRY>No ledger group-specific clearing for the account</ENTRY>
+       <LENGTH>56</LENGTH>
+      </item>
+      <item>
+       <ID>I</ID>
+       <KEY>T04</KEY>
+       <ENTRY>Only ledger group-specific clearing for the account possible</ENTRY>
+       <LENGTH>63</LENGTH>
+      </item>
+      <item>
+       <ID>R</ID>
+       <ENTRY>Automatic Clearing</ENTRY>
+       <LENGTH>70</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>AUGDT</KEY>
+       <ENTRY>Clearing Date</ENTRY>
+       <LENGTH>23</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>BMONAT</KEY>
+       <ENTRY>Period</ENTRY>
+       <LENGTH>15</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>BUKRX</KEY>
+       <ENTRY>Company Code</ENTRY>
+       <LENGTH>22</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>DOCNR</KEY>
+       <ENTRY>Document Number</ENTRY>
+       <LENGTH>23</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>GJAHX</KEY>
+       <ENTRY>Fiscal Year</ENTRY>
+       <LENGTH>22</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>KONTD</KEY>
+       <ENTRY>Customers</ENTRY>
+       <LENGTH>17</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>KONTK</KEY>
+       <ENTRY>Vendors</ENTRY>
+       <LENGTH>18</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>KONTS</KEY>
+       <ENTRY>G/L Accounts</ENTRY>
+       <LENGTH>20</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>MIN_BEL</KEY>
+       <ENTRY>Minimum Number of Line Items</ENTRY>
+       <LENGTH>36</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>POSTDATE</KEY>
+       <ENTRY>Posting Date</ENTRY>
+       <LENGTH>31</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>PZBSISGR</KEY>
+       <ENTRY>Maximum Number of Groups</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SHBKD</KEY>
+       <ENTRY>Special G/L Indicator-Customer</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SHBKK</KEY>
+       <ENTRY>Special G/L Indicator - Vendor</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>XAUGDT</KEY>
+       <ENTRY>Date from Most Recent Document</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>XAUSBEL</KEY>
+       <ENTRY>Documents that can be cleared</ENTRY>
+       <LENGTH>37</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>XAUSLW</KEY>
+       <ENTRY>Expiring Currencies</ENTRY>
+       <LENGTH>29</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>XNAUSBEL</KEY>
+       <ENTRY>Documents that cannot be clrd</ENTRY>
+       <LENGTH>37</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>XNKON</KEY>
+       <ENTRY>Include suppl. account assgmnt</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>XSOBEBVK</KEY>
+       <ENTRY>Clearing curr. from assignment</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>XSOBWERE</KEY>
+       <ENTRY>GR/IR account special process.</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>XTOL</KEY>
+       <ENTRY>Include tolerances</ENTRY>
+       <LENGTH>34</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>XTOLEB</KEY>
+       <ENTRY>Permit individual line items</ENTRY>
+       <LENGTH>36</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>X_AVISD</KEY>
+       <ENTRY>Grouping by payment advice no.</ENTRY>
+       <LENGTH>38</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>X_FEHLER</KEY>
+       <ENTRY>Error Messages</ENTRY>
+       <LENGTH>23</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>X_KUNNR</KEY>
+       <ENTRY>Select customers</ENTRY>
+       <LENGTH>27</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>X_LIFNR</KEY>
+       <ENTRY>Select vendors</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>X_SAKNR</KEY>
+       <ENTRY>Select G/L accounts</ENTRY>
+       <LENGTH>28</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>X_SHBKN</KEY>
+       <ENTRY>Special G/L transactions</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>X_SHBLF</KEY>
+       <ENTRY>Special G/L transactions</ENTRY>
+       <LENGTH>32</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>X_TESTL</KEY>
+       <ENTRY>Test run</ENTRY>
+       <LENGTH>16</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>ZWAERS</KEY>
+       <ENTRY>Clearing Currency</ENTRY>
+       <LENGTH>25</LENGTH>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>P_LG</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>21</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+      <item>
+       <ID>S</ID>
+       <KEY>SO_ZUONR</KEY>
+       <ENTRY>.</ENTRY>
+       <LENGTH>17</LENGTH>
+       <SPLIT>D</SPLIT>
+      </item>
+     </TEXTPOOL>
+    </item>
+   </I18N_TPOOL>
+   <LONGTEXTS>
+    <item>
+     <DOKIL>
+      <ID>RE</ID>
+      <OBJECT>ZSAPF124</OBJECT>
+      <LANGU>D</LANGU>
+      <TYP>E</TYP>
+      <VERSION>0040</VERSION>
+      <MASTERLANG>X</MASTERLANG>
+      <TXTLINES>00098</TXTLINES>
+     </DOKIL>
+     <HEAD>
+      <TDOBJECT>DOKU</TDOBJECT>
+      <TDNAME>ZSAPF124</TDNAME>
+      <TDID>RE</TDID>
+      <TDSPRAS>D</TDSPRAS>
+      <TDFORM>S_DOCU_SHOW</TDFORM>
+      <TDSTYLE>S_DOCUS1</TDSTYLE>
+      <TDVERSION>00040</TDVERSION>
+      <TDLINESIZE>072</TDLINESIZE>
+     </HEAD>
+     <LINES>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;DESCRIPTION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Mit diesem Programm werden offene Posten von Debitoren-, Kreditoren- und</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Sachkonten (insbesondere von WE/RE-Verrechnungskonten) automatisch</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>ausgeglichen.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Das Programm selektiert alle durch die Wertemengen beschriebenen Konten,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>bei denen Buchungen im Soll und Haben vorliegen.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Folgende Posten werden &lt;ZH&gt;nicht&lt;/&gt; ausgeglichen:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>LZ</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Merkposten</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>statistische Buchungen und Sonderhauptbuchvorgänge vom Typ Wechsel</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Posten mit Quellensteuerbuchungen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Anzahlungen können nur ausgeglichen werden, wenn bereits betragsgleiche</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Anzahlungsverrechnungen gebucht sind.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Die verbleibenden offenen Posten werden nach festen Systemkriterien</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>gruppiert:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>LZ</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Buchungskreis</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Kontoart</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Kontonummer</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Abstimmkontonummer</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Währungsschlüssel</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B2</TDFORMAT>
+       <TDLINE>BSID-WAERS bei Debitoren</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B2</TDFORMAT>
+       <TDLINE>BSIK-WAERS bei Kreditoren</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B2</TDFORMAT>
+       <TDLINE>BSIS-PSWSL bei Sachkonten</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Sonderhauptbuchkennzeichen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Zusätzlich gruppiert das Programm Posten nach maximal fünf</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Anwenderkriterien. Beachten Sie, dass die Partnergesellschaftsnummer und</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>der Geschäftsbereich (im Vergleich zu den alten Ausgleichsprogrammen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>SAPF123 und SAPF123W) keine festen Systemkriterien mehr sind. Wenn nach</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Geschäftsbereich oder Partnergesellschaft gruppiert werden soll, müssen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Sie diese als Anwenderkriterien eingeben.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Ein Ausgleich erfolgt genau dann, wenn für die nach obigen Kriterien</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>selektierte Gruppe von Belegposten der Saldo in Belegwährung (bei</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Debitoren und Kreditoren) bzw. in Fortschreibewährung (bei Sachkonten)</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Null ist. Das Datum des Ausgleichs ist das Ausgleichsdatum gemäß Ihren</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Selektionsangaben. Im Echtlauf wird bei einem erfolgreichen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Ausgleichsvorgang auch die Ausgleichsbelegnummer angegeben.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Während des Programmlaufes werden alle Konten gesperrt, auf denen ein</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Ausgleich vorgenommen werden kann. Sie werden nach dem Ausgleichsvorgang</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>wieder freigegeben. Konten, die durch andere Transaktionen gesperrt</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>wurden oder im maschinellen Zahllauf vorgesehen sind, werden beim</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>maschinellen Ausgleichen nicht berücksichtigt.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>&lt;ZH&gt;WE/RE-Verrechnungskonten&lt;/&gt;.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Bei WE/RE-Konten wird versucht, in einer zusammengefassten Gruppe von</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>nicht ausgleichbaren Belegen durch sukzessives Weglassen von Belegen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>eine ausgleichbare Gruppe zu erzeugen.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Falls trotz dieses Weglassens die Zuordnung von Wareneingängen zu den</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>entsprechenden Rechnungseingängen über die Bestellnummer und die</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Bestellposition nicht ausreichend ist (z.B. bei Lieferplänen), können</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Sie das Kennzeichen &lt;LS&gt;Sonderbearbeitung WE/RE-Konten&lt;/&gt; setzen. Dieses</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Kennzeichen bewirkt, dass dann die Zuordnung von Belegen auf</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>WE/RE-Konten nicht nur über die Bestellnummer und die Bestellposition</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>erfolgt, sondern zusätzlich über den Materialbeleg, falls in der</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Bestellposition eine wareneingangsbezogene Rechnungsprüfung vorgesehen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>ist. Als Gruppierungskriterien verwendet das Programm dann automatisch</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>die Felder &apos;EBELN&apos;, &apos;EBELP&apos; sowie das Referenzfeld &apos;XREF3&apos;. Das</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Referenzfeld wird in diesen Fällen nur zur Anzeige des Materialbeleges</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>benutzt, d.h. auf der Datenbank wird dieses Feld nicht verändert.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;PRECONDITION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>Die Anwenderkriterien müssen in der Systemeinstellung für die</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Buchhaltung definiert sein.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FUNKTION_AUSFÜHREN&apos; OBJECT DOKU ID TX LANGUAGE DE</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>IF &amp;DEVICE&amp; = &apos;SCREEN&apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AL</TDFORMAT>
+       <TDLINE>&lt;DS:TRAN.OB74&gt;(Pflege der Anwenderkriterien)&lt;/&gt;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>ENDIF</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>Wählen Sie die gewünschten Kontoarten, für die der Ausgleich stattfinden</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>soll. Sie können die Konten über die Eingabe von Kontonummern</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>eingrenzen.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>Wenn beim Ausgleich Toleranzen berücksichtigt werden sollen, müssen Sie</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>diese im Customizing definiert haben und gegebenenfalls auch die</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Zuordnung der Toleranzgruppen zu den Konten.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>Wenn Sie eine Ausgleichswährung vorgeben oder auslaufende Währungen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>berücksichtigen wollen, starten Sie die Transaktion F13E.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;OUTPUT&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Wenn Sie in der Ausgabesteuerung gewählt haben, dass ausgleichbare oder</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>nicht ausgleichbare Belege ausgegeben werden sollen, erhalten Sie eine</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Detailliste. Wenn Sie keines der beiden Kennzeichen gesetzt haben, gibt</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>das Programm eine Kurzliste aus.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Die &lt;ZH&gt;Detailliste&lt;/&gt; ist eine Liste der Belegposten und gibt Auskunft</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>über die selektierten offenen oder ausgeglichenen (bzw. ausgleichbaren)</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Belegposten. Gruppen von Posten, die sowohl den Systemkriterien als auch</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>den Anwenderkriterien genügen, werden optisch zusammengefasst. Sind die</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Ausgleichsbedingungen erfüllt, werden das Ausgleichsdatum und im</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Echtlauf zusätzlich die Ausgleichsbelegnummer angezeigt, falls der</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>entsprechende Ausgleichsvorgang erfolgreich verlaufen ist. Ist beim</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Ausgleichen ein Fehler aufgetreten, erscheint die Meldung &apos;Kein</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Ausgleich&apos;.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Die &lt;ZH&gt;Kurzliste&lt;/&gt; der offenen und ausgeglichenen Posten bietet eine</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Zusammenfassung der Ergebnisse des Programmlaufs. Dabei werden die Zahl</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>der je Konto selektierten offenen Posten, die Zahl der davon</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>ausgleichbaren Posten sowie die tatsächlich ausgeglichenen Posten</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>angezeigt.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Dem &lt;ZH&gt;Fehlerprotokoll&lt;/&gt; können Sie entnehmen, welche Fehler beim</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Ausgleichen einer (gemäß den Systemkriterien und Anwenderkriterien</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>ausgleichbaren) Gruppe aufgetreten sind. Je nach Fehlermeldung sollten</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Sie dann versuchen, die entsprechende Gruppe manuell auszugleichen.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Darüber hinaus wird in einem  &lt;ZH&gt;Zusatzprotokoll&lt;/&gt;  ggf. vermerkt,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>dass aufgrund der Selektionseingaben keine Debitoren-, Kreditoren-, bzw.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Sachkontenbelege auf der Datenbank gelesen wurden. Außerdem erfolgt in</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>folgenden Fällen ein Protokolleintrag:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>LZ</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>bei Posten mit Quellensteuerbuchungen</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>falls Konten gesperrt sind</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>falls Buchungskreise durch das Zahlprogramm gesperrt sind</TDLINE>
+      </TLINE>
+     </LINES>
+    </item>
+    <item>
+     <DOKIL>
+      <ID>RE</ID>
+      <OBJECT>ZSAPF124</OBJECT>
+      <LANGU>E</LANGU>
+      <TYP>E</TYP>
+      <VERSION>0040</VERSION>
+      <TXTLINES>00095</TXTLINES>
+     </DOKIL>
+     <HEAD>
+      <TDOBJECT>DOKU</TDOBJECT>
+      <TDNAME>ZSAPF124</TDNAME>
+      <TDID>RE</TDID>
+      <TDSPRAS>E</TDSPRAS>
+      <TDFORM>S_DOCU_SHOW</TDFORM>
+      <TDSTYLE>S_DOCUS1</TDSTYLE>
+      <TDVERSION>00040</TDVERSION>
+      <TDLINESIZE>072</TDLINESIZE>
+     </HEAD>
+     <LINES>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>Description</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>This program clears open items from customer, vendor and G/L accounts</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>(in particular, GR/IR clearing accounts) automatically.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>It selects all accounts specified in the value sets that have debit and</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>credit postings.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>The following items are &lt;ZH&gt;not&lt;/&gt; cleared:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>LZ</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Noted items</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Statistical postings and special G/L transactions of the type bill of</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>exchange</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Items with withholding tax postings</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Down payments can only be cleared if down payment clearing for the same</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>amount has been posted</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>The remaining open items are grouped according to fixed system criteria:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>LZ</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Company code</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Account type</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Account number</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Reconciliation account number</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Currency key</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B2</TDFORMAT>
+       <TDLINE>BSID-WAERS for customers</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B2</TDFORMAT>
+       <TDLINE>BSIK-WAERS for vendors</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B2</TDFORMAT>
+       <TDLINE>BSIS-PSWSL for G/L accounts</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Special G/L indicator</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>The program also groups items according to a maximum of five user</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>criteria. Note that the trading partner number and the business area are</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>no longer fixed system criteria (in comparison to the former clearing</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>programs SAPF123 and SAPF123W). Therefore, if you want to group by</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>business area or trading partner number, you have to enter these as user</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>criteria.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Clearing takes place when, for the group of line items selected</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>according to the above criteria, the balance in document currency (for</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>customers and vendors) or in update currency (for G/L accounts) is zero.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>The date for clearing is the clearing date according to your selection</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>specifications. In an update run, if the clearing transaction is</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>successful, the clearing document number is specified.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>During the program run, all accounts in which clearing can be performed</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>are blocked. They are then unblocked again after the clearing</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>transaction. Accounts that are blocked by other transactions or that are</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>intended for the automatic payment run are not considered in automatic</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>clearing.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>&lt;ZH&gt;GR/IR Accounts&lt;/&gt;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>For GR/IR accounts, the program tries to create a group of documents</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>that can be cleared from a group of documents that cannot be cleared by</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>successively omitting documents.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>If, despite this action, the assignment of goods receipts to the</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>corresponding invoice receipts using the purchase order number and</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>purchase order item is insufficient (for example, for delivery</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>schedules), you can set the indicator &lt;LS&gt;Special Processing of GR/IR</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>Accounts&lt;/&gt;. This indicator has the effect that documents are assigned</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>to GR/IR accounts not only by means of the purchase order number and the</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>purchase order item, but also using the material document if a goods</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>receipt-related invoice verification is defined in the purchase order</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>item. The program automatically uses the fields EBELN, EBELP, and the</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>reference field XREF3 as grouping criteria. In this case, the reference</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>field is only used to display the material document, which means that</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>this field is not changed in the database.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;PRECONDITIONS&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>The user criteria must be defined in the system setting for Accounting.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FUNKTION_AUSFÜHREN&apos; OBJECT DOKU ID TX LANGUAGE EN</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>IF &amp;DEVICE&amp; = &apos;SCREEN&apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AL</TDFORMAT>
+       <TDLINE>&lt;DS:TRAN.OB74&gt;(Maintain User Criteria)&lt;/&gt;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>ENDIF</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>Select the account types for which clearing is to be performed. You can</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>restrict the number of accounts the system selects by entering account</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>numbers.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>If tolerances are to be considered during clearing, you must have</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>defined these in Customizing and, if necessary, also the assignment of</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>tolerance groups to the accounts.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>If you want to define a clearing currency or consider expiring</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>currencies, start transaction F13E.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>Output</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>If, in the output control, you have selected that documents that can be</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>cleared or documents that cannot be cleared are to be output, you</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>receive a detailed list. If you have not set either of the indicators,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>the program outputs a short list.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>The &lt;ZH&gt;detail list&lt;/&gt; is a list of the line items and gives information</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>about the open or cleared (or clearable) line items selected. Group of</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>items that comply with the system criteria and the user criteria are</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>summarized optically. If the clearing conditions have been fulfilled,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>the clearing date and, in an update run, also the clearing document</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>number are displayed if the clearing transaction was successful. If an</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>error occurred during clearing, the message No clearing appears.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>The &lt;ZH&gt;short list&lt;/&gt; of the open and cleared items provides a summary</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>of the results of the program run. The number of open items selected per</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>account are displayed, the number of those that can be cleared, and the</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>items actually cleared are displayed.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>From the &lt;ZH&gt;error log&lt;/&gt;, you can see which errors occurred during</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>clearing of a group (of documents that can be cleared according to the</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>system criteria and user criteria). Depending on the error message, you</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>should then try to clear the group concerned manually.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>If necessary, the system also issues an additional log that states that</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>no customer, vendor, or G/L account documents could be read from the</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>database as a result of the selection criteria. A log entry also occurs</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>in the following cases:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>LZ</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Items with withholding tax postings</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>If accounts are blocked</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>If company codes are blocked by the payment program</TDLINE>
+      </TLINE>
+     </LINES>
+    </item>
+    <item>
+     <DOKIL>
+      <ID>RE</ID>
+      <OBJECT>ZSAPF124</OBJECT>
+      <LANGU>S</LANGU>
+      <TYP>E</TYP>
+      <VERSION>0040</VERSION>
+      <TXTLINES>00106</TXTLINES>
+     </DOKIL>
+     <HEAD>
+      <TDOBJECT>DOKU</TDOBJECT>
+      <TDNAME>ZSAPF124</TDNAME>
+      <TDID>RE</TDID>
+      <TDSPRAS>S</TDSPRAS>
+      <TDFORM>S_DOCU_SHOW</TDFORM>
+      <TDSTYLE>S_DOCUS1</TDSTYLE>
+      <TDVERSION>00040</TDVERSION>
+      <TDLINESIZE>072</TDLINESIZE>
+     </HEAD>
+     <LINES>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;DESCRIPTION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Este programa permite compensar automáticamente partidas abiertas de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>deudor, acreedor y cuentas de mayor (en especial de cuentas de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>compensación EM/RF).</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>El programa selecciona todas las cuentas descritas mediante los</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>conjuntos de valores, en las que existen contabilizaciones en el Debe y</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>en el Haber.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Las siguientes partidas &lt;ZH&gt;no&lt;/&gt; se compensan:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>LZ</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Apuntes estadísticos</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Asientos estadísticos y operaciones en cuentas de mayor especiales del</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>tipo efecto</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Partidas con contabilizaciones de retenciones de impuestos</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Los anticipos sólo se pueden compensar, cuando previamente se hayan</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>contabilizado traslados de anticipos con importes idénticos</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Las partidas abiertas restantes se agrupan por criterios fijos del</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>sistema:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>LZ</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Sociedad</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Clase de cuenta</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Número de cuenta</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Número de cuenta de reconciliación</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Clave de moneda</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B2</TDFORMAT>
+       <TDLINE>BSID-WAERS en deudores</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B2</TDFORMAT>
+       <TDLINE>BSIK-WAERS en acreedores</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B2</TDFORMAT>
+       <TDLINE>BSIS-PSWSL en cuentas de mayor</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>Indicador de operación en cuenta de mayor especial</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Adicionalmente, el programa agrupa las partidas según un máximo de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>cinco criterios de usuario. Tenga en cuenta que el número de sociedad</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>GL asociada y la división (en comparación con los anteriores</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>programas de compensación SAPF123 y SAPF123W) ya no son criterios</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>fijos del sistema. Si se debe agrupar por división o sociedad GL</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>asociada, estos elementos se deberán introducir como criterios de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>usuario.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>La compensación se efectúa en el momento en que el saldo en la moneda</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>del documento (en deudores y acreedores) o bien en la moneda de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>actualización (en cuentas de mayor) es cero, en el grupo seleccionado</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>de partidas del documento, según los criterios mencionados</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>anteriormente. La fecha de la compensación viene marcada por las</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>entradas de selección. En el caso de una operación de compensación</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>realizada, en la ejecución de actualización también se indicará el</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>número del documento de compensación.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Durante la ejecución del programa se bloquean todas las cuentas en las</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>que sea posible efectuar una compensación. Se vuelven a liberar tras la</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>operación de compensación. La compensación automática no considera las</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>cuentas que se hayan bloqueado mediante otras transacciones o bien las</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>cuentas que estén previstas en la ejecución de pago automática.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>&lt;ZH&gt;Cuentas de compensación EM/RF&lt;/&gt;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>En las cuentas EM/RF se intenta crear un grupo que se pueda compensar</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>omitiendo sucesivamente documentos en un grupo de documentos que no</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>se pueda compensar.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>En caso de que, a pesar de esta omisión, no baste con la asignación de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>entradas de mercancías para las correspondientes recepciones de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>facturas mediante el número y la posición del pedido (por ejemplo, en</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>planes de entregas), se podrá activar el indicador &lt;LS&gt;Tratamiento</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>especial cuentas EM/RF&lt;/&gt;. Este indicador ocasiona que seguidamente</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>la asignación de documentos en cuentas EM/RF no se efectúe sólo</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>mediante el número y la posición del pedido, sino que también se</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>utilice el documento de material, en caso de que se haya previsto una</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>verificación de facturas en base a la entrada de mercancías en la</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>posición de pedido. Como criterios de agrupación, el programa utiliza</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>automáticamente los campos &quot;EBELN&quot;, &quot;EBELP&quot;, así como el campo de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>referencia &quot;XREF3&quot;. En estos casos, el campo de referencia sólo se</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>utiliza para visualizar el documento de material, es decir, que este</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>campo no se modifica en la base de datos.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;PRECONDITION&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>Los criterios de usuario deberán estar definidos en la parametrización</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>del sistema para la contabilidad financiera.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>INCLUDE &apos;FUNKTION_AUSFÜHREN&apos; OBJECT DOKU ID TX LANGUAGE ES</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>IF &amp;DEVICE&amp; = &apos;SCREEN&apos;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AL</TDFORMAT>
+       <TDLINE>&lt;DS:TRAN.OB74&gt;(Actualización de los criterios de usuario)&lt;/&gt;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>/:</TDFORMAT>
+       <TDLINE>ENDIF</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>Seleccione las clases de cuenta en las que deba efectuarse la</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>compensación. La entrada de números de cuenta permite delimitar las</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>cuentas.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>Si se deben considerar tolerancias en la compensación, éstas se deberán</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>haber definido en el Customizing, así como eventualmente también</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>la asignación de grupos de tolerancia para las cuentas.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>N1</TDFORMAT>
+       <TDLINE>Si se indica una moneda de comparación o se desea tener en cuenta</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>monedas a reemplazar, inicie la transacción F13E.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>U1</TDFORMAT>
+       <TDLINE>&amp;OUTPUT&amp;</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Si en el control de salida se ha seleccionado que se debe dar salida</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>a documentos que se puedan o no se puedan compensar, se obtendrá una</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>lista desglosada. Si no se ha activado ninguno de los dos indicadores,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>el programa dará salida a una lista breve.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>La &lt;ZH&gt;lista detallada&lt;/&gt; es una lista de las posiciones de documento y</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>porporciona información sobre las partidas de documento abiertas y</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>compensadas (o compensables), que se hayan seleccionado. De forma</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>visual se resumen los grupos de partidas que cumplan, tanto los</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>criterios del sistema como los criterios del usuario. Si</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>se cumplen las condiciones de compensación, se visualizará la fecha de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>compensación y, en la ejecución de actualización, además el número del</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>documento de compensación, en caso de que la correspondiente operación</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>de compensación se haya procesado. En caso de que en la compensación</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>surja un error, aparecerá el mensaje &quot;Sin compensación&quot;.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>La &lt;ZH&gt;lista breve&lt;/&gt; de las partidas abiertas y compensadas ofrece un</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>resumen de los resultados de la ejecución del programa. En este proceso</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>se visualizan la cantidad de partidas abiertas seleccionadas por cuenta,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>la cantidad de estas partidas que son compensables, así como las</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>partidas realmente compensadas.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>En el &lt;ZH&gt;log de errores&lt;/&gt; se pueden consultar los errores que hayan</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>aparecido al compensar un grupo (compensable, según los criterios de</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>sistema y los criterios de usuario). En función del mensaje de error,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>deberá intentarse compensar manualmente el grupo correspondiente.</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>AS</TDFORMAT>
+       <TDLINE>Además, si se da el caso, en un &lt;ZH&gt;log adicional&lt;/&gt; se indica que en</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>la base de datos no se han leído documentos de deudores, acreedores o</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>de cuentas de mayor debido a las entradas de selección. Adicionalmente,</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDLINE>en los siguientes casos se efectúa una entrada en el log:</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>LZ</TDFORMAT>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>en partidas con contabilizaciones de retenciones de impuestos</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>si se han bloqueado cuentas</TDLINE>
+      </TLINE>
+      <TLINE>
+       <TDFORMAT>B1</TDFORMAT>
+       <TDLINE>si se han bloqueado sociedades mediante el programa de pagos</TDLINE>
+      </TLINE>
+     </LINES>
+    </item>
+   </LONGTEXTS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

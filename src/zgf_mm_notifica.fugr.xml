@@ -1,0 +1,128 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_FUGR" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <AREAT>Grupo Función mensajes de notificación</AREAT>
+   <INCLUDES>
+    <SOBJ_NAME>LZGF_MM_NOTIFICAF01</SOBJ_NAME>
+    <SOBJ_NAME>LZGF_MM_NOTIFICATOP</SOBJ_NAME>
+    <SOBJ_NAME>SAPLZGF_MM_NOTIFICA</SOBJ_NAME>
+   </INCLUDES>
+   <FUNCTIONS>
+    <item>
+     <FUNCNAME>ZFU_MM_SEND_EMAIL_HES</FUNCNAME>
+     <SHORT_TEXT>Envio mail proveedor HES</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_ESSR</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>UESSR</TYP>
+      </RSIMP>
+      <RSIMP>
+       <PARAMETER>I_EKKO</PARAMETER>
+       <OPTIONAL>X</OPTIONAL>
+       <REFERENCE>X</REFERENCE>
+       <TYP>EKKO</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_SUBRC</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>SYST-SUBRC</TYP>
+      </RSEXP>
+     </EXPORT>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>IT_ESLL</PARAMETER>
+       <DBSTRUCT>ML_ESLL</DBSTRUCT>
+      </RSTBL>
+     </TABLES>
+     <EXCEPTION>
+      <RSEXC>
+       <EXCEPTION>NO_EXISTE_HES</EXCEPTION>
+      </RSEXC>
+     </EXCEPTION>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_ESSR</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Número del documento de compras</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>I_EKKO</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Cabecera del documento de compras</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_SUBRC</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Código retorno de sentencias ABAP</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IT_ESLL</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Generated Table for View ML_ESLL</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>NO_EXISTE_HES</PARAMETER>
+       <KIND>X</KIND>
+       <STEXT>HES no existe</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+    <item>
+     <FUNCNAME>ZFU_MM_SEND_EMAIL_PO</FUNCNAME>
+     <SHORT_TEXT>Envio mail proveedor Orden de Compra</SHORT_TEXT>
+     <IMPORT>
+      <RSIMP>
+       <PARAMETER>I_EKKO</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>EKKO</TYP>
+      </RSIMP>
+     </IMPORT>
+     <EXPORT>
+      <RSEXP>
+       <PARAMETER>E_SUBRC</PARAMETER>
+       <REFERENCE>X</REFERENCE>
+       <TYP>SYST-SUBRC</TYP>
+      </RSEXP>
+     </EXPORT>
+     <TABLES>
+      <RSTBL>
+       <PARAMETER>IT_KOMV</PARAMETER>
+       <DBSTRUCT>KOMV</DBSTRUCT>
+      </RSTBL>
+     </TABLES>
+     <EXCEPTION>
+      <RSEXC>
+       <EXCEPTION>NO_EXISTE_OC</EXCEPTION>
+      </RSEXC>
+     </EXCEPTION>
+     <DOCUMENTATION>
+      <RSFDO>
+       <PARAMETER>I_EKKO</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Número del documento de compras</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>E_SUBRC</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Código retorno de sentencias ABAP</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>IT_KOMV</PARAMETER>
+       <KIND>P</KIND>
+       <STEXT>Determinación precio registro de condición comunicación</STEXT>
+      </RSFDO>
+      <RSFDO>
+       <PARAMETER>NO_EXISTE_OC</PARAMETER>
+       <KIND>X</KIND>
+       <STEXT>OC no existe</STEXT>
+      </RSFDO>
+     </DOCUMENTATION>
+    </item>
+   </FUNCTIONS>
+  </asx:values>
+ </asx:abap>
+</abapGit>

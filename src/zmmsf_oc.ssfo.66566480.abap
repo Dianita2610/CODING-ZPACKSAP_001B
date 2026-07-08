@@ -1,0 +1,22 @@
+*CONCATENATE 'FIRMA_OC_' IS_EKKO-BUKRS INTO V_LOGO_FIRMA.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

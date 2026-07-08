@@ -1,0 +1,50 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<abapGit version="v1.0.0" serializer="LCL_OBJECT_TABL" serializer_version="v1.0.0">
+ <asx:abap xmlns:asx="http://www.sap.com/abapxml" version="1.0">
+  <asx:values>
+   <DD02V>
+    <TABNAME>ZMM_DETALLE_INS</TABNAME>
+    <DDLANGUAGE>S</DDLANGUAGE>
+    <TABCLASS>INTTAB</TABCLASS>
+    <DDTEXT>Estructura detalle impresión inst. despacho</DDTEXT>
+    <EXCLASS>4</EXCLASS>
+   </DD02V>
+   <DD03P_TABLE>
+    <DD03P>
+     <FIELDNAME>ZCANTIDAD</FIELDNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <INTTYPE>P</INTTYPE>
+     <INTLEN>000007</INTLEN>
+     <REFTABLE>MSEG</REFTABLE>
+     <REFFIELD>MEINS</REFFIELD>
+     <DATATYPE>QUAN</DATATYPE>
+     <LENG>000013</LENG>
+     <DECIMALS>000001</DECIMALS>
+     <MASK>  QUAN</MASK>
+     <DDTEXT>Cantidad</DDTEXT>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>ZCONCEPTO1</FIELDNAME>
+     <ROLLNAME>MAKTG</ROLLNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <COMPTYPE>E</COMPTYPE>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>ZCONCEPTO2</FIELDNAME>
+     <ROLLNAME>ZZUNID_PRO</ROLLNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <SHLPORIGIN>D</SHLPORIGIN>
+     <COMPTYPE>E</COMPTYPE>
+    </DD03P>
+    <DD03P>
+     <FIELDNAME>ZPRECIO_UN</FIELDNAME>
+     <ROLLNAME>DMBTR</ROLLNAME>
+     <ADMINFIELD>0</ADMINFIELD>
+     <REFTABLE>MSEG</REFTABLE>
+     <REFFIELD>WAERS</REFFIELD>
+     <COMPTYPE>E</COMPTYPE>
+    </DD03P>
+   </DD03P_TABLE>
+  </asx:values>
+ </asx:abap>
+</abapGit>

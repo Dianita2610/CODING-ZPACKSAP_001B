@@ -1,21 +1,57 @@
 *data v_direccion type char30.
 
 
-SELECT SINGLE *
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*SELECT SINGLE *
+*  into CORRESPONDING FIELDS OF wa_ekpo
+*  from ekpo
+*  where ebeln eq v_ebeln.
+*
+* NEW CODE
+SELECT *
+UP TO 1 ROWS 
   into CORRESPONDING FIELDS OF wa_ekpo
   from ekpo
-  where ebeln eq v_ebeln.
+  where ebeln eq v_ebeln ORDER BY PRIMARY KEY.
 
-SELECT SINGLE *
+ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
+
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*SELECT SINGLE *
+*INTO CORRESPONDING FIELDS OF wa_ekko
+*FROM ekko
+*WHERE ebeln EQ v_ebeln.
+*
+* NEW CODE
+SELECT *
+UP TO 1 ROWS 
 INTO CORRESPONDING FIELDS OF wa_ekko
 FROM ekko
-WHERE ebeln EQ v_ebeln.
+WHERE ebeln EQ v_ebeln ORDER BY PRIMARY KEY.
+
+ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
 
-SELECT single *
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*SELECT single *
+*  into CORRESPONDING FIELDS OF wa_adrc
+*  from adrc
+*  where ADDRNUMBER eq wa_ekpo-adrnr.
+*
+* NEW CODE
+SELECT *
+UP TO 1 ROWS 
   into CORRESPONDING FIELDS OF wa_adrc
   from adrc
-  where ADDRNUMBER eq wa_ekpo-adrnr.
+  where ADDRNUMBER eq wa_ekpo-adrnr ORDER BY PRIMARY KEY.
+
+ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
 CONCATENATE wa_adrc-street wa_ADRC-HOUSE_NUM1 ',' wa_adrc-CITY2 into v_direccion SEPARATED BY space.
 *break crystalis_ab.
@@ -35,13 +71,27 @@ TABLES
 data: ti_cdhdr TYPE TABLE OF CDHDR.
 clear ti_cdhdr[].
 
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*SELECT *
+*  into CORRESPONDING FIELDS OF table ti_cdhdr
+*  from CDHDR
+*  where OBJECTID eq v_ebeln
+**    and TCODE    eq 'ME29N'
+*    and TCODE    in ('ME29N', 'ME28')
+*  .
+*
+* NEW CODE
 SELECT *
+
   into CORRESPONDING FIELDS OF table ti_cdhdr
   from CDHDR
   where OBJECTID eq v_ebeln
 *    and TCODE    eq 'ME29N'
     and TCODE    in ('ME29N', 'ME28')
-  .
+   ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 sort ti_cdhdr by udate DESCENDING utime DESCENDING.
 
 READ TABLE ti_cdhdr into wa_cdhdr INDEX 1.

@@ -182,9 +182,20 @@ SORT LT_DYNPFIELDS .
 
   nocentro = 'S'.
 
-  SELECT SINGLE *
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE *
+*    FROM csks
+*    WHERE kostl EQ p_coste.
+*
+* NEW CODE
+  SELECT *
+  UP TO 1 ROWS 
     FROM csks
-    WHERE kostl EQ p_coste.
+    WHERE kostl EQ p_coste ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
   IF sy-subrc = 0.
     CONCATENATE csks-stras '---' csks-ort01 INTO value-text.
@@ -197,9 +208,19 @@ SORT LT_DYNPFIELDS .
     nocentro = 'N'.
   ENDIF.
 
-  SELECT * FROM zdireccguia
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT * FROM zdireccguia
+*    WHERE bukrs = lv_bukrs
+*      AND kostl = p_coste.
+*
+* NEW CODE
+  SELECT *
+ FROM zdireccguia
     WHERE bukrs = lv_bukrs
-      AND kostl = p_coste.
+      AND kostl = p_coste ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
     n3 = n3 + 1.
     CONCATENATE zdireccguia-stras '---' zdireccguia-ort01 INTO value-text.
     IF n3 = 1 AND n4 = 0.
@@ -239,10 +260,22 @@ START-OF-SELECTION.
         lv_ciudad = csks-ort01.
       ELSE.
         n1 = p_list.
-        SELECT  SINGLE * FROM zdireccguia
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*        SELECT  SINGLE * FROM zdireccguia
+*          WHERE bukrs = lv_bukrs
+*          AND kostl = p_coste
+*          AND correl = n1.
+*
+* NEW CODE
+        SELECT *
+        UP TO 1 ROWS  FROM zdireccguia
           WHERE bukrs = lv_bukrs
           AND kostl = p_coste
-          AND correl = n1.
+          AND correl = n1 ORDER BY PRIMARY KEY.
+
+        ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
         IF sy-subrc = 0.
           lv_calle  = zdireccguia-stras.
           lv_ciudad = zdireccguia-ort01.
@@ -254,9 +287,20 @@ START-OF-SELECTION.
 *--------------------------------------------------------------------*
 * START-OF-SELECTION
 *--------------------------------------------------------------------*
-        SELECT SINGLE bukrs  INTO cia
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*        SELECT SINGLE bukrs  INTO cia
+*        FROM csks
+*        WHERE kostl EQ p_coste.
+*
+* NEW CODE
+        SELECT bukrs
+        UP TO 1 ROWS   INTO cia
         FROM csks
-        WHERE kostl EQ p_coste.
+        WHERE kostl EQ p_coste ORDER BY PRIMARY KEY.
+
+        ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
         PERFORM seleccion_datos.
         IF gt_alv[] IS NOT INITIAL.
           PERFORM mostrar_alv.
@@ -273,20 +317,43 @@ START-OF-SELECTION.
 *----------------------------------------------------------------------*
 FORM seleccion_datos.
   "Con la fecha ingresada ir a la tabla MKPF y rescatar todos los MBLNR asociados. Luego ir a la tabla MSEG, ingresar estos datos y además el centro de costo KOSTL.
-  SELECT  mblnr INTO CORRESPONDING FIELDS OF TABLE gt_mkpf
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT  mblnr INTO CORRESPONDING FIELDS OF TABLE gt_mkpf
+*  FROM mkpf
+*  WHERE bldat EQ p_fechad.
+*
+* NEW CODE
+  SELECT mblnr
+ INTO CORRESPONDING FIELDS OF TABLE gt_mkpf
   FROM mkpf
-  WHERE bldat EQ p_fechad.
+  WHERE bldat EQ p_fechad ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
   IF gt_mkpf[] IS NOT INITIAL.
 
 *     SORT gt_mkpf BY mblnr.
 
-    SELECT mblnr mjahr zeile werks kostl zzunid_pro matnr menge meins dmbtr bwart smbln sjahr smblp INTO CORRESPONDING FIELDS OF TABLE gt_alv
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT mblnr mjahr zeile werks kostl zzunid_pro matnr menge meins dmbtr bwart smbln sjahr smblp INTO CORRESPONDING FIELDS OF TABLE gt_alv
+*    FROM mseg FOR ALL ENTRIES IN gt_mkpf
+*    WHERE mblnr EQ gt_mkpf-mblnr
+*      AND bwart IN ('201', '202' )
+*      AND kostl EQ p_coste
+*      AND zznfolio EQ '0000000000'. 
+*
+* NEW CODE
+    SELECT mblnr mjahr zeile werks kostl zzunid_pro matnr menge meins dmbtr bwart smbln sjahr smblp
+ INTO CORRESPONDING FIELDS OF TABLE gt_alv
     FROM mseg FOR ALL ENTRIES IN gt_mkpf
     WHERE mblnr EQ gt_mkpf-mblnr
       AND bwart IN ('201', '202' )
       AND kostl EQ p_coste
-      AND zznfolio EQ '0000000000'. " que no tenga numero de folio asociado.
+      AND zznfolio EQ '0000000000' ORDER BY PRIMARY KEY. 
+
+* END. 08-07-2026 - ATC - ATC-03" que no tenga numero de folio asociado.
 
     LOOP AT gt_alv INTO gs_alv WHERE bwart EQ '202'.
 
@@ -314,9 +381,20 @@ FORM seleccion_datos.
 
     LOOP AT gt_alv INTO gs_alv.
 
-      SELECT SINGLE maktg INTO gs_alv-descrip_material
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*      SELECT SINGLE maktg INTO gs_alv-descrip_material
+*      FROM makt
+*      WHERE matnr EQ gs_alv-matnr.
+*
+* NEW CODE
+      SELECT maktg
+      UP TO 1 ROWS  INTO gs_alv-descrip_material
       FROM makt
-      WHERE matnr EQ gs_alv-matnr.
+      WHERE matnr EQ gs_alv-matnr ORDER BY PRIMARY KEY.
+
+      ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
       MODIFY gt_alv FROM gs_alv INDEX  sy-tabix.
 
@@ -576,18 +654,51 @@ FORM datos_impresion.
 
   ENDCASE.
 
-  SELECT SINGLE bukrs name1 INTO (lv_bukrs, lv_nombre)
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE bukrs name1 INTO (lv_bukrs, lv_nombre)
+*  FROM csks
+*  WHERE kostl EQ p_coste.
+*
+* NEW CODE
+  SELECT bukrs name1
+  UP TO 1 ROWS  INTO (lv_bukrs, lv_nombre)
   FROM csks
-  WHERE kostl EQ p_coste.
+  WHERE kostl EQ p_coste ORDER BY PRIMARY KEY.
 
-  SELECT SINGLE name1 INTO lv_bukrs_name
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
+
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE name1 INTO lv_bukrs_name
+*   FROM t880
+*    WHERE rcomp EQ lv_bukrs.
+*
+* NEW CODE
+  SELECT name1
+  UP TO 1 ROWS  INTO lv_bukrs_name
    FROM t880
-    WHERE rcomp EQ lv_bukrs.
+    WHERE rcomp EQ lv_bukrs ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
 *ResQ Comment:Correction not required as Select Single is used 19/12/2019 EY_DES04 ECDK917080 *
-  SELECT SINGLE paval INTO lv_rut
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE paval INTO lv_rut
+*   FROM t001z
+*   WHERE bukrs EQ lv_bukrs.
+*
+* NEW CODE
+  SELECT paval
+  UP TO 1 ROWS  INTO lv_rut
    FROM t001z
-   WHERE bukrs EQ lv_bukrs.
+   WHERE bukrs EQ lv_bukrs ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
   " DETALLE
 
@@ -741,9 +852,20 @@ MODULE validacion INPUT.
 
   DATA: lv_folio TYPE mseg-zznfolio.
 
-  SELECT SINGLE zznfolio INTO lv_folio
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE zznfolio INTO lv_folio
+*    FROM mseg
+*    WHERE zznfolio EQ p_num AND bukrs = cia.
+*
+* NEW CODE
+  SELECT zznfolio
+  UP TO 1 ROWS  INTO lv_folio
     FROM mseg
-    WHERE zznfolio EQ p_num AND bukrs = cia.
+    WHERE zznfolio EQ p_num AND bukrs = cia ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
   IF lv_folio IS NOT INITIAL. " si existe.
     CLEAR: lv_folio.

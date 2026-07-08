@@ -29,13 +29,34 @@ DATA l_lfm1 LIKE lfm1.
 
 IF  is_nast-parnr NE space AND
 is_nast-parnr NE is_ekko-lifnr.
-SELECT SINGLE land1 FROM lfa1 INTO cv_vender_land
-WHERE lifnr = is_nast-parnr.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*SELECT SINGLE land1 FROM lfa1 INTO cv_vender_land
+*WHERE lifnr = is_nast-parnr.
+*
+* NEW CODE
+SELECT land1
+UP TO 1 ROWS  FROM lfa1 INTO cv_vender_land
+WHERE lifnr = is_nast-parnr ORDER BY PRIMARY KEY.
+
+ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 ELSE.
 "--Get address number from table LFA1--
-SELECT SINGLE land1 FROM lfa1 INTO cv_vender_land
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*SELECT SINGLE land1 FROM lfa1 INTO cv_vender_land
+*
+*WHERE lifnr = is_ekko-lifnr.
+*
+* NEW CODE
+SELECT land1
+UP TO 1 ROWS  FROM lfa1 INTO cv_vender_land
 
-WHERE lifnr = is_ekko-lifnr.
+WHERE lifnr = is_ekko-lifnr ORDER BY PRIMARY KEY.
+
+ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 ENDIF.
 ENDFORM.                    "GET_VENDER_LAND
 
@@ -48,8 +69,18 @@ FORM get_cur_decimal_flag
 USING     iv_waers TYPE waers
 CHANGING  cv_flag  TYPE c.
 DATA ls_tcurx TYPE tcurx.
-SELECT SINGLE * FROM tcurx INTO ls_tcurx
-WHERE currkey = iv_waers.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*SELECT SINGLE * FROM tcurx INTO ls_tcurx
+*WHERE currkey = iv_waers.
+*
+* NEW CODE
+SELECT *
+UP TO 1 ROWS  FROM tcurx INTO ls_tcurx
+WHERE currkey = iv_waers ORDER BY PRIMARY KEY.
+
+ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 IF sy-subrc = 0.
 cv_flag = 'X'.
 ELSE.
@@ -67,8 +98,18 @@ USING is_ekko TYPE ekko
 CHANGING cv_sto_flag.
 CHECK is_ekko-bstyp EQ 'F'.
 DATA: ls_brefn TYPE brefn.
-SELECT SINGLE brefn FROM t161
-INTO ls_brefn WHERE bsart EQ is_ekko-bsart.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*SELECT SINGLE brefn FROM t161
+*INTO ls_brefn WHERE bsart EQ is_ekko-bsart.
+*
+* NEW CODE
+SELECT brefn
+UP TO 1 ROWS  FROM t161
+INTO ls_brefn WHERE bsart EQ is_ekko-bsart ORDER BY PRIMARY KEY.
+
+ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 IF sy-subrc EQ 0.
 IF ls_brefn EQ 'UBF'.
 cv_sto_flag = 'X'.
@@ -268,8 +309,18 @@ CHANGING cv_adrnr.
 DATA: l_adrnr LIKE kna1-adrnr.
 
 CHECK NOT is_kunnr IS INITIAL.
-SELECT SINGLE adrnr FROM  kna1 INTO (l_adrnr)
-WHERE  kunnr  = is_kunnr.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*SELECT SINGLE adrnr FROM  kna1 INTO (l_adrnr)
+*WHERE  kunnr  = is_kunnr.
+*
+* NEW CODE
+SELECT adrnr
+UP TO 1 ROWS  FROM  kna1 INTO (l_adrnr)
+WHERE  kunnr  = is_kunnr ORDER BY PRIMARY KEY.
+
+ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 IF sy-subrc EQ 0.
 cv_adrnr = l_adrnr.
 ELSE.

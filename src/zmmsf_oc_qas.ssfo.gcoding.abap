@@ -57,8 +57,18 @@ IF is_nast-aende NE space.
     ls_chg_texts-ctxnr = ls_xaend-ctxnr.
     ls_chg_texts-f_old = ls_xaend-f_old.
     ls_chg_texts-f_new = ls_xaend-f_new.
-    SELECT SINGLE chtxt FROM t166t INTO ls_chg_texts-chtxt
-    WHERE spras = gv_language AND ctxnr = ls_xaend-ctxnr.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE chtxt FROM t166t INTO ls_chg_texts-chtxt
+*    WHERE spras = gv_language AND ctxnr = ls_xaend-ctxnr.
+*
+* NEW CODE
+    SELECT chtxt
+    UP TO 1 ROWS  FROM t166t INTO ls_chg_texts-chtxt
+    WHERE spras = gv_language AND ctxnr = ls_xaend-ctxnr ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     APPEND ls_chg_texts TO gt_chg_texts.
   ENDLOOP.
 
@@ -75,11 +85,24 @@ ENDIF.
 *******************************
 FIELD-SYMBOLS: <fs_komv>  TYPE komv.
 LOOP AT it_tkomv ASSIGNING <fs_komv>.
-  SELECT SINGLE drukz
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE drukz
+*  FROM t683s
+*  INTO <fs_komv>-drukz
+*  WHERE kalsm = is_ekko-kalsm
+*  AND kschl = <fs_komv>-kschl.
+*
+* NEW CODE
+  SELECT drukz
+  UP TO 1 ROWS 
   FROM t683s
   INTO <fs_komv>-drukz
   WHERE kalsm = is_ekko-kalsm
-  AND kschl = <fs_komv>-kschl.
+  AND kschl = <fs_komv>-kschl ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 ENDLOOP.
 ********************************
 
@@ -107,9 +130,20 @@ DATA: lv_txadr TYPE txadr,
 
 DATA: lv_formname TYPE tdsfname.
 
-SELECT SINGLE txadr txkop txfus txgru
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*SELECT SINGLE txadr txkop txfus txgru
+*FROM t024e INTO (lv_txadr, lv_txkop, lv_txfus, lv_txgru )
+*WHERE ekorg = is_ekko-ekorg.
+*
+* NEW CODE
+SELECT txadr txkop txfus txgru
+UP TO 1 ROWS 
 FROM t024e INTO (lv_txadr, lv_txkop, lv_txfus, lv_txgru )
-WHERE ekorg = is_ekko-ekorg.
+WHERE ekorg = is_ekko-ekorg ORDER BY PRIMARY KEY.
+
+ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
 IF sy-subrc = '0'.
 
@@ -121,16 +155,38 @@ IF sy-subrc = '0'.
 
 * Footer 1 - Prefix + No. + Purchasing Org.
   CONCATENATE lv_txfus '1_' is_ekko-ekorg INTO gv_footer1.
-  SELECT SINGLE formname FROM stxfadm INTO lv_formname
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE formname FROM stxfadm INTO lv_formname
+*  WHERE formname = gv_footer1
+*  AND formtype = 'T'.
+*
+* NEW CODE
+  SELECT formname
+  UP TO 1 ROWS  FROM stxfadm INTO lv_formname
   WHERE formname = gv_footer1
-  AND formtype = 'T'.
+  AND formtype = 'T' ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
   IF sy-subrc <> '0'.
 *   Footer 1 - Prefix + No.
     CONCATENATE lv_txfus '1' INTO gv_footer1.
-    SELECT SINGLE formname FROM stxfadm INTO lv_formname
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE formname FROM stxfadm INTO lv_formname
+*    WHERE formname = gv_footer1
+*    AND formtype = 'T'.
+*
+* NEW CODE
+    SELECT formname
+    UP TO 1 ROWS  FROM stxfadm INTO lv_formname
     WHERE formname = gv_footer1
-    AND formtype = 'T'.
+    AND formtype = 'T' ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     IF sy-subrc <> '0'.
       CLEAR: gv_footer1.
@@ -139,16 +195,38 @@ IF sy-subrc = '0'.
 
 * Footer 2 - Prefix + No. + Purchasing Org.
   CONCATENATE lv_txfus '2_' is_ekko-ekorg INTO gv_footer2.
-  SELECT SINGLE formname FROM stxfadm INTO lv_formname
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE formname FROM stxfadm INTO lv_formname
+*  WHERE formname = gv_footer2
+*  AND formtype = 'T'.
+*
+* NEW CODE
+  SELECT formname
+  UP TO 1 ROWS  FROM stxfadm INTO lv_formname
   WHERE formname = gv_footer2
-  AND formtype = 'T'.
+  AND formtype = 'T' ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
   IF sy-subrc <> '0'.
 *   Footer 2 - Prefix + No.
     CONCATENATE lv_txfus '2' INTO gv_footer2.
-    SELECT SINGLE formname FROM stxfadm INTO lv_formname
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE formname FROM stxfadm INTO lv_formname
+*    WHERE formname = gv_footer2
+*    AND formtype = 'T'.
+*
+* NEW CODE
+    SELECT formname
+    UP TO 1 ROWS  FROM stxfadm INTO lv_formname
     WHERE formname = gv_footer2
-    AND formtype = 'T'.
+    AND formtype = 'T' ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     IF sy-subrc <> '0'.
       CLEAR: gv_footer2.
     ENDIF.
@@ -156,16 +234,38 @@ IF sy-subrc = '0'.
 
 * Footer 3 - Prefix + No. + Purchasing Org.
   CONCATENATE lv_txfus '3_' is_ekko-ekorg INTO gv_footer3.
-  SELECT SINGLE formname FROM stxfadm INTO lv_formname
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE formname FROM stxfadm INTO lv_formname
+*  WHERE formname = gv_footer3
+*  AND formtype = 'T'.
+*
+* NEW CODE
+  SELECT formname
+  UP TO 1 ROWS  FROM stxfadm INTO lv_formname
   WHERE formname = gv_footer3
-  AND formtype = 'T'.
+  AND formtype = 'T' ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
   IF sy-subrc <> '0'.
 *   Footer 3 - Prefix + No.
     CONCATENATE lv_txfus '3' INTO gv_footer3.
-    SELECT SINGLE formname FROM stxfadm INTO lv_formname
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE formname FROM stxfadm INTO lv_formname
+*    WHERE formname = gv_footer3
+*    AND formtype = 'T'.
+*
+* NEW CODE
+    SELECT formname
+    UP TO 1 ROWS  FROM stxfadm INTO lv_formname
     WHERE formname = gv_footer3
-    AND formtype = 'T'.
+    AND formtype = 'T' ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     IF sy-subrc <> '0'.
       CLEAR: gv_footer3.
     ENDIF.
@@ -173,16 +273,38 @@ IF sy-subrc = '0'.
 
 * Footer 4 - Prefix + No. + Purchasing Org.
   CONCATENATE lv_txfus '4_' is_ekko-ekorg INTO gv_footer4.
-  SELECT SINGLE formname FROM stxfadm INTO lv_formname
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE formname FROM stxfadm INTO lv_formname
+*  WHERE formname = gv_footer4
+*  AND formtype = 'T'.
+*
+* NEW CODE
+  SELECT formname
+  UP TO 1 ROWS  FROM stxfadm INTO lv_formname
   WHERE formname = gv_footer4
-  AND formtype = 'T'.
+  AND formtype = 'T' ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
   IF sy-subrc <> '0'.
 *   Footer 4 - Prefix + No.
     CONCATENATE lv_txfus '4' INTO gv_footer4.
-    SELECT SINGLE formname FROM stxfadm INTO lv_formname
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE formname FROM stxfadm INTO lv_formname
+*    WHERE formname = gv_footer4
+*    AND formtype = 'T'.
+*
+* NEW CODE
+    SELECT formname
+    UP TO 1 ROWS  FROM stxfadm INTO lv_formname
     WHERE formname = gv_footer4
-    AND formtype = 'T'.
+    AND formtype = 'T' ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     IF sy-subrc <> '0'.
       CLEAR: gv_footer4.
     ENDIF.
@@ -191,8 +313,18 @@ IF sy-subrc = '0'.
 ENDIF.
 
 *formatting settings of the langauge environment
-SELECT SINGLE land1 FROM lfa1 INTO h_land
-WHERE lifnr = is_ekko-lifnr.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*SELECT SINGLE land1 FROM lfa1 INTO h_land
+*WHERE lifnr = is_ekko-lifnr.
+*
+* NEW CODE
+SELECT land1
+UP TO 1 ROWS  FROM lfa1 INTO h_land
+WHERE lifnr = is_ekko-lifnr ORDER BY PRIMARY KEY.
+
+ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 *
 SET COUNTRY h_land.
 *SET COUNTRY IS_EKKO-lands.

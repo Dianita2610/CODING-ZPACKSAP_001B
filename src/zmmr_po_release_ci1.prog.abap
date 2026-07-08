@@ -268,10 +268,22 @@ CLASS lcl_report IMPLEMENTATION.
   METHOD get_data.
     DATA: lv_frgzu TYPE ekko-frgzu.
 
-    SELECT SINGLE * FROM t16fv INTO gs_t16fv
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE * FROM t16fv INTO gs_t16fv
+*      WHERE frggr IN so_frggr
+*        AND frgsx EQ gc_frgsx
+*        AND frgco EQ pa_frgco.
+*
+* NEW CODE
+    SELECT *
+    UP TO 1 ROWS  FROM t16fv INTO gs_t16fv
       WHERE frggr IN so_frggr
         AND frgsx EQ gc_frgsx
-        AND frgco EQ pa_frgco.
+        AND frgco EQ pa_frgco ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     IF gs_t16fv-frga1 = 'X'.
       lv_frgzu = ''.
@@ -291,15 +303,36 @@ CLASS lcl_report IMPLEMENTATION.
       lv_frgzu = 'XXXXXXX'.
     ENDIF.
 
-    SELECT * FROM ekko INTO TABLE gt_ekko
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT * FROM ekko INTO TABLE gt_ekko
+*      WHERE frgsx = gs_t16fv-frgsx
+*        AND frgke = '1'
+*        AND frgzu = lv_frgzu.
+*
+* NEW CODE
+    SELECT *
+ FROM ekko INTO TABLE gt_ekko
       WHERE frgsx = gs_t16fv-frgsx
         AND frgke = '1'
-        AND frgzu = lv_frgzu.
+        AND frgzu = lv_frgzu ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
     IF gt_ekko[] IS NOT INITIAL.
-      SELECT * FROM ekpo INTO TABLE gt_ekpo
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT * FROM ekpo INTO TABLE gt_ekpo
+*        FOR ALL ENTRIES IN gt_ekko
+*          WHERE ebeln = gt_ekko-ebeln.
+*
+* NEW CODE
+      SELECT *
+ FROM ekpo INTO TABLE gt_ekpo
         FOR ALL ENTRIES IN gt_ekko
-          WHERE ebeln = gt_ekko-ebeln.
+          WHERE ebeln = gt_ekko-ebeln ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
       IF gt_ekpo[] IS NOT INITIAL.
 
@@ -309,14 +342,35 @@ CLASS lcl_report IMPLEMENTATION.
             WHERE a~bwkey = gt_ekpo-werks
               AND b~matnr = gt_ekpo-matnr.
 
-        SELECT matnr maktx FROM makt INTO TABLE gt_makt
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*        SELECT matnr maktx FROM makt INTO TABLE gt_makt
+*          FOR ALL ENTRIES IN gt_ekpo
+*            WHERE matnr = gt_ekpo-matnr
+*              AND spras = 'S'.
+*
+* NEW CODE
+        SELECT matnr maktx
+ FROM makt INTO TABLE gt_makt
           FOR ALL ENTRIES IN gt_ekpo
             WHERE matnr = gt_ekpo-matnr
-              AND spras = 'S'.
+              AND spras = 'S' ORDER BY PRIMARY KEY.
 
-        SELECT werks name1 FROM t001w INTO TABLE gt_t001w
+* END. 08-07-2026 - ATC - ATC-03
+
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*        SELECT werks name1 FROM t001w INTO TABLE gt_t001w
+*          FOR ALL ENTRIES IN gt_ekpo
+*            WHERE werks = gt_ekpo-werks.
+*
+* NEW CODE
+        SELECT werks name1
+ FROM t001w INTO TABLE gt_t001w
           FOR ALL ENTRIES IN gt_ekpo
-            WHERE werks = gt_ekpo-werks.
+            WHERE werks = gt_ekpo-werks ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
       ENDIF.
 

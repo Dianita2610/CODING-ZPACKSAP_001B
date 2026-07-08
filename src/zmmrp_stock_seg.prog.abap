@@ -204,16 +204,41 @@ FORM selecciona_nv.
   DATA : wa_icon(4) TYPE c.
   DATA : ex_resultado(1) TYPE c.
 
-  SELECT SINGLE name1
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE name1
+*  INTO wa_des_centro
+*  FROM t001w
+*  WHERE werks = s_werks-low.
+*
+* NEW CODE
+  SELECT name1
+  UP TO 1 ROWS 
   INTO wa_des_centro
   FROM t001w
-  WHERE werks = s_werks-low.
+  WHERE werks = s_werks-low ORDER BY PRIMARY KEY.
 
-  SELECT SINGLE dsnam
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
+
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE dsnam
+*  INTO wa_des_dispo
+*  FROM t024d
+*  WHERE werks = s_werks-low
+*  AND dispo   = s_dispo-low.
+*
+* NEW CODE
+  SELECT dsnam
+  UP TO 1 ROWS 
   INTO wa_des_dispo
   FROM t024d
   WHERE werks = s_werks-low
-  AND dispo   = s_dispo-low.
+  AND dispo   = s_dispo-low ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
 *  IF s_matnr IS INITIAL.
 *    SELECT *
@@ -222,12 +247,25 @@ FORM selecciona_nv.
 *    WHERE   werks  EQ  p_werks
 *    AND   dispo  EQ p_dispo.
 *  ELSE.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT *
+*FROM marc
+*INTO CORRESPONDING FIELDS OF TABLE it_marc
+*WHERE matnr  IN  s_matnr
+*AND   werks  IN  s_werks
+*AND   dispo  IN  s_dispo.
+*
+* NEW CODE
   SELECT *
+
 FROM marc
 INTO CORRESPONDING FIELDS OF TABLE it_marc
 WHERE matnr  IN  s_matnr
 AND   werks  IN  s_werks
-AND   dispo  IN  s_dispo.
+AND   dispo  IN  s_dispo ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 *  ENDIF.
   LOOP AT it_marc.
 
@@ -244,17 +282,42 @@ AND   dispo  IN  s_dispo.
     it_alv-dispo = s_dispo-low.    "  Material
 
 *     IT_ALV-MTART = it_MARC-MTART.    "  Tipo Material
-    SELECT SINGLE mtart meins
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE mtart meins
+*    INTO (it_alv-mtart,  it_alv-ubase)
+*    FROM mara
+*    WHERE matnr = it_marc-matnr.
+*
+* NEW CODE
+    SELECT mtart meins
+    UP TO 1 ROWS 
     INTO (it_alv-mtart,  it_alv-ubase)
     FROM mara
-    WHERE matnr = it_marc-matnr.
+    WHERE matnr = it_marc-matnr ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
 *     IT_ALV-MAKTX = it_MARC-MAKTX.    "  Denominación
-    SELECT SINGLE maktx
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE maktx
+*    INTO it_alv-maktx
+*    FROM makt
+*    WHERE matnr = it_marc-matnr
+*    AND   spras = 'S'.
+*
+* NEW CODE
+    SELECT maktx
+    UP TO 1 ROWS 
     INTO it_alv-maktx
     FROM makt
     WHERE matnr = it_marc-matnr
-    AND   spras = 'S'.
+    AND   spras = 'S' ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
 
     wa_stock_libre   = 0.
@@ -268,11 +331,24 @@ AND   dispo  IN  s_dispo.
 
 *    IT_ALV-STOCK_SEG    =  0.    "  Stock Seguridad
 
-    SELECT SINGLE eisbe
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE eisbe
+*    INTO wa_stock_seg
+*    FROM marc
+*    WHERE matnr = it_marc-matnr
+*    AND   werks = it_marc-werks.
+*
+* NEW CODE
+    SELECT eisbe
+    UP TO 1 ROWS 
     INTO wa_stock_seg
     FROM marc
     WHERE matnr = it_marc-matnr
-    AND   werks = it_marc-werks.
+    AND   werks = it_marc-werks ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     it_alv-stock_seg = wa_stock_seg.
     it_alv-stock_saldo  =  it_alv-stock_centro - it_alv-stock_seg.
 *     IT_ALV-UBASE = 'KG'.             "  Unidad de medida
@@ -286,21 +362,58 @@ AND   dispo  IN  s_dispo.
     it_alv-status    = wa_icon.
 
 *****Consulta valor moneda***
-    SELECT SINGLE salk3
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE salk3
+*    INTO it_alv-salk3
+*    FROM mbew
+*    WHERE matnr = it_marc-matnr
+*    AND bwkey = it_alv-werks.
+*
+* NEW CODE
+    SELECT salk3
+    UP TO 1 ROWS 
     INTO it_alv-salk3
     FROM mbew
     WHERE matnr = it_marc-matnr
-    AND bwkey = it_alv-werks.
+    AND bwkey = it_alv-werks ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 *****Rescata la sociedad para buscar el campo waers en la tabla t001
-    SELECT SINGLE bukrs
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE bukrs
+*    INTO vl_bukrs
+*    FROM t001k
+*    WHERE bwkey = it_alv-werks.
+*
+* NEW CODE
+    SELECT bukrs
+    UP TO 1 ROWS 
     INTO vl_bukrs
     FROM t001k
-    WHERE bwkey = it_alv-werks.
+    WHERE bwkey = it_alv-werks ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 *****Rescata el campo moneda segun la sociedad traida desde la t001k
-    SELECT SINGLE waers
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE waers
+*    INTO it_alv-waers
+*    FROM t001
+*    WHERE bukrs = vl_bukrs.
+*
+* NEW CODE
+    SELECT waers
+    UP TO 1 ROWS 
     INTO it_alv-waers
     FROM t001
-    WHERE bukrs = vl_bukrs.
+    WHERE bukrs = vl_bukrs ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     APPEND it_alv.
 

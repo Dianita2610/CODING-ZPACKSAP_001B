@@ -1,6 +1,17 @@
-SELECT SINGLE maktx FROM makt INTO (gv_maktx)
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*SELECT SINGLE maktx FROM makt INTO (gv_maktx)
+*WHERE matnr = gs_ekpo-matnr
+*AND spras = 'S'.
+*
+* NEW CODE
+SELECT maktx
+UP TO 1 ROWS  FROM makt INTO (gv_maktx)
 WHERE matnr = gs_ekpo-matnr
-AND spras = 'S'.
+AND spras = 'S' ORDER BY PRIMARY KEY.
+
+ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
 gv_netwr = gs_ekpo-netwr * 100.
 gv_netpr = gs_ekpo-netpr * 100.

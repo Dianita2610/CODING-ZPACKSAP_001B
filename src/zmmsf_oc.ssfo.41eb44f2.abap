@@ -18,7 +18,19 @@ LOOP AT it_ekpo INTO gs_ekpo.
 
 ENDLOOP.
 
-  SELECT SINGLE name1 street city1 house_num1 country
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE name1 street city1 house_num1 country
+*    sort1 tel_number
+*    INTO gs_adrc FROM adrc
+*      WHERE addrnumber = lv_adrnr.
+*
+* NEW CODE
+  SELECT name1 street city1 house_num1 country
     sort1 tel_number
+  UP TO 1 ROWS 
     INTO gs_adrc FROM adrc
-      WHERE addrnumber = lv_adrnr.
+      WHERE addrnumber = lv_adrnr ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01

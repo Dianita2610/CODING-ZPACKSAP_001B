@@ -1,9 +1,20 @@
 CLEAR: gv_kbetr, gv_maktx.
 
 IF gs_ekpo-matnr IS NOT INITIAL.
-  SELECT SINGLE maktx FROM makt INTO (gv_maktx)
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE maktx FROM makt INTO (gv_maktx)
+*    WHERE matnr = gs_ekpo-matnr
+*      AND spras = 'S'.
+*
+* NEW CODE
+  SELECT maktx
+  UP TO 1 ROWS  FROM makt INTO (gv_maktx)
     WHERE matnr = gs_ekpo-matnr
-      AND spras = 'S'.
+      AND spras = 'S' ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 ELSE.
   gv_maktx = gs_ekpo-txz01.
 ENDIF.

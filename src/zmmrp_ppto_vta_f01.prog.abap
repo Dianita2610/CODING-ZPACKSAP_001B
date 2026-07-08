@@ -88,9 +88,19 @@ FORM valid_data USING ps_ppto TYPE zmm_ppto_vta
   ELSE.
 * / Check Material Number exits
 **add ini
-    SELECT matnr FROM mara
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT matnr FROM mara
+*    INTO TABLE gt_mara
+*    WHERE matnr = ps_ppto-matnr.
+*
+* NEW CODE
+    SELECT matnr
+ FROM mara
     INTO TABLE gt_mara
-    WHERE matnr = ps_ppto-matnr.
+    WHERE matnr = ps_ppto-matnr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 *comment
 *    READ TABLE gt_mara TRANSPORTING NO FIELDS
 *      WITH KEY matnr = ps_ppto-matnr.

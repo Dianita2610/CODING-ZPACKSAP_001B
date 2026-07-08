@@ -15,9 +15,19 @@ SET COUNTRY IS_T001W-land1.
 *  set country 'DE'.
 *endif.
 
-SELECT * FROM mseg INTO TABLE gt_mseg
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*SELECT * FROM mseg INTO TABLE gt_mseg
+*  WHERE mblnr = is_mkpf-mblnr
+*    AND mjahr = is_mkpf-mjahr.
+*
+* NEW CODE
+SELECT *
+ FROM mseg INTO TABLE gt_mseg
   WHERE mblnr = is_mkpf-mblnr
-    AND mjahr = is_mkpf-mjahr.
+    AND mjahr = is_mkpf-mjahr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
 *dynamic logo
 

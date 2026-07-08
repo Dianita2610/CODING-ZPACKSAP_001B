@@ -184,7 +184,16 @@ FORM fo_process_file .
     ENDIF.
 
 
-    SELECT SINGLE * FROM mast INTO lv_mast WHERE matnr = lv_mat AND werks = lv_index-centro AND stlan = '7'.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE * FROM mast INTO lv_mast WHERE matnr = lv_mat AND werks = lv_index-centro AND stlan = '7'.
+*
+* NEW CODE
+    SELECT *
+    UP TO 1 ROWS  FROM mast INTO lv_mast WHERE matnr = lv_mat AND werks = lv_index-centro AND stlan = '7' ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     IF sy-subrc <> 0.
 
       IF lv_index-cantidad = 1.
@@ -332,9 +341,20 @@ FORM fo_bi_1  USING    u_index TYPE ty_index.
 *  PERFORM bdc_transaction USING 'CS01'.
 
   LOOP AT messtab.
-    SELECT SINGLE * FROM t100 WHERE sprsl = messtab-msgspra
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE * FROM t100 WHERE sprsl = messtab-msgspra
+*                              AND   arbgb = messtab-msgid
+*                              AND   msgnr = messtab-msgnr.
+*
+* NEW CODE
+    SELECT *
+    UP TO 1 ROWS  FROM t100 WHERE sprsl = messtab-msgspra
                               AND   arbgb = messtab-msgid
-                              AND   msgnr = messtab-msgnr.
+                              AND   msgnr = messtab-msgnr ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     IF sy-subrc = 0.
       l_mstring = t100-text.
       IF l_mstring CS '&1'.
@@ -435,9 +455,20 @@ FORM fo_bi_2  USING    u_index TYPE ty_index.
 *  PERFORM bdc_transaction USING 'CS01'.
 
   LOOP AT messtab.
-    SELECT SINGLE * FROM t100 WHERE sprsl = messtab-msgspra
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE * FROM t100 WHERE sprsl = messtab-msgspra
+*                              AND   arbgb = messtab-msgid
+*                              AND   msgnr = messtab-msgnr.
+*
+* NEW CODE
+    SELECT *
+    UP TO 1 ROWS  FROM t100 WHERE sprsl = messtab-msgspra
                               AND   arbgb = messtab-msgid
-                              AND   msgnr = messtab-msgnr.
+                              AND   msgnr = messtab-msgnr ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     IF sy-subrc = 0.
       l_mstring = t100-text.
       IF l_mstring CS '&1'.
@@ -565,9 +596,20 @@ FORM fo_bi_multi  USING    u_index TYPE ty_index.
 *  PERFORM bdc_transaction USING 'CS01'.
 
   LOOP AT messtab.
-    SELECT SINGLE * FROM t100 WHERE sprsl = messtab-msgspra
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE * FROM t100 WHERE sprsl = messtab-msgspra
+*                              AND   arbgb = messtab-msgid
+*                              AND   msgnr = messtab-msgnr.
+*
+* NEW CODE
+    SELECT *
+    UP TO 1 ROWS  FROM t100 WHERE sprsl = messtab-msgspra
                               AND   arbgb = messtab-msgid
-                              AND   msgnr = messtab-msgnr.
+                              AND   msgnr = messtab-msgnr ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     IF sy-subrc = 0.
       l_mstring = t100-text.
       IF l_mstring CS '&1'.

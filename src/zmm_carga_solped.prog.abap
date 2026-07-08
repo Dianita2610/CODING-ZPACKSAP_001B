@@ -324,7 +324,7 @@ ENDFORM.                    " CARGAR_TABLAS
 *----------------------------------------------------------------------*
 FORM ejecutar_bapi .
 
-  CALL FUNCTION 'BAPI_REQUISITION_CREATE'
+  CALL FUNCTION 'BAPI_REQUISITION_CREATE' "#EC CI_USAGE_OK[2438131]
 *EXPORTING
 *  SKIP_ITEMS_WITH_ERROR                =
 *  AUTOMATIC_SOURCE                     = 'X'

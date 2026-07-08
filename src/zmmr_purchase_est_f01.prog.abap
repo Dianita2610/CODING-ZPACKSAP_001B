@@ -11,11 +11,23 @@
 
 FORM get_data.
 
-  SELECT * FROM zmm_ppto_vta INTO TABLE gt_ppto_vta
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT * FROM zmm_ppto_vta INTO TABLE gt_ppto_vta
+*    WHERE matnr   IN so_matnr
+*      AND zversion IN so_versn
+*      AND werks   IN so_werks
+*      AND gjahr   IN so_gjahr.
+*
+* NEW CODE
+  SELECT *
+ FROM zmm_ppto_vta INTO TABLE gt_ppto_vta
     WHERE matnr   IN so_matnr
       AND zversion IN so_versn
       AND werks   IN so_werks
-      AND gjahr   IN so_gjahr.
+      AND gjahr   IN so_gjahr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
   IF gt_ppto_vta[] IS NOT INITIAL.
 * / Posición de lista de materiales
@@ -53,26 +65,61 @@ FORM get_data.
     GROUP BY lifnr waers kdatb kdate.
 
   IF gs_ekko_last IS NOT INITIAL.
-    SELECT ebeln ebelp matnr meins netpr brtwr banfn FROM ekpo
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT ebeln ebelp matnr meins netpr brtwr banfn FROM ekpo
+*      INTO TABLE gt_ekpo_last
+*        WHERE ebeln EQ gs_ekko_last-ebeln.
+*
+* NEW CODE
+    SELECT ebeln ebelp matnr meins netpr brtwr banfn
+ FROM ekpo
       INTO TABLE gt_ekpo_last
-        WHERE ebeln EQ gs_ekko_last-ebeln.
+        WHERE ebeln EQ gs_ekko_last-ebeln ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
   ENDIF.
 *    ORDER BY ebeln bedat DESCENDING
 * / Obtener Contratos Marco
 
-  SELECT ebeln lifnr waers kdatb kdate FROM ekko
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT ebeln lifnr waers kdatb kdate FROM ekko
+*    INTO TABLE gt_ekko
+*    WHERE bstyp EQ gc_bstyp
+*      AND lifnr IN so_lifnr
+*      AND kdatb LE sy-datum
+*      AND kdate GE sy-datum.
+*
+* NEW CODE
+  SELECT ebeln lifnr waers kdatb kdate
+ FROM ekko
     INTO TABLE gt_ekko
     WHERE bstyp EQ gc_bstyp
       AND lifnr IN so_lifnr
       AND kdatb LE sy-datum
-      AND kdate GE sy-datum.
+      AND kdate GE sy-datum ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
   IF gt_ekko[] IS NOT INITIAL.
-    SELECT ebeln ebelp matnr meins netpr brtwr banfn bnfpo FROM ekpo
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT ebeln ebelp matnr meins netpr brtwr banfn bnfpo FROM ekpo
+*      INTO TABLE gt_ekpo
+*        FOR ALL ENTRIES IN gt_ekko
+*          WHERE ebeln EQ gt_ekko-ebeln
+*            AND werks IN so_werks.
+*
+* NEW CODE
+    SELECT ebeln ebelp matnr meins netpr brtwr banfn bnfpo
+ FROM ekpo
       INTO TABLE gt_ekpo
         FOR ALL ENTRIES IN gt_ekko
           WHERE ebeln EQ gt_ekko-ebeln
-            AND werks IN so_werks.
+            AND werks IN so_werks ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
   ENDIF.
 
 
@@ -90,13 +137,27 @@ FORM get_solped_data.
 
   CONCATENATE so_gjahr-low so_monat-low '__' INTO lv_lfdat.
 
-  SELECT banfn bnfpo bstyp loekz txz01 matnr werks matkl menge meins preis waers lifnr lfdat FROM eban
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT banfn bnfpo bstyp loekz txz01 matnr werks matkl menge meins preis waers lifnr lfdat FROM eban
+*    INTO TABLE gt_eban
+*      WHERE bsart EQ   gc_zspm
+*        AND matnr IN   so_matnr
+*        AND werks IN   so_werks
+*        AND lifnr IN   so_lifnr
+*        AND lfdat LIKE lv_lfdat.
+*
+* NEW CODE
+  SELECT banfn bnfpo bstyp loekz txz01 matnr werks matkl menge meins preis waers lifnr lfdat
+ FROM eban
     INTO TABLE gt_eban
       WHERE bsart EQ   gc_zspm
         AND matnr IN   so_matnr
         AND werks IN   so_werks
         AND lifnr IN   so_lifnr
-        AND lfdat LIKE lv_lfdat.
+        AND lfdat LIKE lv_lfdat ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 ENDFORM.                    "get_solped_data
 
 *&---------------------------------------------------------------------*
@@ -243,12 +304,31 @@ SORT RG_MATNR BY LOW .
 *End of change: ReSQ Correction for DELETE ADJACENT DUPLICATE 19/12/2019 EY_DES04 ECDK917080 *
     DELETE ADJACENT DUPLICATES FROM rg_matnr COMPARING low.
 
-    SELECT matnr maktx FROM makt INTO TABLE gt_makt
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT matnr maktx FROM makt INTO TABLE gt_makt
+*      WHERE matnr IN rg_matnr
+*        AND spras EQ sy-langu.
+*
+* NEW CODE
+    SELECT matnr maktx
+ FROM makt INTO TABLE gt_makt
       WHERE matnr IN rg_matnr
-        AND spras EQ sy-langu.
+        AND spras EQ sy-langu ORDER BY PRIMARY KEY.
 
-    SELECT matnr matkl FROM mara INTO TABLE gt_mara
-      WHERE matnr IN rg_matnr.
+* END. 08-07-2026 - ATC - ATC-03
+
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT matnr matkl FROM mara INTO TABLE gt_mara
+*      WHERE matnr IN rg_matnr.
+*
+* NEW CODE
+    SELECT matnr matkl
+ FROM mara INTO TABLE gt_mara
+      WHERE matnr IN rg_matnr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
   ENDIF.
 
   LOOP AT gt_ekko.
@@ -262,9 +342,19 @@ SORT RG_LIFNR[] BY LOW .
   DELETE ADJACENT DUPLICATES FROM rg_lifnr[] COMPARING low.
 
   IF rg_lifnr[] IS NOT INITIAL.
-    SELECT lifnr name1 stcd1 FROM lfa1
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT lifnr name1 stcd1 FROM lfa1
+*      INTO TABLE gt_lfa1
+*        WHERE lifnr IN rg_lifnr.
+*
+* NEW CODE
+    SELECT lifnr name1 stcd1
+ FROM lfa1
       INTO TABLE gt_lfa1
-        WHERE lifnr IN rg_lifnr.
+        WHERE lifnr IN rg_lifnr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
   ENDIF.
 
 * / Valoración de material
@@ -274,10 +364,21 @@ SORT RG_WERKS[] BY LOW .
 *End of change: ReSQ Correction for DELETE ADJACENT DUPLICATE 19/12/2019 EY_DES04 ECDK917080 *
   DELETE ADJACENT DUPLICATES FROM rg_werks[] COMPARING low.
 
-  SELECT matnr bwkey bwtar bklas FROM mbew
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT matnr bwkey bwtar bklas FROM mbew
+*    INTO TABLE gt_mbew
+*      WHERE matnr IN rg_matnr
+*        AND bwkey IN so_werks.
+*
+* NEW CODE
+  SELECT matnr bwkey bwtar bklas
+ FROM mbew
     INTO TABLE gt_mbew
       WHERE matnr IN rg_matnr
-        AND bwkey IN so_werks.
+        AND bwkey IN so_werks ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
   IF gt_mbew[] IS NOT INITIAL.
 * / Cuentas Fijas - Cta. Gasto
@@ -295,10 +396,21 @@ AND BKLAS = GT_MBEW-BKLAS ORDER BY PRIMARY KEY.
   ENDIF.
 
 * / Stock actual
-  SELECT matnr werks lgort labst FROM mard
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT matnr werks lgort labst FROM mard
+*    INTO TABLE gt_mard
+*        WHERE matnr IN rg_matnr
+*          AND werks IN so_werks.
+*
+* NEW CODE
+  SELECT matnr werks lgort labst
+ FROM mard
     INTO TABLE gt_mard
         WHERE matnr IN rg_matnr
-          AND werks IN so_werks.
+          AND werks IN so_werks ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 ENDFORM.                    "get_aditional_data
 
 *&---------------------------------------------------------------------*

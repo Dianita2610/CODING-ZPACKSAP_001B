@@ -71,8 +71,17 @@ FORM entry_neu USING ent_retco ent_screen.
 
 * Fill up pricing condition table if calling from ME9F
   IF l_doc-xtkomv IS INITIAL.
-    SELECT * INTO TABLE l_doc-xtkomv FROM konv
-    WHERE knumv = l_doc-xekko-knumv.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT * INTO TABLE l_doc-xtkomv FROM konv
+*    WHERE knumv = l_doc-xekko-knumv.
+*
+* NEW CODE
+    SELECT *
+ INTO TABLE l_doc-xtkomv FROM konv
+    WHERE knumv = l_doc-xekko-knumv ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
   ENDIF.
 
 *Set the print Parameters
@@ -181,8 +190,17 @@ FORM entry_mahn USING ent_retco ent_screen.
 
 * Fill up pricing condition table if calling from ME9F
   IF l_doc-xtkomv IS INITIAL.
-    SELECT * INTO TABLE l_doc-xtkomv FROM konv
-    WHERE knumv = l_doc-xekko-knumv.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT * INTO TABLE l_doc-xtkomv FROM konv
+*    WHERE knumv = l_doc-xekko-knumv.
+*
+* NEW CODE
+    SELECT *
+ INTO TABLE l_doc-xtkomv FROM konv
+    WHERE knumv = l_doc-xekko-knumv ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
   ENDIF.
 
 *Set the print Parameters
@@ -289,8 +307,17 @@ FORM entry_aufb USING ent_retco ent_screen.
 
 * Fill up pricing condition table if calling from ME9F
   IF l_doc-xtkomv IS INITIAL.
-    SELECT * INTO TABLE l_doc-xtkomv FROM konv
-    WHERE knumv = l_doc-xekko-knumv.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT * INTO TABLE l_doc-xtkomv FROM konv
+*    WHERE knumv = l_doc-xekko-knumv.
+*
+* NEW CODE
+    SELECT *
+ INTO TABLE l_doc-xtkomv FROM konv
+    WHERE knumv = l_doc-xekko-knumv ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
   ENDIF.
 
 *Set the print Parameters

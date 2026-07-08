@@ -82,8 +82,17 @@ FORM entry_neu USING ent_retco ent_screen.
 
 
   IF l_doc-xtkomv IS INITIAL.
-    SELECT * INTO TABLE l_doc-xtkomv FROM konv
-    WHERE knumv = l_doc-xekko-knumv.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT * INTO TABLE l_doc-xtkomv FROM konv
+*    WHERE knumv = l_doc-xekko-knumv.
+*
+* NEW CODE
+    SELECT *
+ INTO TABLE l_doc-xtkomv FROM konv
+    WHERE knumv = l_doc-xekko-knumv ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
   ENDIF.
 
 *--------------------------------------------------------------------
@@ -160,15 +169,35 @@ FORM entry_neu USING ent_retco ent_screen.
 
     break fdiaz.
     IF sy-subrc = 0.
-      SELECT * INTO TABLE t_esll_1 FROM esll
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT * INTO TABLE t_esll_1 FROM esll
+*      FOR ALL entries IN t_ekpo
+*      WHERE  packno = t_ekpo-packno.
+*
+* NEW CODE
+      SELECT *
+ INTO TABLE t_esll_1 FROM esll
       FOR ALL entries IN t_ekpo
-      WHERE  packno = t_ekpo-packno.
+      WHERE  packno = t_ekpo-packno ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
       READ TABLE t_esll_1 INDEX 1.
       IF sy-subrc = 0.
-        SELECT * INTO TABLE t_esll_2 FROM esll
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*        SELECT * INTO TABLE t_esll_2 FROM esll
+*        FOR ALL entries IN t_esll_1
+*        WHERE  packno = t_esll_1-sub_packno.
+*
+* NEW CODE
+        SELECT *
+ INTO TABLE t_esll_2 FROM esll
         FOR ALL entries IN t_esll_1
-        WHERE  packno = t_esll_1-sub_packno.
+        WHERE  packno = t_esll_1-sub_packno ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
       ENDIF.
     ENDIF.

@@ -78,8 +78,17 @@ INITIALIZATION.
 
 START-OF-SELECTION.
 
-  SELECT * INTO TABLE lt_t001w
-    FROM t001w WHERE werks IN so_wrk.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT * INTO TABLE lt_t001w
+*    FROM t001w WHERE werks IN so_wrk.
+*
+* NEW CODE
+  SELECT *
+ INTO TABLE lt_t001w
+    FROM t001w WHERE werks IN so_wrk ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
   IF sy-subrc = 0.
     LOOP AT lt_t001w INTO ls_t001w.
@@ -127,13 +136,27 @@ FORM fo_get_data.
         lv_index TYPE sy-tabix.
   DATA: lv_bukrs TYPE t001-bukrs.
 
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT *
+*    INTO CORRESPONDING FIELDS OF TABLE it_mast
+*    FROM mast
+*    WHERE matnr IN so_mat
+*    AND werks IN so_wrk
+**    and STLAN = '7'
+*    AND andat <= sy-datum.
+*
+* NEW CODE
   SELECT *
+
     INTO CORRESPONDING FIELDS OF TABLE it_mast
     FROM mast
     WHERE matnr IN so_mat
     AND werks IN so_wrk
 *    and STLAN = '7'
-    AND andat <= sy-datum.
+    AND andat <= sy-datum ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
   IF NOT it_mast[] IS INITIAL.
     SELECT stas~stlnr stas~stlal stas~stlkn
       INTO CORRESPONDING FIELDS OF TABLE it_stas
@@ -146,11 +169,23 @@ FORM fo_get_data.
   ENDIF.
 
   LOOP AT it_stas INTO lv_stas.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT *
+*      APPENDING CORRESPONDING FIELDS OF TABLE it_stpo
+*      FROM stpo
+*      WHERE stlnr = lv_stas-stlnr
+*      AND   stlkn = lv_stas-stlkn.
+*
+* NEW CODE
     SELECT *
       APPENDING CORRESPONDING FIELDS OF TABLE it_stpo
+
       FROM stpo
       WHERE stlnr = lv_stas-stlnr
-      AND   stlkn = lv_stas-stlkn.
+      AND   stlkn = lv_stas-stlkn ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
   ENDLOOP.
 
   LOOP AT it_mast INTO lv_mast.
@@ -159,20 +194,79 @@ FORM fo_get_data.
     lv_data-werks = lv_mast-werks.
     lv_data-stlal = lv_mast-stlal.
 
-    SELECT SINGLE mtart INTO lv_data-mtart FROM mara WHERE matnr = lv_mast-matnr.
-    SELECT SINGLE bukrs INTO lv_bukrs FROM t001k WHERE bwkey = lv_data-werks.
-    SELECT SINGLE * FROM t001 WHERE bukrs = lv_bukrs.
-    SELECT SINGLE name1 INTO lv_data-name1 FROM t001w WHERE werks = lv_mast-werks.
-    SELECT SINGLE maktx INTO lv_data-maktx FROM makt WHERE spras = sy-langu AND matnr = lv_mast-matnr.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE mtart INTO lv_data-mtart FROM mara WHERE matnr = lv_mast-matnr.
+*
+* NEW CODE
+    SELECT mtart
+    UP TO 1 ROWS  INTO lv_data-mtart FROM mara WHERE matnr = lv_mast-matnr ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE bukrs INTO lv_bukrs FROM t001k WHERE bwkey = lv_data-werks.
+*
+* NEW CODE
+    SELECT bukrs
+    UP TO 1 ROWS  INTO lv_bukrs FROM t001k WHERE bwkey = lv_data-werks ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE * FROM t001 WHERE bukrs = lv_bukrs.
+*
+* NEW CODE
+    SELECT *
+    UP TO 1 ROWS  FROM t001 WHERE bukrs = lv_bukrs ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE name1 INTO lv_data-name1 FROM t001w WHERE werks = lv_mast-werks.
+*
+* NEW CODE
+    SELECT name1
+    UP TO 1 ROWS  INTO lv_data-name1 FROM t001w WHERE werks = lv_mast-werks ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE maktx INTO lv_data-maktx FROM makt WHERE spras = sy-langu AND matnr = lv_mast-matnr.
+*
+* NEW CODE
+    SELECT maktx
+    UP TO 1 ROWS  INTO lv_data-maktx FROM makt WHERE spras = sy-langu AND matnr = lv_mast-matnr ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     lv_data-general = 'X'.
     lv_data-waers = t001-waers.
     lv_data-line_color = 'C510'.
-    SELECT SINGLE bmeng
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE bmeng
+*    INTO lv_data-menge
+*    FROM stko WHERE stlnr = lv_mast-stlnr
+*       AND  stlal = lv_mast-stlal
+*      AND   stlty = 'M'
+*      AND   wrkan = lv_mast-werks.
+*
+* NEW CODE
+    SELECT bmeng
+    UP TO 1 ROWS 
     INTO lv_data-menge
     FROM stko WHERE stlnr = lv_mast-stlnr
        AND  stlal = lv_mast-stlal
       AND   stlty = 'M'
-      AND   wrkan = lv_mast-werks.
+      AND   wrkan = lv_mast-werks ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     APPEND lv_data TO it_data.
     LOOP AT it_stas INTO lv_stas WHERE stlnr = lv_mast-stlnr AND stlal = lv_mast-stlal.
@@ -181,9 +275,27 @@ FORM fo_get_data.
         lv_data-matnr2  = lv_stpo-idnrk.
         lv_data-menge   = lv_stpo-menge.
         lv_data-meins   = lv_stpo-meins.
-        SELECT SINGLE maktx INTO lv_data-maktx2 FROM makt WHERE spras = sy-langu AND matnr = lv_stpo-idnrk.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*        SELECT SINGLE maktx INTO lv_data-maktx2 FROM makt WHERE spras = sy-langu AND matnr = lv_stpo-idnrk.
 *
-        SELECT SINGLE * FROM mbew WHERE matnr = lv_data-matnr2 AND bwkey = lv_data-werks.
+* NEW CODE
+        SELECT maktx
+        UP TO 1 ROWS  INTO lv_data-maktx2 FROM makt WHERE spras = sy-langu AND matnr = lv_stpo-idnrk ORDER BY PRIMARY KEY.
+
+        ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
+*
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*        SELECT SINGLE * FROM mbew WHERE matnr = lv_data-matnr2 AND bwkey = lv_data-werks.
+*
+* NEW CODE
+        SELECT *
+        UP TO 1 ROWS  FROM mbew WHERE matnr = lv_data-matnr2 AND bwkey = lv_data-werks ORDER BY PRIMARY KEY.
+
+        ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
         IF sy-subrc = 0.
           IF mbew-vprsv = 'S'. "Precio Fijo (Standard)
             lv_data-costo = lv_stpo-menge * mbew-stprs.

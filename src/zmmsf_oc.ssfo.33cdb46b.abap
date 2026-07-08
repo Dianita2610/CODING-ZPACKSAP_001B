@@ -9,10 +9,21 @@ DATA: lv_frgst TYPE eban-frgst,
 
 gv_total = gv_neto + gv_iva.
 
-SELECT * FROM cdhdr INTO TABLE gt_cdhdr
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*SELECT * FROM cdhdr INTO TABLE gt_cdhdr
+*  WHERE objectclas EQ 'EINKBELEG'
+*    AND objectid   EQ is_ekko-ebeln
+*    AND tcode      IN ('ME29N', 'ME28').
+*
+* NEW CODE
+SELECT *
+ FROM cdhdr INTO TABLE gt_cdhdr
   WHERE objectclas EQ 'EINKBELEG'
     AND objectid   EQ is_ekko-ebeln
-    AND tcode      IN ('ME29N', 'ME28').
+    AND tcode      IN ('ME29N', 'ME28') ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 *    ORDER BY changenr DESCENDING.
 
   SORT gt_cdhdr BY changenr DESCENDING.
@@ -20,19 +31,47 @@ SELECT * FROM cdhdr INTO TABLE gt_cdhdr
   READ TABLE gt_cdhdr INDEX 1 INTO gs_cdhdr.
 
   IF gs_cdhdr IS NOT INITIAL.
-    SELECT SINGLE * FROM cdpos INTO gs_cdpos
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE * FROM cdpos INTO gs_cdpos
+*        WHERE objectclas = gs_cdhdr-objectclas
+*          AND objectid   = gs_cdhdr-objectid
+*          AND changenr   = gs_cdhdr-changenr
+*          AND tabname    = 'EKKO'
+*          AND fname      = 'FRGZU'
+*          AND chngind    = 'U'.
+*
+* NEW CODE
+    SELECT *
+    UP TO 1 ROWS  FROM cdpos INTO gs_cdpos
         WHERE objectclas = gs_cdhdr-objectclas
           AND objectid   = gs_cdhdr-objectid
           AND changenr   = gs_cdhdr-changenr
           AND tabname    = 'EKKO'
           AND fname      = 'FRGZU'
-          AND chngind    = 'U'.
+          AND chngind    = 'U' ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     IF sy-subrc EQ 0.
-      SELECT SINGLE *
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*      SELECT SINGLE *
+*        INTO gs_t16fs
+*        FROM t16fs
+*       WHERE frggr EQ is_ekko-frggr
+*         AND frgsx EQ is_ekko-frgsx.
+*
+* NEW CODE
+      SELECT *
+      UP TO 1 ROWS 
         INTO gs_t16fs
         FROM t16fs
        WHERE frggr EQ is_ekko-frggr
-         AND frgsx EQ is_ekko-frgsx.
+         AND frgsx EQ is_ekko-frgsx ORDER BY PRIMARY KEY.
+
+      ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     CASE gs_cdpos-value_new.
       WHEN 'X'.
@@ -54,10 +93,22 @@ SELECT * FROM cdhdr INTO TABLE gt_cdhdr
     ENDCASE.
 
       IF lv_frgco IS NOT INITIAL.
-        SELECT SINGLE frgct FROM t16fd INTO gv_frgct
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*        SELECT SINGLE frgct FROM t16fd INTO gv_frgct
+*          WHERE spras = 'S'
+*            AND frggr = is_ekko-frggr
+*            AND frgco = lv_frgco.
+*
+* NEW CODE
+        SELECT frgct
+        UP TO 1 ROWS  FROM t16fd INTO gv_frgct
           WHERE spras = 'S'
             AND frggr = is_ekko-frggr
-            AND frgco = lv_frgco.
+            AND frgco = lv_frgco ORDER BY PRIMARY KEY.
+
+        ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
       ENDIF.
     ENDIF.
   ENDIF.
@@ -100,15 +151,37 @@ SELECT * FROM cdhdr INTO TABLE gt_cdhdr
 
 READ TABLE it_ekpo INTO gs_ekpo index 1.
     IF sy-subrc EQ 0.
-      SELECT SINGLE frgst frggr FROM eban INTO (lv_frgst, lv_frggr)
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*      SELECT SINGLE frgst frggr FROM eban INTO (lv_frgst, lv_frggr)
+*        WHERE banfn = gs_ekpo-banfn
+*          AND bnfpo = 00010.
+*
+* NEW CODE
+      SELECT frgst frggr
+      UP TO 1 ROWS  FROM eban INTO (lv_frgst, lv_frggr)
         WHERE banfn = gs_ekpo-banfn
-          AND bnfpo = 00010.
+          AND bnfpo = 00010 ORDER BY PRIMARY KEY.
+
+      ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     ENDIF.
 
-SELECT * FROM cdhdr INTO TABLE gt_cdhdr
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*SELECT * FROM cdhdr INTO TABLE gt_cdhdr
+*  WHERE objectclas EQ 'BANF'
+*    AND objectid   EQ gs_ekpo-banfn
+*    AND tcode      IN ('ME54N', 'ME55').
+*
+* NEW CODE
+SELECT *
+ FROM cdhdr INTO TABLE gt_cdhdr
   WHERE objectclas EQ 'BANF'
     AND objectid   EQ gs_ekpo-banfn
-    AND tcode      IN ('ME54N', 'ME55').
+    AND tcode      IN ('ME54N', 'ME55') ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 *    ORDER BY changenr DESCENDING.
 
   SORT gt_cdhdr BY changenr DESCENDING.
@@ -117,19 +190,47 @@ SELECT * FROM cdhdr INTO TABLE gt_cdhdr
 
   IF gs_cdhdr IS NOT INITIAL.
 
-    SELECT SINGLE * FROM cdpos INTO gs_cdpos
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE * FROM cdpos INTO gs_cdpos
+*        WHERE objectclas = gs_cdhdr-objectclas
+*          AND objectid   = gs_cdhdr-objectid
+*          AND changenr   = gs_cdhdr-changenr
+*          AND tabname    = 'EBAN'
+*          AND fname      = 'FRGZU'
+*          AND chngind    = 'U'.
+*
+* NEW CODE
+    SELECT *
+    UP TO 1 ROWS  FROM cdpos INTO gs_cdpos
         WHERE objectclas = gs_cdhdr-objectclas
           AND objectid   = gs_cdhdr-objectid
           AND changenr   = gs_cdhdr-changenr
           AND tabname    = 'EBAN'
           AND fname      = 'FRGZU'
-          AND chngind    = 'U'.
+          AND chngind    = 'U' ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     IF sy-subrc EQ 0.
-      SELECT SINGLE *
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*      SELECT SINGLE *
+*        INTO gs_t16fs
+*        FROM t16fs
+*       WHERE frggr EQ lv_frggr
+*         AND frgsx EQ lv_frgst.
+*
+* NEW CODE
+      SELECT *
+      UP TO 1 ROWS 
         INTO gs_t16fs
         FROM t16fs
        WHERE frggr EQ lv_frggr
-         AND frgsx EQ lv_frgst.
+         AND frgsx EQ lv_frgst ORDER BY PRIMARY KEY.
+
+      ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 CLEAR lv_frgco.
     CASE gs_cdpos-value_new.
       WHEN 'X'.
@@ -151,10 +252,22 @@ CLEAR lv_frgco.
     ENDCASE.
 
       IF lv_frgco IS NOT INITIAL.
-        SELECT SINGLE frgct FROM t16fd INTO gv_frgct0
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*        SELECT SINGLE frgct FROM t16fd INTO gv_frgct0
+*          WHERE spras = 'S'
+*            AND frggr = lv_frggr
+*            AND frgco = lv_frgco.
+*
+* NEW CODE
+        SELECT frgct
+        UP TO 1 ROWS  FROM t16fd INTO gv_frgct0
           WHERE spras = 'S'
             AND frggr = lv_frggr
-            AND frgco = lv_frgco.
+            AND frgco = lv_frgco ORDER BY PRIMARY KEY.
+
+        ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
       ENDIF.
     ENDIF.
     ENDIF.

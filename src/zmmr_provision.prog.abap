@@ -374,12 +374,25 @@ FORM get_data.
           AND b~ebelp = gt_result-ebelp.
 
 * / Get document historical data
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT ebeln ebelp zekkn vgabe gjahr belnr buzei bewtp budat dmbtr arewr shkzg lfgja waers wrbtr
+*      FROM ekbe INTO TABLE gt_ekbe_we
+*        FOR ALL ENTRIES IN gt_result
+*          WHERE ebeln = gt_result-ebeln
+*            AND ebelp = gt_result-ebelp
+*            AND bewtp = 'E'. 
+*
+* NEW CODE
     SELECT ebeln ebelp zekkn vgabe gjahr belnr buzei bewtp budat dmbtr arewr shkzg lfgja waers wrbtr
+
       FROM ekbe INTO TABLE gt_ekbe_we
         FOR ALL ENTRIES IN gt_result
           WHERE ebeln = gt_result-ebeln
             AND ebelp = gt_result-ebelp
-            AND bewtp = 'E'. " Only WE
+            AND bewtp = 'E' ORDER BY PRIMARY KEY. 
+
+* END. 08-07-2026 - ATC - ATC-03" Only WE
 
     SELECT a~mwskz a~knumh b~kbetr INTO TABLE gt_imp FROM a003 AS a INNER JOIN konp AS b ON a~knumh = b~knumh
       FOR ALL ENTRIES IN gt_result
@@ -389,11 +402,23 @@ FORM get_data.
 
   IF gt_ekbe_we[] IS NOT INITIAL.
 
-    SELECT mblnr mjahr zeile line_id werks lgort kostl zzunid_pro zzrut_terc FROM mseg
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT mblnr mjahr zeile line_id werks lgort kostl zzunid_pro zzrut_terc FROM mseg
+*      INTO TABLE gt_mseg FOR ALL ENTRIES IN gt_ekbe_we
+*        WHERE mblnr = gt_ekbe_we-belnr
+*          AND mjahr = gt_ekbe_we-gjahr
+*          AND zeile = gt_ekbe_we-buzei.
+*
+* NEW CODE
+    SELECT mblnr mjahr zeile line_id werks lgort kostl zzunid_pro zzrut_terc
+ FROM mseg
       INTO TABLE gt_mseg FOR ALL ENTRIES IN gt_ekbe_we
         WHERE mblnr = gt_ekbe_we-belnr
           AND mjahr = gt_ekbe_we-gjahr
-          AND zeile = gt_ekbe_we-buzei.
+          AND zeile = gt_ekbe_we-buzei ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
   ENDIF.
 

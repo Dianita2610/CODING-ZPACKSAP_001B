@@ -21,14 +21,29 @@
 *----------------------------------------------------------------------*
 FORM obtener_datos .
 
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT bukrs belnr gjahr xblnr blart budat
+*    INTO TABLE ti_bkpf
+*    FROM bkpf
+*    WHERE bukrs IN s_bukrs
+*      AND belnr IN s_belnr
+*      AND gjahr IN s_gjahr
+*      AND budat IN s_budat
+*      AND blart IN s_blart.
+*
+* NEW CODE
   SELECT bukrs belnr gjahr xblnr blart budat
+
     INTO TABLE ti_bkpf
     FROM bkpf
     WHERE bukrs IN s_bukrs
       AND belnr IN s_belnr
       AND gjahr IN s_gjahr
       AND budat IN s_budat
-      AND blart IN s_blart.
+      AND blart IN s_blart ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
   IF sy-subrc EQ 0.
 SELECT bukrs belnr gjahr buzei lifnr kunnr
 INTO TABLE ti_bseg
@@ -43,17 +58,41 @@ AND ( koart EQ 'K' OR
 KOART EQ 'D' ) ORDER BY PRIMARY KEY .
 *End of change: ReSQ Correction for Addition ORDER BY PRIMARY KEY 24/12/2019 EY_DES04 ECDK917080 *
     IF sy-subrc EQ 0.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT lifnr stcd1
+*        INTO TABLE ti_lfa1
+*        FROM lfa1
+*        FOR ALL ENTRIES IN ti_bseg
+*        WHERE lifnr EQ ti_bseg-lifnr.
+*
+* NEW CODE
       SELECT lifnr stcd1
+
         INTO TABLE ti_lfa1
         FROM lfa1
         FOR ALL ENTRIES IN ti_bseg
-        WHERE lifnr EQ ti_bseg-lifnr.
+        WHERE lifnr EQ ti_bseg-lifnr ORDER BY PRIMARY KEY.
 
+* END. 08-07-2026 - ATC - ATC-03
+
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT kunnr stcd1
+*        APPENDING TABLE ti_lfa1
+*        FROM kna1
+*        FOR ALL ENTRIES IN ti_bseg
+*        WHERE kunnr EQ ti_bseg-kunnr.
+*
+* NEW CODE
       SELECT kunnr stcd1
         APPENDING TABLE ti_lfa1
+
         FROM kna1
         FOR ALL ENTRIES IN ti_bseg
-        WHERE kunnr EQ ti_bseg-kunnr.
+        WHERE kunnr EQ ti_bseg-kunnr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
       SORT ti_lfa1 BY lifnr.
 

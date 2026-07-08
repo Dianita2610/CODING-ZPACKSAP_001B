@@ -374,7 +374,7 @@ CLASS lcl_report IMPLEMENTATION.
       ENDLOOP.
 
       AT END OF llave.
-        CALL FUNCTION 'BAPI_PO_CREATE1'
+        CALL FUNCTION 'BAPI_PO_CREATE1' "#EC CI_USAGE_OK[2438131]
           EXPORTING
             poheader          = ls_poheader
             poheaderx         = ls_poheaderx

@@ -33,9 +33,25 @@ FORM obtener_datos .
   APPEND r_zuonr.
 
   REFRESH ti_anticipos.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT bukrs kunnr zuonr hkont umskz vertn xblnr belnr gjahr
+*         blart bldat zfbdt wrbtr waers shkzg
+*         vertt xref1
+*    INTO CORRESPONDING FIELDS OF TABLE ti_anticipos
+*    FROM bsid
+*    WHERE bukrs EQ p_bukrs
+*      AND kunnr IN s_kunnr
+*      AND umskz EQ 'A'                "Anticipo.
+*      AND bschl EQ '19'               "haber
+*      AND vertn NE space              "Contrato
+*      AND vertt EQ lv_vertt.
+*
+* NEW CODE
   SELECT bukrs kunnr zuonr hkont umskz vertn xblnr belnr gjahr
          blart bldat zfbdt wrbtr waers shkzg
          vertt xref1
+
     INTO CORRESPONDING FIELDS OF TABLE ti_anticipos
     FROM bsid
     WHERE bukrs EQ p_bukrs
@@ -43,7 +59,9 @@ FORM obtener_datos .
       AND umskz EQ 'A'                "Anticipo.
       AND bschl EQ '19'               "haber
       AND vertn NE space              "Contrato
-      AND vertt EQ lv_vertt.
+      AND vertt EQ lv_vertt ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 *-> BEG INS V1-CNN ECDK922573 Facturación el línea HELP
 * Se tratan por separado los que tienen VERTT = 'Y'.
   DATA: lt_anticipos_y TYPE STANDARD TABLE OF t_bsid,
@@ -79,28 +97,63 @@ FORM obtener_datos .
             output = v_contrato2.
 
         IF wa_anticipos-zuonr IN r_zuonr.  "1000 al 99999999
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*          SELECT bukrs kunnr vertn hkont umskz zuonr xblnr
+*               belnr gjahr blart bldat zfbdt wrbtr waers
+*               shkzg
+*            APPENDING CORRESPONDING FIELDS OF TABLE ti_docs
+*            FROM bsid
+*            WHERE bukrs EQ wa_anticipos-bukrs
+*              AND kunnr EQ wa_anticipos-kunnr
+*              AND umskz EQ space
+*              AND blart NE 'DZ'
+*              AND zuonr IN r_zuonr.
+*
+* NEW CODE
           SELECT bukrs kunnr vertn hkont umskz zuonr xblnr
                belnr gjahr blart bldat zfbdt wrbtr waers
                shkzg
             APPENDING CORRESPONDING FIELDS OF TABLE ti_docs
+
             FROM bsid
             WHERE bukrs EQ wa_anticipos-bukrs
               AND kunnr EQ wa_anticipos-kunnr
               AND umskz EQ space
               AND blart NE 'DZ'
-              AND zuonr IN r_zuonr.
+              AND zuonr IN r_zuonr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
         ELSE.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*          SELECT bukrs kunnr vertn hkont umskz zuonr xblnr
+*              belnr gjahr blart bldat zfbdt wrbtr waers
+*              shkzg
+*            APPENDING CORRESPONDING FIELDS OF TABLE ti_docs
+*            FROM bsid
+*            WHERE bukrs EQ wa_anticipos-bukrs
+*             AND kunnr EQ wa_anticipos-kunnr
+*             AND ( vertn EQ v_contrato1 OR vertn EQ v_contrato2 )
+*             AND umskz EQ space
+*             AND blart NE 'DZ'
+*             AND NOT zuonr IN r_zuonr.
+*
+* NEW CODE
           SELECT bukrs kunnr vertn hkont umskz zuonr xblnr
               belnr gjahr blart bldat zfbdt wrbtr waers
               shkzg
             APPENDING CORRESPONDING FIELDS OF TABLE ti_docs
+
             FROM bsid
             WHERE bukrs EQ wa_anticipos-bukrs
              AND kunnr EQ wa_anticipos-kunnr
              AND ( vertn EQ v_contrato1 OR vertn EQ v_contrato2 )
              AND umskz EQ space
              AND blart NE 'DZ'
-             AND NOT zuonr IN r_zuonr.
+             AND NOT zuonr IN r_zuonr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
         ENDIF.
       ENDAT.
 
@@ -148,21 +201,55 @@ FORM obtener_datos .
             output = v_contrato2.
 
         IF wa_anticipos-zuonr IN r_zuonr.  "1000 al 99999999
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*          SELECT bukrs kunnr vertn hkont umskz zuonr xblnr
+*               belnr gjahr blart bldat zfbdt wrbtr waers
+*               shkzg
+*            APPENDING CORRESPONDING FIELDS OF TABLE ti_docs
+*            FROM bsid
+*            WHERE bukrs EQ ls_anticipos-bukrs
+*              AND kunnr EQ ls_anticipos-kunnr
+*              AND umskz EQ space
+*              AND blart NE 'DZ'
+*              AND zuonr IN r_zuonr.
+*
+* NEW CODE
           SELECT bukrs kunnr vertn hkont umskz zuonr xblnr
                belnr gjahr blart bldat zfbdt wrbtr waers
                shkzg
             APPENDING CORRESPONDING FIELDS OF TABLE ti_docs
+
             FROM bsid
             WHERE bukrs EQ ls_anticipos-bukrs
               AND kunnr EQ ls_anticipos-kunnr
               AND umskz EQ space
               AND blart NE 'DZ'
-              AND zuonr IN r_zuonr.
+              AND zuonr IN r_zuonr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
         ELSE.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*          SELECT bukrs kunnr vertn hkont umskz zuonr xblnr
+*              belnr gjahr blart bldat zfbdt wrbtr waers
+*              shkzg vertt xref1
+*         APPENDING CORRESPONDING FIELDS OF TABLE ti_docs
+*         FROM bsid
+*         WHERE bukrs EQ ls_anticipos-bukrs
+*           AND kunnr EQ ls_anticipos-kunnr
+*           AND ( vertn EQ v_contrato1 OR vertn EQ v_contrato2 )
+*           AND umskz EQ space
+*           AND blart NE 'DZ'
+*           AND NOT zuonr IN r_zuonr
+*           AND xref1 EQ ls_anticipos-xref1.
+*
+* NEW CODE
           SELECT bukrs kunnr vertn hkont umskz zuonr xblnr
               belnr gjahr blart bldat zfbdt wrbtr waers
               shkzg vertt xref1
          APPENDING CORRESPONDING FIELDS OF TABLE ti_docs
+
          FROM bsid
          WHERE bukrs EQ ls_anticipos-bukrs
            AND kunnr EQ ls_anticipos-kunnr
@@ -170,7 +257,9 @@ FORM obtener_datos .
            AND umskz EQ space
            AND blart NE 'DZ'
            AND NOT zuonr IN r_zuonr
-           AND xref1 EQ ls_anticipos-xref1.
+           AND xref1 EQ ls_anticipos-xref1 ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
         ENDIF.
       ENDAT.
 
@@ -601,18 +690,50 @@ FORM compensar.
 *
     IF wa_anticipos-zuonr IN r_zuonr.
 
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT kunnr hkont zuonr xblnr bukrs belnr gjahr
+*             blart bldat zfbdt wrbtr waers shkzg vertn
+*        INTO CORRESPONDING FIELDS OF TABLE ti_docs
+*        FROM bsid
+*        WHERE bukrs EQ wa_anticipos-bukrs
+*          AND kunnr EQ wa_anticipos-kunnr
+*          AND umskz EQ space
+*          AND blart NE 'DZ'
+*          AND zuonr IN r_zuonr.
+*
+* NEW CODE
       SELECT kunnr hkont zuonr xblnr bukrs belnr gjahr
              blart bldat zfbdt wrbtr waers shkzg vertn
+
         INTO CORRESPONDING FIELDS OF TABLE ti_docs
         FROM bsid
         WHERE bukrs EQ wa_anticipos-bukrs
           AND kunnr EQ wa_anticipos-kunnr
           AND umskz EQ space
           AND blart NE 'DZ'
-          AND zuonr IN r_zuonr.
+          AND zuonr IN r_zuonr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
     ELSE.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT kunnr hkont zuonr xblnr bukrs belnr gjahr
+*             blart bldat zfbdt wrbtr waers shkzg vertn
+*        INTO CORRESPONDING FIELDS OF TABLE ti_docs
+*        FROM bsid
+*        WHERE bukrs EQ wa_anticipos-bukrs
+*          AND kunnr EQ wa_anticipos-kunnr
+*          AND ( vertn EQ v_contrato1 OR
+*              vertn EQ v_contrato2 )
+*          AND umskz EQ space
+*          AND blart NE 'DZ'
+*          AND NOT zuonr IN r_zuonr.
+*
+* NEW CODE
       SELECT kunnr hkont zuonr xblnr bukrs belnr gjahr
              blart bldat zfbdt wrbtr waers shkzg vertn
+
         INTO CORRESPONDING FIELDS OF TABLE ti_docs
         FROM bsid
         WHERE bukrs EQ wa_anticipos-bukrs
@@ -621,7 +742,9 @@ FORM compensar.
               vertn EQ v_contrato2 )
           AND umskz EQ space
           AND blart NE 'DZ'
-          AND NOT zuonr IN r_zuonr.
+          AND NOT zuonr IN r_zuonr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
     ENDIF.
 *
     SORT ti_docs BY bldat.
@@ -633,12 +756,25 @@ FORM compensar.
         CLEAR v_conta.
 *       Buscamos si tiene abonos la factura
         REFRESH ti_ref.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*        SELECT belnr rebzg wrbtr
+*          INTO TABLE ti_ref
+*          FROM bsid
+*          WHERE bukrs EQ wa_docs-bukrs
+*            AND kunnr EQ wa_docs-kunnr
+*            AND rebzg EQ wa_docs-belnr.
+*
+* NEW CODE
         SELECT belnr rebzg wrbtr
+
           INTO TABLE ti_ref
           FROM bsid
           WHERE bukrs EQ wa_docs-bukrs
             AND kunnr EQ wa_docs-kunnr
-            AND rebzg EQ wa_docs-belnr.
+            AND rebzg EQ wa_docs-belnr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
         IF sy-subrc EQ 0.
           PERFORM ingresar_criterios USING wa_anticipos-kunnr 'X'.
 
@@ -754,10 +890,27 @@ FORM compensar.
 *
       REFRESH: ti_docs.
 *
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT bukrs kunnr vertn hkont umskz zuonr xblnr
+*             belnr gjahr blart bldat zfbdt wrbtr waers
+*             shkzg vertt xref1
+*        APPENDING CORRESPONDING FIELDS OF TABLE ti_docs
+*        FROM bsid
+*        WHERE bukrs EQ ls_anticipo-bukrs
+*          AND kunnr EQ ls_anticipo-kunnr
+*          AND ( vertn EQ v_contrato1 OR vertn EQ v_contrato2 )
+*          AND umskz EQ space
+*          AND blart NE 'DZ'
+*          AND NOT zuonr IN r_zuonr
+*          AND xref1 EQ ls_anticipo-xref1.
+*
+* NEW CODE
       SELECT bukrs kunnr vertn hkont umskz zuonr xblnr
              belnr gjahr blart bldat zfbdt wrbtr waers
              shkzg vertt xref1
         APPENDING CORRESPONDING FIELDS OF TABLE ti_docs
+
         FROM bsid
         WHERE bukrs EQ ls_anticipo-bukrs
           AND kunnr EQ ls_anticipo-kunnr
@@ -765,7 +918,9 @@ FORM compensar.
           AND umskz EQ space
           AND blart NE 'DZ'
           AND NOT zuonr IN r_zuonr
-          AND xref1 EQ ls_anticipo-xref1.
+          AND xref1 EQ ls_anticipo-xref1 ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
       SORT ti_docs BY bldat.
 

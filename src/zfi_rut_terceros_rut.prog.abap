@@ -48,13 +48,27 @@ FORM obtener_datos .
         wa_bseg TYPE t_bseg,
         wa_bkpf TYPE t_bkpf.
 
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT bukrs belnr gjahr budat cpudt blart xblnr waers
+*    INTO TABLE ti_bkpf
+*    FROM bkpf
+*    WHERE bukrs IN s_bukrs
+*      AND belnr IN s_belnr
+*      AND budat IN s_budat
+*      AND cpudt IN s_cpudt.
+*
+* NEW CODE
   SELECT bukrs belnr gjahr budat cpudt blart xblnr waers
+
     INTO TABLE ti_bkpf
     FROM bkpf
     WHERE bukrs IN s_bukrs
       AND belnr IN s_belnr
       AND budat IN s_budat
-      AND cpudt IN s_cpudt.
+      AND cpudt IN s_cpudt ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
   IF sy-subrc EQ 0.
 SELECT bukrs belnr gjahr buzei bschl
 hkont wrbtr zzrut_terc lifnr
@@ -143,25 +157,52 @@ FORM ejecutar .
 
   SORT ti_salida BY bukrs belnr gjahr buzei.
 
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT *
+*  INTO TABLE ti_bkpf
+*  FROM bkpf
+*  FOR ALL ENTRIES IN ti_salida
+*  WHERE belnr  EQ ti_salida-belnr
+*     AND bukrs EQ ti_salida-bukrs
+*     AND gjahr EQ ti_salida-gjahr.
+*
+* NEW CODE
   SELECT *
+
   INTO TABLE ti_bkpf
   FROM bkpf
   FOR ALL ENTRIES IN ti_salida
   WHERE belnr  EQ ti_salida-belnr
      AND bukrs EQ ti_salida-bukrs
-     AND gjahr EQ ti_salida-gjahr.
+     AND gjahr EQ ti_salida-gjahr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
   LOOP AT ti_bkpf INTO wa_bkpf.
     REFRESH : ti_bkdf, ti_bseg, ti_bsec, ti_bsed, ti_bset, ti_bkpf_aux.
 
     APPEND wa_bkpf TO ti_bkpf_aux.
 
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT *
+*      INTO TABLE ti_bkdf
+*      FROM bkdf
+*      WHERE bukrs  EQ wa_bkpf-bukrs
+*        AND belnr  EQ wa_bkpf-belnr
+*        AND gjahr  EQ wa_bkpf-gjahr.
+*
+* NEW CODE
     SELECT *
+
       INTO TABLE ti_bkdf
       FROM bkdf
       WHERE bukrs  EQ wa_bkpf-bukrs
         AND belnr  EQ wa_bkpf-belnr
-        AND gjahr  EQ wa_bkpf-gjahr.
+        AND gjahr  EQ wa_bkpf-gjahr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
 SELECT *
 INTO TABLE ti_bseg

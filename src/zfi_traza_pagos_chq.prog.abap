@@ -302,37 +302,88 @@ FORM busca_historial.
 
       CASE TABNAME.
        WHEN 101.
-        SELECT SINGLE ZBUKR VBLNR GJAHR INTO CORRESPONDING FIELDS OF gs_payr_ini
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*        SELECT SINGLE ZBUKR VBLNR GJAHR INTO CORRESPONDING FIELDS OF gs_payr_ini
+*          FROM PAYR
+*         WHERE  ZBUKR EQ s_bukr1-low
+*           AND HBKID EQ s_hbkid-low
+*           AND HKTID EQ s_hktid-low
+*           AND RZAWE EQ s_rzawe-low
+*           AND CHECT EQ s_chect-low.
+*
+* NEW CODE
+        SELECT ZBUKR VBLNR GJAHR
+        UP TO 1 ROWS  INTO CORRESPONDING FIELDS OF gs_payr_ini
           FROM PAYR
          WHERE  ZBUKR EQ s_bukr1-low
            AND HBKID EQ s_hbkid-low
            AND HKTID EQ s_hktid-low
            AND RZAWE EQ s_rzawe-low
-           AND CHECT EQ s_chect-low.
+           AND CHECT EQ s_chect-low ORDER BY PRIMARY KEY.
 
-         SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers INTO CORRESPONDING FIELDS OF TABLE gt_hist
+        ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
+
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*         SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers INTO CORRESPONDING FIELDS OF TABLE gt_hist
+*          FROM bse_clr
+*          WHERE bukrs_clr  EQ gs_payr_ini-ZBUKR
+*            AND belnr_clr  EQ gs_payr_ini-vblnr
+*            AND gjahr_clr  EQ gs_payr_ini-gjahr.
+*
+* NEW CODE
+         SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers
+ INTO CORRESPONDING FIELDS OF TABLE gt_hist
           FROM bse_clr
           WHERE bukrs_clr  EQ gs_payr_ini-ZBUKR
             AND belnr_clr  EQ gs_payr_ini-vblnr
-            AND gjahr_clr  EQ gs_payr_ini-gjahr.
+            AND gjahr_clr  EQ gs_payr_ini-gjahr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
           CLEAR: gs_payr.
 
        WHEN 102.
-          SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers INTO CORRESPONDING FIELDS OF TABLE gt_hist
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*          SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers INTO CORRESPONDING FIELDS OF TABLE gt_hist
+*          FROM bse_clr
+*           WHERE bukrs_clr  EQ s_bukrs-low
+*             AND belnr_clr  EQ s_belnr-low
+*             AND gjahr_clr  EQ s_gjahr-low.
+*
+* NEW CODE
+          SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers
+ INTO CORRESPONDING FIELDS OF TABLE gt_hist
           FROM bse_clr
            WHERE bukrs_clr  EQ s_bukrs-low
              AND belnr_clr  EQ s_belnr-low
-             AND gjahr_clr  EQ s_gjahr-low.
+             AND gjahr_clr  EQ s_gjahr-low ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
       ENDCASE.
 
     ELSE.
-      SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers INTO CORRESPONDING FIELDS OF TABLE gt_hist
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers INTO CORRESPONDING FIELDS OF TABLE gt_hist
+*        FROM bse_clr FOR ALL ENTRIES IN gt_hist
+*         WHERE bukrs_clr   EQ gt_hist-bukrs
+*           AND belnr_clr  EQ gt_hist-belnr
+*           AND gjahr_clr  EQ gt_hist-gjahr.
+*
+* NEW CODE
+      SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers
+ INTO CORRESPONDING FIELDS OF TABLE gt_hist
         FROM bse_clr FOR ALL ENTRIES IN gt_hist
          WHERE bukrs_clr   EQ gt_hist-bukrs
            AND belnr_clr  EQ gt_hist-belnr
-           AND gjahr_clr  EQ gt_hist-gjahr.
+           AND gjahr_clr  EQ gt_hist-gjahr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
       lv_sy = sy-subrc.
     ENDIF.
@@ -385,22 +436,46 @@ FORM busca_posterior.
   DO lv_n TIMES. " itera las lv_n veces, hasta que no existan mas consultas exitosas y realiza un EXIT. del DO TIMES.
     " PRIMERA CONSULTA
     IF lv_contador_p EQ 1.
-      SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers INTO CORRESPONDING FIELDS OF TABLE gt_hist
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers INTO CORRESPONDING FIELDS OF TABLE gt_hist
+*      FROM bse_clr
+*     WHERE bukrs  EQ s_bukrs-low
+*      AND belnr  EQ s_belnr-low
+*      AND gjahr  EQ s_gjahr-low.
+*
+* NEW CODE
+      SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers
+ INTO CORRESPONDING FIELDS OF TABLE gt_hist
       FROM bse_clr
      WHERE bukrs  EQ s_bukrs-low
       AND belnr  EQ s_belnr-low
-      AND gjahr  EQ s_gjahr-low.
+      AND gjahr  EQ s_gjahr-low ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
       " tiene posterior
        IF sy-subrc EQ 0.
          lv_flag = 'X'.
        ENDIF.
     ELSE.
-      SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers  INTO CORRESPONDING FIELDS OF TABLE gt_hist
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers  INTO CORRESPONDING FIELDS OF TABLE gt_hist
+*        FROM bse_clr FOR ALL ENTRIES IN gt_hist
+*         WHERE bukrs   EQ gt_hist-bukrs_clr
+*           AND belnr  EQ gt_hist-belnr_clr
+*           AND gjahr  EQ gt_hist-gjahr_clr.
+*
+* NEW CODE
+      SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers
+  INTO CORRESPONDING FIELDS OF TABLE gt_hist
         FROM bse_clr FOR ALL ENTRIES IN gt_hist
          WHERE bukrs   EQ gt_hist-bukrs_clr
            AND belnr  EQ gt_hist-belnr_clr
-           AND gjahr  EQ gt_hist-gjahr_clr.
+           AND gjahr  EQ gt_hist-gjahr_clr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
       lv_sy = sy-subrc.
     ENDIF.
@@ -439,12 +514,26 @@ FORM busca_posterior.
     gs_alv-gjahr = gs_alv-gjahr_clr.
 
 *ResQ Comment:Correction not required as Select Single is used 24/12/2019 EY_DES04 ECDK917080 *
-    SELECT SINGLE buzei INTO gs_alv-buzei
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE buzei INTO gs_alv-buzei
+*    FROM  BSEG
+*    WHERE bukrs EQ gs_alv-bukrs_clr
+*      AND belnr EQ gs_alv-belnr_clr
+*      AND gjahr EQ gs_alv-gjahr_clr
+*      AND augbl EQ SPACE.
+*
+* NEW CODE
+    SELECT buzei
+    UP TO 1 ROWS  INTO gs_alv-buzei
     FROM  BSEG
     WHERE bukrs EQ gs_alv-bukrs_clr
       AND belnr EQ gs_alv-belnr_clr
       AND gjahr EQ gs_alv-gjahr_clr
-      AND augbl EQ SPACE.
+      AND augbl EQ SPACE ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     APPEND gs_alv TO gt_alv.
   ENDIF.
@@ -459,11 +548,23 @@ FORM univ_datos.
   "------------------------------------------------------------------------------------
   " GT_BKPF
   "------------------------------------------------------------------------------------
-  SELECT bukrs belnr gjahr bvorg INTO CORRESPONDING FIELDS OF TABLE gt_bkpf
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT bukrs belnr gjahr bvorg INTO CORRESPONDING FIELDS OF TABLE gt_bkpf
+*    FROM bkpf FOR ALL ENTRIES IN gt_alv
+*    WHERE bukrs   EQ gt_alv-bukrs
+*      AND belnr   EQ gt_alv-belnr
+*      AND gjahr   EQ gt_alv-gjahr.
+*
+* NEW CODE
+  SELECT bukrs belnr gjahr bvorg
+ INTO CORRESPONDING FIELDS OF TABLE gt_bkpf
     FROM bkpf FOR ALL ENTRIES IN gt_alv
     WHERE bukrs   EQ gt_alv-bukrs
       AND belnr   EQ gt_alv-belnr
-      AND gjahr   EQ gt_alv-gjahr.
+      AND gjahr   EQ gt_alv-gjahr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
   SORT gt_bkpf BY bukrs belnr gjahr.
   "------------------------------------------------------------------------------------
@@ -484,12 +585,25 @@ AND BUZEI EQ GT_ALV-BUZEI ORDER BY PRIMARY KEY .
   "------------------------------------------------------------------------------------
   " GT_BSAS
   "------------------------------------------------------------------------------------
-  SELECT bukrs belnr gjahr buzei augdt augbl budat bldat xblnr blart sgtxt INTO CORRESPONDING FIELDS OF TABLE gt_bsas
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT bukrs belnr gjahr buzei augdt augbl budat bldat xblnr blart sgtxt INTO CORRESPONDING FIELDS OF TABLE gt_bsas
+*   FROM bsas FOR ALL ENTRIES IN gt_alv
+*   WHERE bukrs  EQ gt_alv-bukrs
+*     AND belnr  EQ gt_alv-belnr
+*     AND gjahr  EQ gt_alv-gjahr
+*     AND buzei  EQ gt_alv-buzei.
+*
+* NEW CODE
+  SELECT bukrs belnr gjahr buzei augdt augbl budat bldat xblnr blart sgtxt
+ INTO CORRESPONDING FIELDS OF TABLE gt_bsas
    FROM bsas FOR ALL ENTRIES IN gt_alv
    WHERE bukrs  EQ gt_alv-bukrs
      AND belnr  EQ gt_alv-belnr
      AND gjahr  EQ gt_alv-gjahr
-     AND buzei  EQ gt_alv-buzei.
+     AND buzei  EQ gt_alv-buzei ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
   SORT gt_bsas BY bukrs belnr gjahr buzei.
 ENDFORM.                    "univ_datos
@@ -565,12 +679,26 @@ FORM llena_alv.
 
     IF sy-subrc NE 0.
 
-    SELECT SINGLE bukrs belnr gjahr buzei augdt augbl budat bldat xblnr blart sgtxt INTO  gs_bsas
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE bukrs belnr gjahr buzei augdt augbl budat bldat xblnr blart sgtxt INTO  gs_bsas
+*    FROM bsis
+*    WHERE bukrs  EQ gs_alv-bukrs
+*      AND belnr  EQ gs_alv-belnr
+*      AND gjahr  EQ gs_alv-gjahr
+*      AND buzei  EQ gs_alv-buzei.
+*
+* NEW CODE
+    SELECT bukrs belnr gjahr buzei augdt augbl budat bldat xblnr blart sgtxt
+    UP TO 1 ROWS  INTO  gs_bsas
     FROM bsis
     WHERE bukrs  EQ gs_alv-bukrs
       AND belnr  EQ gs_alv-belnr
       AND gjahr  EQ gs_alv-gjahr
-      AND buzei  EQ gs_alv-buzei.
+      AND buzei  EQ gs_alv-buzei ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     ENDIF.
 
@@ -592,37 +720,87 @@ FORM llena_alv.
     "---------------------------------------------------------------------------------------
                                                             " T001
     CLEAR: lv_plan_cta.
-    SELECT SINGLE ktopl INTO lv_plan_cta
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE ktopl INTO lv_plan_cta
+*      FROM t001
+*      WHERE bukrs EQ gs_alv-bukrs.
+*
+* NEW CODE
+    SELECT ktopl
+    UP TO 1 ROWS  INTO lv_plan_cta
       FROM t001
-      WHERE bukrs EQ gs_alv-bukrs.
+      WHERE bukrs EQ gs_alv-bukrs ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     CLEAR: gs_alv-txt50.
-    SELECT SINGLE txt50  INTO gs_alv-txt50
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE txt50  INTO gs_alv-txt50
+*     FROM skat
+*     WHERE spras EQ sy-langu
+*       AND ktopl EQ lv_plan_cta
+*       AND saknr EQ gs_alv-hkont.
+*
+* NEW CODE
+    SELECT txt50
+    UP TO 1 ROWS   INTO gs_alv-txt50
      FROM skat
      WHERE spras EQ sy-langu
        AND ktopl EQ lv_plan_cta
-       AND saknr EQ gs_alv-hkont.
+       AND saknr EQ gs_alv-hkont ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     "---------------------------------------------------------------------------------------
                                                             " T003
     "---------------------------------------------------------------------------------------
     CLEAR: gs_alv-ltext.
 *ResQ Comment:Correction not required as Select Single is used 24/12/2019 EY_DES04 ECDK917080 *
-    SELECT SINGLE ltext INTO gs_alv-ltext
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE ltext INTO gs_alv-ltext
+*    FROM t003t
+*     WHERE spras EQ sy-langu
+*       AND blart EQ gs_alv-blart.
+*
+* NEW CODE
+    SELECT ltext
+    UP TO 1 ROWS  INTO gs_alv-ltext
     FROM t003t
      WHERE spras EQ sy-langu
-       AND blart EQ gs_alv-blart.
+       AND blart EQ gs_alv-blart ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     "------------------------------------------------------------------------------------
     " PAYR
     "------------------------------------------------------------------------------------
     CLEAR: gs_payr.
-    SELECT SINGLE hbkid hktid rzawe chect laufd laufi zaldt  xbanc bancd xbukr voidr
-           voidd voidu INTO CORRESPONDING FIELDS OF gs_payr
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE hbkid hktid rzawe chect laufd laufi zaldt  xbanc bancd xbukr voidr
+*           voidd voidu INTO CORRESPONDING FIELDS OF gs_payr
+*     FROM payr
+*      WHERE zbukr EQ gs_alv-bukrs
+*        AND vblnr EQ gs_alv-belnr
+*        AND gjahr EQ gs_Alv-gjahr.
+*
+* NEW CODE
+    SELECT hbkid hktid rzawe chect laufd laufi zaldt  xbanc bancd xbukr voidr
+           voidd voidu
+    UP TO 1 ROWS  INTO CORRESPONDING FIELDS OF gs_payr
      FROM payr
       WHERE zbukr EQ gs_alv-bukrs
         AND vblnr EQ gs_alv-belnr
-        AND gjahr EQ gs_Alv-gjahr.
+        AND gjahr EQ gs_Alv-gjahr ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 *        AND zaldt EQ gs_alv-augdt
 *        AND lifnr EQ gs_alv-lifnr.
 

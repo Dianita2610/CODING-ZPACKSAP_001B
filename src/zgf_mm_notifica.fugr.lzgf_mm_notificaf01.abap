@@ -38,7 +38,15 @@ FORM get_otf TABLES tab_komv STRUCTURE komv
 * Get data to print form
 
 *  SELECT SINGLE * FROM ekko INTO ls_ekko WHERE ebeln = p_ebeln.
-    SELECT * FROM ekpo INTO TABLE lt_ekpo WHERE ebeln = p_ekko-ebeln.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT * FROM ekpo INTO TABLE lt_ekpo WHERE ebeln = p_ekko-ebeln.
+*
+* NEW CODE
+    SELECT *
+ FROM ekpo INTO TABLE lt_ekpo WHERE ebeln = p_ekko-ebeln ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 *--------------------------------------------------------------------*
 
     ls_ctrl_param-no_dialog = 'X'.

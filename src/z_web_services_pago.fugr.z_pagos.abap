@@ -78,11 +78,23 @@ FUNCTION z_pagos.
 *armar rangos
 *--------------------------------------------------------------------*
 
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT *
+*  INTO CORRESPONDING FIELDS OF TABLE ti_zmot_emis
+*  FROM zmot_emis
+*  WHERE report = 'X'
+*    AND bukrs  = p_bukrs.
+*
+* NEW CODE
   SELECT *
+
   INTO CORRESPONDING FIELDS OF TABLE ti_zmot_emis
   FROM zmot_emis
   WHERE report = 'X'
-    AND bukrs  = p_bukrs.
+    AND bukrs  = p_bukrs ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
   LOOP AT ti_zmot_emis INTO wa_zmot_emis.
 
@@ -134,18 +146,41 @@ FUNCTION z_pagos.
 *--------------------------------------------------------------------*
 *selecciona datos
 * Obtengo dias
-  SELECT SINGLE valor
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE valor
+*  INTO v_valor
+*  FROM zfitr020_t04
+*  WHERE nombre EQ 'ZFITR040_DIAS'.
+*
+* NEW CODE
+  SELECT valor
+  UP TO 1 ROWS 
   INTO v_valor
   FROM zfitr020_t04
-  WHERE nombre EQ 'ZFITR040_DIAS'.
+  WHERE nombre EQ 'ZFITR040_DIAS' ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
   v_fecha = sy-datum - v_valor.
 
 
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT cta_cadf cta_cade cta_pres_h
+*  INTO CORRESPONDING FIELDS OF TABLE ti_zmot_emis
+*  FROM zmot_emis
+*  WHERE report = 'X'.
+*
+* NEW CODE
   SELECT cta_cadf cta_cade cta_pres_h
+
   INTO CORRESPONDING FIELDS OF TABLE ti_zmot_emis
   FROM zmot_emis
-  WHERE report = 'X'.
+  WHERE report = 'X' ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
 
   SELECT lf~stcd1
@@ -188,54 +223,146 @@ SORT TI_SALIDA1 .
       modify ti_salida1 from wa_salida1 index sy-tabix..
     endif.
 
-    SELECT SINGLE *
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE *
+*    FROM zmot_emis
+*    WHERE cta_cadf = wa_salida1-hkont.
+*
+* NEW CODE
+    SELECT *
+    UP TO 1 ROWS 
     FROM zmot_emis
-    WHERE cta_cadf = wa_salida1-hkont.
+    WHERE cta_cadf = wa_salida1-hkont ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     IF sy-subrc EQ 0.
-      SELECT SINGLE glosa
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*      SELECT SINGLE glosa
+*      INTO wa_salida1-cambio_estado
+*      FROM zfitr020_t06
+*      WHERE campo = 'CTA_CADF'.
+*
+* NEW CODE
+      SELECT glosa
+      UP TO 1 ROWS 
       INTO wa_salida1-cambio_estado
       FROM zfitr020_t06
-      WHERE campo = 'CTA_CADF'.
+      WHERE campo = 'CTA_CADF' ORDER BY PRIMARY KEY.
+
+      ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 *ReSQ: No Need Of Change Internal Table TI_SALIDA1 Already Sorted
       MODIFY ti_salida1 FROM wa_salida1 INDEX sy-tabix.
     ENDIF.
 
-    SELECT SINGLE *
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE *
+*    FROM zmot_emis
+*    WHERE cta_cade = wa_salida1-hkont.
+*
+* NEW CODE
+    SELECT *
+    UP TO 1 ROWS 
     FROM zmot_emis
-    WHERE cta_cade = wa_salida1-hkont.
+    WHERE cta_cade = wa_salida1-hkont ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     IF sy-subrc EQ 0.
-      SELECT SINGLE glosa
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*      SELECT SINGLE glosa
+*      INTO wa_salida1-cambio_estado
+*      FROM zfitr020_t06
+*      WHERE campo = 'CTA_CADE'.
+*
+* NEW CODE
+      SELECT glosa
+      UP TO 1 ROWS 
       INTO wa_salida1-cambio_estado
       FROM zfitr020_t06
-      WHERE campo = 'CTA_CADE'.
+      WHERE campo = 'CTA_CADE' ORDER BY PRIMARY KEY.
+
+      ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 *ReSQ: No Need Of Change Internal Table TI_SALIDA1 Already Sorted
       MODIFY ti_salida1 FROM wa_salida1 INDEX sy-tabix.
     ENDIF.
 
-    SELECT SINGLE *
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE *
+*    FROM zmot_emis
+*    WHERE cta_pres_h = wa_salida1-hkont.
+*
+* NEW CODE
+    SELECT *
+    UP TO 1 ROWS 
     FROM zmot_emis
-    WHERE cta_pres_h = wa_salida1-hkont.
+    WHERE cta_pres_h = wa_salida1-hkont ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     IF sy-subrc EQ 0.
-      SELECT SINGLE glosa
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*      SELECT SINGLE glosa
+*      INTO wa_salida1-cambio_estado
+*      FROM zfitr020_t06
+*      WHERE campo = 'CTA_PRES_H'.
+*
+* NEW CODE
+      SELECT glosa
+      UP TO 1 ROWS 
       INTO wa_salida1-cambio_estado
       FROM zfitr020_t06
-      WHERE campo = 'CTA_PRES_H'.
+      WHERE campo = 'CTA_PRES_H' ORDER BY PRIMARY KEY.
+
+      ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 *ReSQ: No Need Of Change Internal Table TI_SALIDA1 Already Sorted
       MODIFY ti_salida1 FROM wa_salida1 INDEX sy-tabix.
     ENDIF.
 
-    SELECT SINGLE *
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE *
+*    FROM zmot_emis
+*    WHERE cta_cadvv = wa_salida1-hkont.
+*
+* NEW CODE
+    SELECT *
+    UP TO 1 ROWS 
     FROM zmot_emis
-    WHERE cta_cadvv = wa_salida1-hkont.
+    WHERE cta_cadvv = wa_salida1-hkont ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     IF sy-subrc EQ 0.
-      SELECT SINGLE glosa
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*      SELECT SINGLE glosa
+*      INTO wa_salida1-cambio_estado
+*      FROM zfitr020_t06
+*      WHERE campo = 'CTA_CADVV'.
+*
+* NEW CODE
+      SELECT glosa
+      UP TO 1 ROWS 
       INTO wa_salida1-cambio_estado
       FROM zfitr020_t06
-      WHERE campo = 'CTA_CADVV'.
+      WHERE campo = 'CTA_CADVV' ORDER BY PRIMARY KEY.
+
+      ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 *ReSQ: No Need Of Change Internal Table TI_SALIDA1 Already Sorted
       MODIFY ti_salida1 FROM wa_salida1 INDEX sy-tabix.
     ENDIF.
@@ -287,7 +414,21 @@ SORT TI_SALIDA_BSAK .
 *End of change: ReSQ Correction for MODIFY on an unsorted Internal Table 19/12/2019 EY_DES01 ECDK917080 *
   LOOP AT ti_salida_bsak INTO wa_salida_bsak .
 
-    SELECT SINGLE *
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE *
+*    INTO CORRESPONDING FIELDS OF wa_bsak
+*    FROM bsak
+*    WHERE bukrs = wa_salida_bsak-bukrs
+*    AND lifnr = wa_salida_bsak-lifnr
+*    AND augdt = wa_salida_bsak-augdt
+*    AND augbl = wa_salida_bsak-augbl
+*    AND belnr NE wa_salida_bsak-belnr
+*    AND zzmot_emis IN r_emision.
+*
+* NEW CODE
+    SELECT *
+    UP TO 1 ROWS 
     INTO CORRESPONDING FIELDS OF wa_bsak
     FROM bsak
     WHERE bukrs = wa_salida_bsak-bukrs
@@ -295,39 +436,86 @@ SORT TI_SALIDA_BSAK .
     AND augdt = wa_salida_bsak-augdt
     AND augbl = wa_salida_bsak-augbl
     AND belnr NE wa_salida_bsak-belnr
-    AND zzmot_emis IN r_emision.
+    AND zzmot_emis IN r_emision ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     IF sy-subrc EQ 0.
 
       wa_salida_bsak-zzmot_emis = wa_bsak-zzmot_emis.
 
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT *
+*      INTO CORRESPONDING FIELDS OF TABLE ti_bkpf
+*      FROM bkpf
+*      WHERE bukrs = p_bukrs
+*      AND belnr = wa_salida_bsak-belnr
+*      AND gjahr = wa_salida_bsak-budat(4)
+*      AND stblg = space.
+*
+* NEW CODE
       SELECT *
+
       INTO CORRESPONDING FIELDS OF TABLE ti_bkpf
       FROM bkpf
       WHERE bukrs = p_bukrs
       AND belnr = wa_salida_bsak-belnr
       AND gjahr = wa_salida_bsak-budat(4)
-      AND stblg = space.
+      AND stblg = space ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
       IF sy-subrc EQ 0.
 
-        SELECT SINGLE *
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*        SELECT SINGLE *
+*        INTO CORRESPONDING FIELDS OF wa_payr
+*        FROM payr
+*        WHERE vblnr = wa_salida_bsak-belnr
+*        AND gjahr = wa_salida_bsak-budat(4)
+*        AND xbanc = space
+*        AND voidr = space.
+*
+* NEW CODE
+        SELECT *
+        UP TO 1 ROWS 
         INTO CORRESPONDING FIELDS OF wa_payr
         FROM payr
         WHERE vblnr = wa_salida_bsak-belnr
         AND gjahr = wa_salida_bsak-budat(4)
         AND xbanc = space
-        AND voidr = space.
+        AND voidr = space ORDER BY PRIMARY KEY.
+
+        ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
         IF sy-subrc EQ 0.
 *ResQ Comment:Correction not required as Select Single is used 19/12/2019 EY_DES01 ECDK917080 *
-          SELECT SINGLE *
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*          SELECT SINGLE *
+*            FROM bseg
+*            WHERE belnr EQ wa_salida_bsak-belnr
+*            AND bukrs EQ wa_salida_bsak-bukrs
+*            AND gjahr EQ wa_salida_bsak-budat(4)
+*            AND hkont EQ wa_payr-ubhkt
+*            AND augbl EQ ''.
+*
+* NEW CODE
+          SELECT *
+          UP TO 1 ROWS 
             FROM bseg
             WHERE belnr EQ wa_salida_bsak-belnr
             AND bukrs EQ wa_salida_bsak-bukrs
             AND gjahr EQ wa_salida_bsak-budat(4)
             AND hkont EQ wa_payr-ubhkt
-            AND augbl EQ ''.
+            AND augbl EQ '' ORDER BY PRIMARY KEY.
+
+          ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
           IF sy-subrc EQ 0.
 
@@ -336,16 +524,43 @@ SORT TI_SALIDA_BSAK .
             modify ti_salida_bsak from wa_salida_bsak index sy-tabix.
           endif.
 
-          SELECT SINGLE glosa
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*          SELECT SINGLE glosa
+*          INTO wa_salida_bsak-cambio_estado
+*          FROM zfitr020_t06
+*          WHERE campo = 'PAYR'.
+*
+* NEW CODE
+          SELECT glosa
+          UP TO 1 ROWS 
           INTO wa_salida_bsak-cambio_estado
           FROM zfitr020_t06
-          WHERE campo = 'PAYR'.
+          WHERE campo = 'PAYR' ORDER BY PRIMARY KEY.
+
+          ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
           wa_salida_bsak-xblnr = wa_payr-chect.
           APPEND wa_salida_bsak TO ti_salida1.
           ENDIF.
         ELSE.                                                 "-----|ini agregado 07.11.2014
 
-          SELECT SINGLE *
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*          SELECT SINGLE *
+*          INTO CORRESPONDING FIELDS OF wa_reguh
+*          FROM reguh
+*          WHERE zbukr = wa_salida_bsak-bukrs
+*          AND lifnr = wa_salida_bsak-lifnr
+*          AND vblnr = wa_salida_bsak-belnr
+*          AND zaldt = wa_salida_bsak-budat
+*          AND identif_pago NE space
+*          AND ind_pago     = space
+*          AND belnr_dev    = space.
+*
+* NEW CODE
+          SELECT *
+          UP TO 1 ROWS 
           INTO CORRESPONDING FIELDS OF wa_reguh
           FROM reguh
           WHERE zbukr = wa_salida_bsak-bukrs
@@ -354,15 +569,30 @@ SORT TI_SALIDA_BSAK .
           AND zaldt = wa_salida_bsak-budat
           AND identif_pago NE space
           AND ind_pago     = space
-          AND belnr_dev    = space.
+          AND belnr_dev    = space ORDER BY PRIMARY KEY.
+
+          ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 *            AND ind_custodia = space.
 
           IF sy-subrc EQ 0.
 
-            SELECT SINGLE glosa
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*            SELECT SINGLE glosa
+*            INTO wa_salida_bsak-cambio_estado
+*            FROM zfitr020_t06
+*            WHERE campo = 'REGUH'.
+*
+* NEW CODE
+            SELECT glosa
+            UP TO 1 ROWS 
             INTO wa_salida_bsak-cambio_estado
             FROM zfitr020_t06
-            WHERE campo = 'REGUH'.
+            WHERE campo = 'REGUH' ORDER BY PRIMARY KEY.
+
+            ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
             wa_salida_bsak-xblnr = wa_reguh-identif_pago.
             APPEND wa_salida_bsak TO ti_salida1.
           ENDIF.

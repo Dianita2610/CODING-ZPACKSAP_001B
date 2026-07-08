@@ -491,26 +491,62 @@ FORM armar_datos .
 
     IF NOT t_reg_entrada-stcd1 IS INITIAL.
       CLEAR t_reg_entrada-lifnr.
-      SELECT SINGLE lifnr
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*      SELECT SINGLE lifnr
+*        INTO t_reg_entrada-lifnr
+*        FROM lfa1
+*        WHERE stcd1 EQ t_reg_entrada-stcd1.
+*
+* NEW CODE
+      SELECT lifnr
+      UP TO 1 ROWS 
         INTO t_reg_entrada-lifnr
         FROM lfa1
-        WHERE stcd1 EQ t_reg_entrada-stcd1.
+        WHERE stcd1 EQ t_reg_entrada-stcd1 ORDER BY PRIMARY KEY.
+
+      ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     ENDIF.
 
     IF NOT t_reg_entrada-stcd2 IS INITIAL.
       CLEAR t_reg_entrada-kunnr.
-      SELECT SINGLE kunnr
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*      SELECT SINGLE kunnr
+*        INTO t_reg_entrada-kunnr
+*        FROM kna1
+*        WHERE stcd1 EQ t_reg_entrada-stcd2.
+*
+* NEW CODE
+      SELECT kunnr
+      UP TO 1 ROWS 
         INTO t_reg_entrada-kunnr
         FROM kna1
-        WHERE stcd1 EQ t_reg_entrada-stcd2.
+        WHERE stcd1 EQ t_reg_entrada-stcd2 ORDER BY PRIMARY KEY.
+
+      ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     ENDIF.
 
     IF NOT t_reg_entrada-rut_tercero IS INITIAL.
       CLEAR t_reg_entrada-zzrut_terc.
-      SELECT SINGLE lifnr
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*      SELECT SINGLE lifnr
+*        INTO t_reg_entrada-zzrut_terc
+*        FROM lfa1
+*        WHERE stcd1 EQ t_reg_entrada-rut_tercero.
+*
+* NEW CODE
+      SELECT lifnr
+      UP TO 1 ROWS 
         INTO t_reg_entrada-zzrut_terc
         FROM lfa1
-        WHERE stcd1 EQ t_reg_entrada-rut_tercero.
+        WHERE stcd1 EQ t_reg_entrada-rut_tercero ORDER BY PRIMARY KEY.
+
+      ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     ENDIF.
 
     ADD 1 TO conta.
@@ -537,10 +573,22 @@ FORM armar_datos .
 
     CLEAR indicador.
 *ResQ Comment:Correction not required as Select Single is used 24/12/2019 EY_DES04 ECDK917080 *
-    SELECT SINGLE shkzg
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE shkzg
+*      INTO indicador
+*      FROM tbsl
+*      WHERE bschl EQ t_reg_entrada-newbs.
+*
+* NEW CODE
+    SELECT shkzg
+    UP TO 1 ROWS 
       INTO indicador
       FROM tbsl
-      WHERE bschl EQ t_reg_entrada-newbs.
+      WHERE bschl EQ t_reg_entrada-newbs ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     PERFORM currency USING conta indicador.
 
@@ -553,7 +601,7 @@ FORM armar_datos .
                                   t_reg_entrada-zz_agencia.
 
     AT END OF belnr1.
-      CALL FUNCTION 'BAPI_ACC_DOCUMENT_POST'
+      CALL FUNCTION 'BAPI_ACC_DOCUMENT_POST' "#EC CI_USAGE_OK[2438131]
         EXPORTING
           documentheader    = wa_header
         IMPORTING

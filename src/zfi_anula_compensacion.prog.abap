@@ -157,9 +157,20 @@ START-OF-SELECTION.
     ENDIF.
 
     LOOP AT GT_MESSTAB.
-      SELECT SINGLE * FROM T100 WHERE SPRSL = GT_MESSTAB-MSGSPRA
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*      SELECT SINGLE * FROM T100 WHERE SPRSL = GT_MESSTAB-MSGSPRA
+*                                AND   ARBGB = GT_MESSTAB-MSGID
+*                                AND   MSGNR = GT_MESSTAB-MSGNR.
+*
+* NEW CODE
+      SELECT *
+      UP TO 1 ROWS  FROM T100 WHERE SPRSL = GT_MESSTAB-MSGSPRA
                                 AND   ARBGB = GT_MESSTAB-MSGID
-                                AND   MSGNR = GT_MESSTAB-MSGNR.
+                                AND   MSGNR = GT_MESSTAB-MSGNR ORDER BY PRIMARY KEY.
+
+      ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
       IF SY-SUBRC = 0.
         L_MSTRING = T100-TEXT.
         IF L_MSTRING CS '&1'.
@@ -212,9 +223,20 @@ GJAHR = RECORD-GJAHR.
                               MESSAGES INTO Gt_messtab.
 
       LOOP AT GT_MESSTAB.
-        SELECT SINGLE * FROM T100 WHERE SPRSL = GT_MESSTAB-MSGSPRA
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*        SELECT SINGLE * FROM T100 WHERE SPRSL = GT_MESSTAB-MSGSPRA
+*                                  AND   ARBGB = GT_MESSTAB-MSGID
+*                                  AND   MSGNR = GT_MESSTAB-MSGNR.
+*
+* NEW CODE
+        SELECT *
+        UP TO 1 ROWS  FROM T100 WHERE SPRSL = GT_MESSTAB-MSGSPRA
                                   AND   ARBGB = GT_MESSTAB-MSGID
-                                  AND   MSGNR = GT_MESSTAB-MSGNR.
+                                  AND   MSGNR = GT_MESSTAB-MSGNR ORDER BY PRIMARY KEY.
+
+        ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
         IF SY-SUBRC = 0.
           L_MSTRING = T100-TEXT.
           IF L_MSTRING CS '&1'.

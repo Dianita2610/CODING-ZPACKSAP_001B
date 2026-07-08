@@ -198,11 +198,23 @@ FORM llenar_tabla .
         wa_bkpf TYPE t_bkpf,
         wa_lfa1 TYPE t_lfa1.
 
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT lifnr stcd1
+*    INTO TABLE ti_lfa1
+*    FROM lfa1
+*    FOR ALL ENTRIES IN ti_entrada
+*    WHERE stcd1 EQ ti_entrada-stcd1.
+*
+* NEW CODE
   SELECT lifnr stcd1
+
     INTO TABLE ti_lfa1
     FROM lfa1
     FOR ALL ENTRIES IN ti_entrada
-    WHERE stcd1 EQ ti_entrada-stcd1.
+    WHERE stcd1 EQ ti_entrada-stcd1 ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
   IF sy-subrc EQ 0.
     SORT ti_lfa1 BY stcd1.
     LOOP AT ti_entrada.
@@ -215,7 +227,22 @@ FORM llenar_tabla .
     ENDLOOP.
   ENDIF.
 
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT bukrs belnr gjahr blart budat xblnr
+*    INTO TABLE ti_bkpf
+*    FROM bkpf
+*    FOR ALL ENTRIES IN ti_entrada
+*    WHERE bukrs EQ ti_entrada-bukrs
+*      AND gjahr EQ ti_entrada-gjahr
+*      AND xblnr EQ ti_entrada-xblnr
+*      AND blart EQ ti_entrada-blart
+*      AND budat EQ ti_entrada-budat
+*      AND stblg EQ space.
+*
+* NEW CODE
   SELECT bukrs belnr gjahr blart budat xblnr
+
     INTO TABLE ti_bkpf
     FROM bkpf
     FOR ALL ENTRIES IN ti_entrada
@@ -224,7 +251,9 @@ FORM llenar_tabla .
       AND xblnr EQ ti_entrada-xblnr
       AND blart EQ ti_entrada-blart
       AND budat EQ ti_entrada-budat
-      AND stblg EQ space.
+      AND stblg EQ space ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
   IF sy-subrc EQ 0.
     SELECT bukrs belnr gjahr buzei lifnr
       INTO TABLE ti_bseg

@@ -127,14 +127,42 @@ START-OF-SELECTION.
 FORM buscar_datos .
   DATA: lv_correlativo TYPE n LENGTH 12.
 
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT cta_cade zzmot_emis
+*  INTO CORRESPONDING FIELDS OF TABLE ti_zmot_emis
+*  FROM zmot_emis
+*  WHERE bukrs      = s_bukrs-low
+*  AND zzmot_emis   IN s_emis.
+*
+* NEW CODE
   SELECT cta_cade zzmot_emis
+
   INTO CORRESPONDING FIELDS OF TABLE ti_zmot_emis
   FROM zmot_emis
   WHERE bukrs      = s_bukrs-low
-  AND zzmot_emis   IN s_emis.
+  AND zzmot_emis   IN s_emis ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
   IF ti_zmot_emis[] IS NOT INITIAL. "agregado 08.05.2020
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT *
+*    INTO CORRESPONDING FIELDS OF TABLE ti_bsik
+*    FROM bsik FOR ALL ENTRIES IN ti_zmot_emis
+*    WHERE  hkont      = ti_zmot_emis-cta_cade
+** ini Waldo Alarcón - Visionone - 06-05-2020
+**  AND    zzmot_emis in s_emis
+*     AND  zzmot_emis  = ti_zmot_emis-zzmot_emis
+** fin Waldo Alarcón - Visionone - 06-05-2020
+*    AND    bukrs = s_bukrs-low
+*    AND    xblnr IN s_chect
+*    AND    budat <= p_budat.                                                
+*
+* NEW CODE
     SELECT *
+
     INTO CORRESPONDING FIELDS OF TABLE ti_bsik
     FROM bsik FOR ALL ENTRIES IN ti_zmot_emis
     WHERE  hkont      = ti_zmot_emis-cta_cade
@@ -144,7 +172,9 @@ FORM buscar_datos .
 * fin Waldo Alarcón - Visionone - 06-05-2020
     AND    bukrs = s_bukrs-low
     AND    xblnr IN s_chect
-    AND    budat <= p_budat.                                                "agregado 04.02.2015
+    AND    budat <= p_budat ORDER BY PRIMARY KEY.                                                
+
+* END. 08-07-2026 - ATC - ATC-03"agregado 04.02.2015
   ENDIF.                              "agregado 08.05.2020
 
   IF sy-subrc NE 0.
@@ -462,18 +492,42 @@ ENDFORM.                    "USER_COMMAND
 *----------------------------------------------------------------------*
 FORM carga_datos .
 
-  SELECT SINGLE clase_doc cambio_estado
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE clase_doc cambio_estado
+*  INTO (l_clase_doc, l_nom_proceso)
+*  FROM zfitr020_t03
+*  WHERE id_proceso = '1004'. 
+*
+* NEW CODE
+  SELECT clase_doc cambio_estado
+  UP TO 1 ROWS 
   INTO (l_clase_doc, l_nom_proceso)
   FROM zfitr020_t03
-  WHERE id_proceso = '1004'. "XB; CADUCA FISICO
+  WHERE id_proceso = '1004' ORDER BY PRIMARY KEY. 
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01"XB; CADUCA FISICO
 
   l_fecha = p_budat.
 
   "se busca la cuenta de la contrapartida
-  SELECT SINGLE cta_cadf INTO l_cta_cadf
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE cta_cadf INTO l_cta_cadf
+*  FROM zmot_emis
+*  WHERE bukrs = wa_itab-bukrs
+*  AND zzmot_emis = wa_itab-zzmot_emis.
+*
+* NEW CODE
+  SELECT cta_cadf
+  UP TO 1 ROWS  INTO l_cta_cadf
   FROM zmot_emis
   WHERE bukrs = wa_itab-bukrs
-  AND zzmot_emis = wa_itab-zzmot_emis.
+  AND zzmot_emis = wa_itab-zzmot_emis ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
 
 ENDFORM.                    " CARGA_DATOS
@@ -781,9 +835,20 @@ FORM convierte_mensaje  USING    p_sy_msgid
                                  p_sy_msgno
                         CHANGING return_message.
 
-  SELECT SINGLE * FROM t100 WHERE sprsl = 'S'
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE * FROM t100 WHERE sprsl = 'S'
+*                            AND   arbgb = sy-msgid
+*                            AND   msgnr = sy-msgno.
+*
+* NEW CODE
+  SELECT *
+  UP TO 1 ROWS  FROM t100 WHERE sprsl = 'S'
                             AND   arbgb = sy-msgid
-                            AND   msgnr = sy-msgno.
+                            AND   msgnr = sy-msgno ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
   IF sy-subrc = 0.
     return_message = t100-text.
     IF return_message CS '&1'.

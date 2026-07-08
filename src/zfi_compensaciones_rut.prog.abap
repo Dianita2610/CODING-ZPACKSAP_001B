@@ -19,23 +19,52 @@
 FORM obtener_datos .
   DATA: indice TYPE sy-tabix.
 ***Buscamos los documnetos en la REGUH
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT *
+*    INTO TABLE ti_reguh
+*    FROM reguh
+*    WHERE laufd IN s_laufd
+*      AND laufi IN s_laufi
+*      AND zbukr IN s_bukrs
+*      AND zaldt IN s_zaldt
+*      AND xvorl NE 'X'.
+*
+* NEW CODE
   SELECT *
+
     INTO TABLE ti_reguh
     FROM reguh
     WHERE laufd IN s_laufd
       AND laufi IN s_laufi
       AND zbukr IN s_bukrs
       AND zaldt IN s_zaldt
-      AND xvorl NE 'X'.
+      AND xvorl NE 'X' ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
   IF sy-subrc EQ 0.
 ***Obtenemos los documentos que si se crearon en la BKPF
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT bukrs belnr gjahr
+*      INTO TABLE ti_bkpf
+*      FROM bkpf
+*      FOR ALL ENTRIES IN ti_reguh
+*      WHERE belnr EQ ti_reguh-vblnr
+*        AND bukrs EQ ti_reguh-zbukr
+*        AND gjahr EQ ti_reguh-zaldt(4).
+*
+* NEW CODE
     SELECT bukrs belnr gjahr
+
       INTO TABLE ti_bkpf
       FROM bkpf
       FOR ALL ENTRIES IN ti_reguh
       WHERE belnr EQ ti_reguh-vblnr
         AND bukrs EQ ti_reguh-zbukr
-        AND gjahr EQ ti_reguh-zaldt(4).
+        AND gjahr EQ ti_reguh-zaldt(4) ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
     SORT ti_bkpf BY bukrs belnr gjahr.
 ***Eliminamos de la TI_REGUH aquellos que existen en la BKPF
@@ -324,7 +353,22 @@ FORM ejecutar_batch .
       ENDLOOP.
 
 ***Verificamos si existen cheques en la PAYR
-      SELECT SINGLE *
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*      SELECT SINGLE *
+*        INTO wa_payr
+*        FROM payr
+*        WHERE zbukr EQ wa_reguh-zbukr
+*          AND hbkid EQ wa_reguh-hbkid
+*          AND hktid EQ wa_reguh-hktid
+*          AND lifnr EQ wa_reguh-lifnr
+*          AND vblnr EQ doc_anterior
+*          AND gjahr EQ wa_reguh-zaldt(4)
+*          AND zaldt EQ wa_reguh-zaldt.
+*
+* NEW CODE
+      SELECT *
+      UP TO 1 ROWS 
         INTO wa_payr
         FROM payr
         WHERE zbukr EQ wa_reguh-zbukr
@@ -333,7 +377,10 @@ FORM ejecutar_batch .
           AND lifnr EQ wa_reguh-lifnr
           AND vblnr EQ doc_anterior
           AND gjahr EQ wa_reguh-zaldt(4)
-          AND zaldt EQ wa_reguh-zaldt.
+          AND zaldt EQ wa_reguh-zaldt ORDER BY PRIMARY KEY.
+
+      ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
       IF sy-subrc EQ 0.
         wa_payr-vblnr = messtab-msgv1.
         wa_payr-gjahr = sy-datum(4).

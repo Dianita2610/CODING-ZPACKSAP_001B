@@ -95,14 +95,29 @@ ENDFORM.                    " BAJAR_ARCHIVO
 *  <--  p2        text
 *----------------------------------------------------------------------*
 FORM procesar .
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT *
+*    INTO TABLE ti_payr
+*    FROM payr
+*    FOR ALL ENTRIES IN ti_entrada
+*    WHERE zbukr EQ ti_entrada-zbukr
+*      AND hbkid EQ ti_entrada-hbkid
+*      AND gjahr EQ ti_entrada-gjahr
+*      AND chect EQ ti_entrada-chect_cob.
+*
+* NEW CODE
   SELECT *
+
     INTO TABLE ti_payr
     FROM payr
     FOR ALL ENTRIES IN ti_entrada
     WHERE zbukr EQ ti_entrada-zbukr
       AND hbkid EQ ti_entrada-hbkid
       AND gjahr EQ ti_entrada-gjahr
-      AND chect EQ ti_entrada-chect_cob.
+      AND chect EQ ti_entrada-chect_cob ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
   LOOP AT ti_payr ASSIGNING <fs>.
     CLEAR ti_entrada.

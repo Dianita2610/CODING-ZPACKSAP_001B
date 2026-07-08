@@ -120,35 +120,87 @@ FORM busca_historial.
  CASE TABNAME.
  WHEN 101.
 
-   SELECT * INTO CORRESPONDING FIELDS OF TABLE gt_reguh_PRIMERA
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*   SELECT * INTO CORRESPONDING FIELDS OF TABLE gt_reguh_PRIMERA
+*    FROM reguh
+*     WHERE ZBUKR EQ  s_bukr1-low
+*      AND  VBLNR EQ  s_vblnr-low
+*      AND ZALDT  EQ  s_zaldt-low
+*      AND RZAWE  EQ  s_rzawe-low.
+*
+* NEW CODE
+   SELECT *
+ INTO CORRESPONDING FIELDS OF TABLE gt_reguh_PRIMERA
     FROM reguh
      WHERE ZBUKR EQ  s_bukr1-low
       AND  VBLNR EQ  s_vblnr-low
       AND ZALDT  EQ  s_zaldt-low
-      AND RZAWE  EQ  s_rzawe-low.
+      AND RZAWE  EQ  s_rzawe-low ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
  WHEN 102.
-    SELECT * INTO CORRESPONDING FIELDS OF TABLE gt_REGUH_PRIMERA
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT * INTO CORRESPONDING FIELDS OF TABLE gt_REGUH_PRIMERA
+*    FROM REGUH
+*    WHERE ZBUKR        EQ s_bukrs-low
+*      AND IDENTIF_PAGO EQ s_idvv-low.
+*
+* NEW CODE
+    SELECT *
+ INTO CORRESPONDING FIELDS OF TABLE gt_REGUH_PRIMERA
     FROM REGUH
     WHERE ZBUKR        EQ s_bukrs-low
-      AND IDENTIF_PAGO EQ s_idvv-low.
+      AND IDENTIF_PAGO EQ s_idvv-low ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
  WHEN 103.
 
-    SELECT SINGLE ZBUKR VBLNR GJAHR ZALDT INTO CORRESPONDING FIELDS OF gs_payr_ini
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE ZBUKR VBLNR GJAHR ZALDT INTO CORRESPONDING FIELDS OF gs_payr_ini
+*     FROM PAYR
+*      WHERE  ZBUKR EQ s_bukr3-low
+*        AND HBKID  EQ s_hbkid-low
+*        AND HKTID  EQ s_hktid-low
+*        AND RZAWE  EQ s_rzaw3-low
+*        AND CHECT  EQ s_chect-low.
+*
+* NEW CODE
+    SELECT ZBUKR VBLNR GJAHR ZALDT
+    UP TO 1 ROWS  INTO CORRESPONDING FIELDS OF gs_payr_ini
      FROM PAYR
       WHERE  ZBUKR EQ s_bukr3-low
         AND HBKID  EQ s_hbkid-low
         AND HKTID  EQ s_hktid-low
         AND RZAWE  EQ s_rzaw3-low
-        AND CHECT  EQ s_chect-low.
+        AND CHECT  EQ s_chect-low ORDER BY PRIMARY KEY.
 
-    SELECT * INTO CORRESPONDING FIELDS OF TABLE gt_reguh_PRIMERA
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
+
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT * INTO CORRESPONDING FIELDS OF TABLE gt_reguh_PRIMERA
+*       FROM reguh
+*       WHERE ZBUKR EQ  gs_payr_ini-zbukr
+*        AND  VBLNR EQ  gs_payr_ini-vblnr
+*         AND ZALDT EQ  gs_payr_ini-zaldt
+*         AND RZAWE EQ  S_RZAW3-LOW.
+*
+* NEW CODE
+    SELECT *
+ INTO CORRESPONDING FIELDS OF TABLE gt_reguh_PRIMERA
        FROM reguh
        WHERE ZBUKR EQ  gs_payr_ini-zbukr
         AND  VBLNR EQ  gs_payr_ini-vblnr
          AND ZALDT EQ  gs_payr_ini-zaldt
-         AND RZAWE EQ  S_RZAW3-LOW.
+         AND RZAWE EQ  S_RZAW3-LOW ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
  ENDCASE.
 "-------------------------------------------------------------------------------------------------------------
@@ -165,21 +217,45 @@ FORM busca_historial.
     " PRIMERA HISTORICA
     IF lv_contador EQ 1.
 
-      SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers INTO CORRESPONDING FIELDS OF TABLE gt_hist
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers INTO CORRESPONDING FIELDS OF TABLE gt_hist
+*      FROM bse_clr
+*     WHERE bukrs_clr EQ gs_reguh-zbukr
+*      AND belnr_clr  EQ gs_reguh-vblnr
+*      AND gjahr_clr  EQ gs_reguh-zaldt+0(4).
+*
+* NEW CODE
+      SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers
+ INTO CORRESPONDING FIELDS OF TABLE gt_hist
       FROM bse_clr
      WHERE bukrs_clr EQ gs_reguh-zbukr
       AND belnr_clr  EQ gs_reguh-vblnr
-      AND gjahr_clr  EQ gs_reguh-zaldt+0(4).
+      AND gjahr_clr  EQ gs_reguh-zaldt+0(4) ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
     ELSE. " SEGUNDA HISTORICA ( ..N HISTORICA )
 
     IF gt_REGUH[] IS NOT INITIAL. " para nueva consulta historica base
       READ TABLE gt_reguh INTO gs_Reguh INDEX 1.
-      SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers INTO CORRESPONDING FIELDS OF TABLE gt_hist
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers INTO CORRESPONDING FIELDS OF TABLE gt_hist
+*       FROM bse_clr
+*       WHERE bukrs_clr EQ gs_reguh-zbukr
+*         AND belnr_clr EQ gs_reguh-vblnr
+*         AND gjahr_clr EQ gs_reguh-zaldt+0(4).
+*
+* NEW CODE
+      SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers
+ INTO CORRESPONDING FIELDS OF TABLE gt_hist
        FROM bse_clr
        WHERE bukrs_clr EQ gs_reguh-zbukr
          AND belnr_clr EQ gs_reguh-vblnr
-         AND gjahr_clr EQ gs_reguh-zaldt+0(4).
+         AND gjahr_clr EQ gs_reguh-zaldt+0(4) ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
 **ins ini
        SORT gt_hist BY bukrs_clr belnr_clr gjahr_clr.
@@ -189,11 +265,23 @@ FORM busca_historial.
      ELSE.
 
       " se creo una tabla gt_hist2 ya que si la consulta no contiene datos me borraria la tabla gt_hist, y la necesito
-      SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers INTO CORRESPONDING FIELDS OF TABLE gt_hist2
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers INTO CORRESPONDING FIELDS OF TABLE gt_hist2
+*        FROM bse_clr FOR ALL ENTRIES IN gt_hist
+*         WHERE bukrs_clr   EQ gt_hist-bukrs
+*           AND belnr_clr  EQ gt_hist-belnr
+*           AND gjahr_clr  EQ gt_hist-gjahr.
+*
+* NEW CODE
+      SELECT bukrs_clr belnr_clr gjahr_clr bukrs belnr gjahr buzei agzei shkzg dmbtr waers
+ INTO CORRESPONDING FIELDS OF TABLE gt_hist2
         FROM bse_clr FOR ALL ENTRIES IN gt_hist
          WHERE bukrs_clr   EQ gt_hist-bukrs
            AND belnr_clr  EQ gt_hist-belnr
-           AND gjahr_clr  EQ gt_hist-gjahr.
+           AND gjahr_clr  EQ gt_hist-gjahr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 **ins ini
        SORT gt_hist2 BY bukrs_clr belnr_clr gjahr_clr.
 *ins fin
@@ -237,12 +325,25 @@ FORM busca_historial.
             CLEAR: gt_reguh.
               " Despues se consulta la REGUH
 *             READ TABLE gt_bseg INTO gs_bseg INDEX 1.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*              SELECT *
+*              INTO CORRESPONDING FIELDS OF TABLE gt_REGUH
+*              FROM REGUH FOR ALL ENTRIES IN GT_BSEG
+*              WHERE ZBUKR     EQ  gt_bseg-bukrs
+*                AND LIFNR     EQ gs_reguh-LIFNR
+*                AND VBLNR     EQ gt_bseg-XREF2.
+*
+* NEW CODE
               SELECT *
+
               INTO CORRESPONDING FIELDS OF TABLE gt_REGUH
               FROM REGUH FOR ALL ENTRIES IN GT_BSEG
               WHERE ZBUKR     EQ  gt_bseg-bukrs
                 AND LIFNR     EQ gs_reguh-LIFNR
-                AND VBLNR     EQ gt_bseg-XREF2.
+                AND VBLNR     EQ gt_bseg-XREF2 ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 *                AND ZALDT     EQ gt_bseg-AUGDT. " CAMBIO 07.05.2015
 *                AND GJAHR_DEV EQ gt_bseg-GJAHR. " COMENTADO
 
@@ -336,19 +437,43 @@ FORM busca_posterior.
  CASE TABNAME.
   WHEN 101.
 
-  SELECT * INTO CORRESPONDING FIELDS OF TABLE gt_reguh
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT * INTO CORRESPONDING FIELDS OF TABLE gt_reguh
+*   FROM reguh
+*   WHERE ZBUKR EQ  s_bukr1-low
+*    AND  VBLNR EQ  s_vblnr-low
+*    AND ZALDT  EQ  s_zaldt-low
+*    AND RZAWE  EQ  s_rzawe-low.
+*
+* NEW CODE
+  SELECT *
+ INTO CORRESPONDING FIELDS OF TABLE gt_reguh
    FROM reguh
    WHERE ZBUKR EQ  s_bukr1-low
     AND  VBLNR EQ  s_vblnr-low
     AND ZALDT  EQ  s_zaldt-low
-    AND RZAWE  EQ  s_rzawe-low.
+    AND RZAWE  EQ  s_rzawe-low ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
 
   WHEN 102.
-    SELECT * INTO CORRESPONDING FIELDS OF TABLE gt_REGUH
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT * INTO CORRESPONDING FIELDS OF TABLE gt_REGUH
+*    FROM REGUH
+*    WHERE ZBUKR        EQ s_bukrs-low
+*      AND IDENTIF_PAGO EQ s_idvv-low.
+*
+* NEW CODE
+    SELECT *
+ INTO CORRESPONDING FIELDS OF TABLE gt_REGUH
     FROM REGUH
     WHERE ZBUKR        EQ s_bukrs-low
-      AND IDENTIF_PAGO EQ s_idvv-low.
+      AND IDENTIF_PAGO EQ s_idvv-low ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
  ENDCASE.
 
@@ -462,21 +587,47 @@ FORM busca_posterior_chq.
 
     WHEN 101 OR 102.
 
-     SELECT * INTO CORRESPONDING FIELDS OF TABLE gt_reguh
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*     SELECT * INTO CORRESPONDING FIELDS OF TABLE gt_reguh
+*      FROM reguh
+*     WHERE ZBUKR EQ  s_bukr1-low
+*      AND  VBLNR EQ  s_vblnr-low
+*      AND  ZALDT EQ  s_zaldt-low
+*      AND  RZAWE EQ  s_rzawe-low.
+*
+* NEW CODE
+     SELECT *
+ INTO CORRESPONDING FIELDS OF TABLE gt_reguh
       FROM reguh
      WHERE ZBUKR EQ  s_bukr1-low
       AND  VBLNR EQ  s_vblnr-low
       AND  ZALDT EQ  s_zaldt-low
-      AND  RZAWE EQ  s_rzawe-low.
+      AND  RZAWE EQ  s_rzawe-low ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
     WHEN 103.
 
-      SELECT * INTO CORRESPONDING FIELDS OF TABLE gt_reguh
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT * INTO CORRESPONDING FIELDS OF TABLE gt_reguh
+*       FROM reguh
+*       WHERE ZBUKR EQ  gs_payr_ini-zbukr  " viene de consulta historica
+*        AND  VBLNR EQ  gs_payr_ini-vblnr
+*        AND  ZALDT EQ  gs_payr_ini-zaldt
+*        AND  RZAWE EQ  S_RZAW3-LOW.
+*
+* NEW CODE
+      SELECT *
+ INTO CORRESPONDING FIELDS OF TABLE gt_reguh
        FROM reguh
        WHERE ZBUKR EQ  gs_payr_ini-zbukr  " viene de consulta historica
         AND  VBLNR EQ  gs_payr_ini-vblnr
         AND  ZALDT EQ  gs_payr_ini-zaldt
-        AND  RZAWE EQ  S_RZAW3-LOW.
+        AND  RZAWE EQ  S_RZAW3-LOW ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
   ENDCASE.
 
@@ -596,11 +747,23 @@ FORM univ_datos.
   "------------------------------------------------------------------------------------
   " GT_BKPF
   "------------------------------------------------------------------------------------
-  SELECT bukrs belnr gjahr bvorg INTO CORRESPONDING FIELDS OF TABLE gt_bkpf
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT bukrs belnr gjahr bvorg INTO CORRESPONDING FIELDS OF TABLE gt_bkpf
+*    FROM bkpf FOR ALL ENTRIES IN gt_alv
+*    WHERE bukrs   EQ gt_alv-bukrs
+*      AND belnr   EQ gt_alv-belnr
+*      AND gjahr   EQ gt_alv-gjahr.
+*
+* NEW CODE
+  SELECT bukrs belnr gjahr bvorg
+ INTO CORRESPONDING FIELDS OF TABLE gt_bkpf
     FROM bkpf FOR ALL ENTRIES IN gt_alv
     WHERE bukrs   EQ gt_alv-bukrs
       AND belnr   EQ gt_alv-belnr
-      AND gjahr   EQ gt_alv-gjahr.
+      AND gjahr   EQ gt_alv-gjahr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
   SORT gt_bkpf BY bukrs belnr gjahr.
   "------------------------------------------------------------------------------------
@@ -620,12 +783,25 @@ FORM univ_datos.
   "------------------------------------------------------------------------------------
   " GT_BSAS
   "------------------------------------------------------------------------------------
-  SELECT bukrs belnr gjahr buzei augdt augbl budat bldat xblnr blart sgtxt INTO CORRESPONDING FIELDS OF TABLE gt_bsas
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT bukrs belnr gjahr buzei augdt augbl budat bldat xblnr blart sgtxt INTO CORRESPONDING FIELDS OF TABLE gt_bsas
+*   FROM bsas FOR ALL ENTRIES IN gt_alv
+*   WHERE bukrs  EQ gt_alv-bukrs
+*     AND belnr  EQ gt_alv-belnr
+*     AND gjahr  EQ gt_alv-gjahr
+*     AND buzei  EQ gt_alv-buzei.
+*
+* NEW CODE
+  SELECT bukrs belnr gjahr buzei augdt augbl budat bldat xblnr blart sgtxt
+ INTO CORRESPONDING FIELDS OF TABLE gt_bsas
    FROM bsas FOR ALL ENTRIES IN gt_alv
    WHERE bukrs  EQ gt_alv-bukrs
      AND belnr  EQ gt_alv-belnr
      AND gjahr  EQ gt_alv-gjahr
-     AND buzei  EQ gt_alv-buzei.
+     AND buzei  EQ gt_alv-buzei ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
   SORT gt_bsas BY bukrs belnr gjahr buzei.
 ENDFORM.                    "univ_datos
@@ -692,12 +868,26 @@ FORM llena_alv.
 
     IF sy-subrc NE 0.
 
-    SELECT SINGLE bukrs belnr gjahr buzei zuonr hkont lifnr xref1 xref2 xref2 xref3 zzmot_emis INTO CORRESPONDING FIELDS OF gs_bseg
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE bukrs belnr gjahr buzei zuonr hkont lifnr xref1 xref2 xref2 xref3 zzmot_emis INTO CORRESPONDING FIELDS OF gs_bseg
+*    FROM bseg
+*    WHERE bukrs   EQ gs_alv-bukrs
+*      AND belnr   EQ gs_alv-belnr
+*      AND gjahr   EQ gs_alv-gjahr
+*      AND buzei   EQ gs_alv-buzei.
+*
+* NEW CODE
+    SELECT bukrs belnr gjahr buzei zuonr hkont lifnr xref1 xref2 xref2 xref3 zzmot_emis
+    UP TO 1 ROWS  INTO CORRESPONDING FIELDS OF gs_bseg
     FROM bseg
     WHERE bukrs   EQ gs_alv-bukrs
       AND belnr   EQ gs_alv-belnr
       AND gjahr   EQ gs_alv-gjahr
-      AND buzei   EQ gs_alv-buzei.
+      AND buzei   EQ gs_alv-buzei ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     ENDIF.
 
@@ -712,12 +902,26 @@ FORM llena_alv.
                                              buzei = gs_alv-buzei BINARY SEARCH.
     IF sy-subrc NE 0.
 
-    SELECT SINGLE bukrs belnr gjahr buzei augdt augbl budat bldat xblnr blart sgtxt INTO  gs_bsas
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE bukrs belnr gjahr buzei augdt augbl budat bldat xblnr blart sgtxt INTO  gs_bsas
+*    FROM bsis
+*    WHERE bukrs  EQ gs_alv-bukrs
+*      AND belnr  EQ gs_alv-belnr
+*      AND gjahr  EQ gs_alv-gjahr
+*      AND buzei  EQ gs_alv-buzei.
+*
+* NEW CODE
+    SELECT bukrs belnr gjahr buzei augdt augbl budat bldat xblnr blart sgtxt
+    UP TO 1 ROWS  INTO  gs_bsas
     FROM bsis
     WHERE bukrs  EQ gs_alv-bukrs
       AND belnr  EQ gs_alv-belnr
       AND gjahr  EQ gs_alv-gjahr
-      AND buzei  EQ gs_alv-buzei.
+      AND buzei  EQ gs_alv-buzei ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
      ENDIF.
 
@@ -734,36 +938,86 @@ FORM llena_alv.
     "---------------------------------------------------------------------------------------
                                                             " T001
     CLEAR: lv_plan_cta.
-    SELECT SINGLE ktopl INTO lv_plan_cta
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE ktopl INTO lv_plan_cta
+*      FROM t001
+*      WHERE bukrs EQ gs_alv-bukrs.
+*
+* NEW CODE
+    SELECT ktopl
+    UP TO 1 ROWS  INTO lv_plan_cta
       FROM t001
-      WHERE bukrs EQ gs_alv-bukrs.
+      WHERE bukrs EQ gs_alv-bukrs ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     CLEAR: gs_alv-txt50.
-    SELECT SINGLE txt50  INTO gs_alv-txt50
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE txt50  INTO gs_alv-txt50
+*     FROM skat
+*     WHERE spras EQ sy-langu
+*       AND ktopl EQ lv_plan_cta
+*       AND saknr EQ gs_alv-hkont.
+*
+* NEW CODE
+    SELECT txt50
+    UP TO 1 ROWS   INTO gs_alv-txt50
      FROM skat
      WHERE spras EQ sy-langu
        AND ktopl EQ lv_plan_cta
-       AND saknr EQ gs_alv-hkont.
+       AND saknr EQ gs_alv-hkont ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     "---------------------------------------------------------------------------------------
                                                             " T003
     "---------------------------------------------------------------------------------------
     CLEAR: gs_alv-ltext.
-    SELECT SINGLE ltext INTO gs_alv-ltext
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE ltext INTO gs_alv-ltext
+*    FROM t003t
+*     WHERE spras EQ sy-langu
+*       AND blart EQ gs_alv-blart.
+*
+* NEW CODE
+    SELECT ltext
+    UP TO 1 ROWS  INTO gs_alv-ltext
     FROM t003t
      WHERE spras EQ sy-langu
-       AND blart EQ gs_alv-blart.
+       AND blart EQ gs_alv-blart ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     "------------------------------------------------------------------------------------
     " PAYR
     "------------------------------------------------------------------------------------
     CLEAR: gs_payr.
-    SELECT SINGLE hbkid hktid rzawe chect laufd laufi zaldt  xbanc bancd xbukr voidr
-           voidd voidu INTO CORRESPONDING FIELDS OF gs_payr
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE hbkid hktid rzawe chect laufd laufi zaldt  xbanc bancd xbukr voidr
+*           voidd voidu INTO CORRESPONDING FIELDS OF gs_payr
+*     FROM payr
+*      WHERE zbukr EQ gs_alv-bukrs
+*        AND vblnr EQ gs_alv-belnr
+*        AND gjahr EQ gs_Alv-gjahr.
+*
+* NEW CODE
+    SELECT hbkid hktid rzawe chect laufd laufi zaldt  xbanc bancd xbukr voidr
+           voidd voidu
+    UP TO 1 ROWS  INTO CORRESPONDING FIELDS OF gs_payr
      FROM payr
       WHERE zbukr EQ gs_alv-bukrs
         AND vblnr EQ gs_alv-belnr
-        AND gjahr EQ gs_Alv-gjahr.
+        AND gjahr EQ gs_Alv-gjahr ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 *        AND zaldt EQ gs_alv-augdt
 *        AND lifnr EQ gs_alv-lifnr.
 
@@ -883,12 +1137,25 @@ FORM itera_reguh USING gt_reguh LIKE gt_reguh
         IMPORTING
          OUTPUT        = gs_reguh-BELNR_DEV.
 
-   SELECT BUKRS AUGDT  AUGBL BUZEI SHKZG WRBTR  LIFNR BELNR BUDAT INTO CORRESPONDING FIELDS OF TABLE gt_bsak_reguh
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*   SELECT BUKRS AUGDT  AUGBL BUZEI SHKZG WRBTR  LIFNR BELNR BUDAT INTO CORRESPONDING FIELDS OF TABLE gt_bsak_reguh
+*       FROM bsak
+*       WHERE bukrs EQ gs_reguh-zbukr
+*        AND LIFNR  EQ gs_reguh-LIFNR
+*        AND GJAHR	 EQ gs_reguh-GJAHR_DEV
+*        AND BELNR	 EQ gs_reguh-BELNR_DEV.
+*
+* NEW CODE
+   SELECT BUKRS AUGDT  AUGBL BUZEI SHKZG WRBTR  LIFNR BELNR BUDAT
+ INTO CORRESPONDING FIELDS OF TABLE gt_bsak_reguh
        FROM bsak
        WHERE bukrs EQ gs_reguh-zbukr
         AND LIFNR  EQ gs_reguh-LIFNR
         AND GJAHR	 EQ gs_reguh-GJAHR_DEV
-        AND BELNR	 EQ gs_reguh-BELNR_DEV.
+        AND BELNR	 EQ gs_reguh-BELNR_DEV ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
        IF sy-subrc EQ 0.
 
@@ -897,13 +1164,28 @@ FORM itera_reguh USING gt_reguh LIKE gt_reguh
                                             lv_contador_p.
         ELSE. " si no eta en la bsak lo agrego solo al final
 
-           SELECT SINGLE BUZEI SHKZG WRBTR INTO CORRESPONDING FIELDS OF  gs_bsik
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*           SELECT SINGLE BUZEI SHKZG WRBTR INTO CORRESPONDING FIELDS OF  gs_bsik
+*           FROM bsik
+*           WHERE bukrs EQ gs_reguh-zbukr
+*            AND LIFNR  EQ gs_reguh-LIFNR
+*            AND GJAHR  EQ gs_reguh-GJAHR_DEV
+*            AND BELNR	 EQ gs_reguh-BELNR_DEV
+*            AND XREF2	 EQ gs_reguh-vblnr.
+*
+* NEW CODE
+           SELECT BUZEI SHKZG WRBTR
+           UP TO 1 ROWS  INTO CORRESPONDING FIELDS OF  gs_bsik
            FROM bsik
            WHERE bukrs EQ gs_reguh-zbukr
             AND LIFNR  EQ gs_reguh-LIFNR
             AND GJAHR  EQ gs_reguh-GJAHR_DEV
             AND BELNR	 EQ gs_reguh-BELNR_DEV
-            AND XREF2	 EQ gs_reguh-vblnr.
+            AND XREF2	 EQ gs_reguh-vblnr ORDER BY PRIMARY KEY.
+
+           ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
           gs_Alv-ordencon   = lv_contador_p .
           gs_alv-BUKRS_CLR     = ''.
@@ -943,12 +1225,25 @@ FORM LOGICA USING gs_Reguh LIKe gs_reguh
         IMPORTING
          OUTPUT        = gs_reguh-BELNR_DEV.
 
-      SELECT BUKRS AUGDT  AUGBL BUZEI SHKZG WRBTR  LIFNR BELNR BUDAT INTO CORRESPONDING FIELDS OF TABLE gt_bsak
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT BUKRS AUGDT  AUGBL BUZEI SHKZG WRBTR  LIFNR BELNR BUDAT INTO CORRESPONDING FIELDS OF TABLE gt_bsak
+*       FROM bsak
+*       WHERE bukrs EQ gs_reguh-zbukr
+*        AND LIFNR  EQ gs_reguh-LIFNR
+*        AND GJAHR	 EQ gs_reguh-GJAHR_DEV
+*        AND BELNR	 EQ gs_reguh-BELNR_DEV.
+*
+* NEW CODE
+      SELECT BUKRS AUGDT  AUGBL BUZEI SHKZG WRBTR  LIFNR BELNR BUDAT
+ INTO CORRESPONDING FIELDS OF TABLE gt_bsak
        FROM bsak
        WHERE bukrs EQ gs_reguh-zbukr
         AND LIFNR  EQ gs_reguh-LIFNR
         AND GJAHR	 EQ gs_reguh-GJAHR_DEV
-        AND BELNR	 EQ gs_reguh-BELNR_DEV.
+        AND BELNR	 EQ gs_reguh-BELNR_DEV ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
           IF sy-subrc EQ 0.
 
@@ -958,13 +1253,28 @@ FORM LOGICA USING gs_Reguh LIKe gs_reguh
 
           ELSEIF lv_contador_p EQ 1 AND sy-subrc NE 0.
 
-           SELECT SINGLE BUZEI SHKZG WRBTR INTO CORRESPONDING FIELDS OF  gs_bsik
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*           SELECT SINGLE BUZEI SHKZG WRBTR INTO CORRESPONDING FIELDS OF  gs_bsik
+*           FROM bsik
+*           WHERE bukrs EQ gs_reguh-zbukr
+*            AND LIFNR  EQ gs_reguh-LIFNR
+*            AND GJAHR  EQ gs_reguh-GJAHR_DEV
+*            AND BELNR	 EQ gs_reguh-BELNR_DEV
+*            AND XREF2	 EQ gs_reguh-vblnr.
+*
+* NEW CODE
+           SELECT BUZEI SHKZG WRBTR
+           UP TO 1 ROWS  INTO CORRESPONDING FIELDS OF  gs_bsik
            FROM bsik
            WHERE bukrs EQ gs_reguh-zbukr
             AND LIFNR  EQ gs_reguh-LIFNR
             AND GJAHR  EQ gs_reguh-GJAHR_DEV
             AND BELNR	 EQ gs_reguh-BELNR_DEV
-            AND XREF2	 EQ gs_reguh-vblnr.
+            AND XREF2	 EQ gs_reguh-vblnr ORDER BY PRIMARY KEY.
+
+           ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
           gs_Alv-ordencon   =  lv_contador_p.
           gs_alv-BUKRS_CLR     = ''.
@@ -995,33 +1305,73 @@ FORM LOGICA USING gs_Reguh LIKe gs_reguh
         IF gt_bsak IS NOT INITIAL.
           lv_contador_p = lv_contador_p + 1.
 *          LOOP AT gt_bsak INTO gs_bsak.
-            SELECT  BUKRS BELNR GJAHR BLART BUDAT INTO CORRESPONDING FIELDS OF TABLE  gt_bkpf
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*            SELECT  BUKRS BELNR GJAHR BLART BUDAT INTO CORRESPONDING FIELDS OF TABLE  gt_bkpf
+*            FROM bkpf  FOR ALL ENTRIES IN gt_bsak
+*             WHERE BUKRS  EQ gt_bsak-BUKRS
+*               AND BELNR  EQ gt_bsak-AUGBL
+*               AND GJAHR  EQ gt_bsak-AUGDT+0(4).
+*
+* NEW CODE
+            SELECT BUKRS BELNR GJAHR BLART BUDAT
+ INTO CORRESPONDING FIELDS OF TABLE  gt_bkpf
             FROM bkpf  FOR ALL ENTRIES IN gt_bsak
              WHERE BUKRS  EQ gt_bsak-BUKRS
                AND BELNR  EQ gt_bsak-AUGBL
-               AND GJAHR  EQ gt_bsak-AUGDT+0(4).
+               AND GJAHR  EQ gt_bsak-AUGDT+0(4) ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
               CLEAR: gt_reguh.
             LOOP AT gt_bkpf INTO gs_bkpf.
 *            como el resultado es ZP se hace consulta  a la REGUH
              IF  gs_bkpf-BLART EQ 'ZP'.
-              SELECT SINGLE * INTO CORRESPONDING FIELDS OF gs_reguh2
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*              SELECT SINGLE * INTO CORRESPONDING FIELDS OF gs_reguh2
+*              FROM reguh
+*              WHERE ZBUKR EQ gs_bkpf-BUKRS
+*                AND LIFNR EQ gs_reguh-LIFNR
+*                AND  VBLNR EQ gs_bkpf-BELNR
+*                AND ZALDT EQ gs_bkpf-BUDAT
+*                AND  BELNR_DEV NE SPACE.
+*
+* NEW CODE
+              SELECT *
+              UP TO 1 ROWS  INTO CORRESPONDING FIELDS OF gs_reguh2
               FROM reguh
               WHERE ZBUKR EQ gs_bkpf-BUKRS
                 AND LIFNR EQ gs_reguh-LIFNR
                 AND  VBLNR EQ gs_bkpf-BELNR
                 AND ZALDT EQ gs_bkpf-BUDAT
-                AND  BELNR_DEV NE SPACE.
+                AND  BELNR_DEV NE SPACE ORDER BY PRIMARY KEY.
+
+              ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
                IF sy-subrc EQ 0.
                APPEND gs_reguh2 TO gt_reguh. "con la gt_reguh se vuelve a iterar desde la primera posterior ''
 
                 ELSE.
-               SELECT SINGLE BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR INTO CORRESPONDING FIELDS OF gs_bse_clr
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*               SELECT SINGLE BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR INTO CORRESPONDING FIELDS OF gs_bse_clr
+*                 FROM bse_clr
+*               WHERE BUKRS EQ  gs_bkpf-BUKRS
+*                 AND BELNR EQ gs_bkpf-belnr
+*                 AND GJAHR EQ gs_bkpf-GJAHR.
+*
+* NEW CODE
+               SELECT BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR
+               UP TO 1 ROWS  INTO CORRESPONDING FIELDS OF gs_bse_clr
                  FROM bse_clr
                WHERE BUKRS EQ  gs_bkpf-BUKRS
                  AND BELNR EQ gs_bkpf-belnr
-                 AND GJAHR EQ gs_bkpf-GJAHR.
+                 AND GJAHR EQ gs_bkpf-GJAHR ORDER BY PRIMARY KEY.
+
+               ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
                  IF sy-subrc EQ 0.
 
@@ -1052,11 +1402,24 @@ FORM LOGICA USING gs_Reguh LIKe gs_reguh
              ELSE. " Si no, se consulta la bse_Clr
                  " SI NO ES ZP (BSC_CLR)
                "---------------------------------------------------------------------------------------
-               SELECT SINGLE BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR INTO CORRESPONDING FIELDS OF gs_bse_clr
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*               SELECT SINGLE BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR INTO CORRESPONDING FIELDS OF gs_bse_clr
+*                 FROM bse_clr
+*               WHERE BUKRS EQ  gs_bkpf-BUKRS
+*                 AND BELNR EQ gs_bkpf-belnr
+*                 AND GJAHR EQ gs_bkpf-GJAHR.
+*
+* NEW CODE
+               SELECT BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR
+               UP TO 1 ROWS  INTO CORRESPONDING FIELDS OF gs_bse_clr
                  FROM bse_clr
                WHERE BUKRS EQ  gs_bkpf-BUKRS
                  AND BELNR EQ gs_bkpf-belnr
-                 AND GJAHR EQ gs_bkpf-GJAHR.
+                 AND GJAHR EQ gs_bkpf-GJAHR ORDER BY PRIMARY KEY.
+
+               ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
             IF sy-subrc EQ 0.
 
@@ -1114,34 +1477,75 @@ FORM LOGICA USING gs_Reguh LIKe gs_reguh
           lv_contador_p = lv_contador_p + 1.
            CLEAR: gt_reguh.
            LOOP AT gt_Alv_Aux INTO gs_Alv_aux.
-            SELECT SINGLE BUKRS BELNR GJAHR BLART BUDAT INTO CORRESPONDING FIELDS OF  gs_bkpf
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*            SELECT SINGLE BUKRS BELNR GJAHR BLART BUDAT INTO CORRESPONDING FIELDS OF  gs_bkpf
+*            FROM bkpf "FOR ALL ENTRIES IN gt_alv_aux
+*             WHERE BUKRS  EQ gs_alv_Aux-bukrs_clr
+*               AND BELNR  EQ gs_Alv_aux-BELNR_CLR
+*               AND GJAHR  EQ gs_alv_aux-GJAHR_CLR.
+*
+* NEW CODE
+            SELECT BUKRS BELNR GJAHR BLART BUDAT
+            UP TO 1 ROWS  INTO CORRESPONDING FIELDS OF  gs_bkpf
             FROM bkpf "FOR ALL ENTRIES IN gt_alv_aux
              WHERE BUKRS  EQ gs_alv_Aux-bukrs_clr
                AND BELNR  EQ gs_Alv_aux-BELNR_CLR
-               AND GJAHR  EQ gs_alv_aux-GJAHR_CLR.
+               AND GJAHR  EQ gs_alv_aux-GJAHR_CLR ORDER BY PRIMARY KEY.
+
+            ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
 *             CLEAR: gt_reguh.
 *              LOOP AT gt_bkpf INTO gs_bkpf.
 *            como el resultado es ZP se hace consulta  a la REGUH
              IF  gs_bkpf-BLART EQ 'ZP'.
-              SELECT SINGLE * INTO CORRESPONDING FIELDS OF gs_reguh2
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*              SELECT SINGLE * INTO CORRESPONDING FIELDS OF gs_reguh2
+*              FROM reguh
+*              WHERE ZBUKR  EQ gs_bkpf-BUKRS
+*                AND LIFNR  EQ gv_lifnr"gs_reguh-LIFNR
+*                AND  VBLNR EQ gs_bkpf-BELNR
+*                AND ZALDT  EQ gs_bkpf-BUDAT
+*                AND  BELNR_DEV NE SPACE.
+*
+* NEW CODE
+              SELECT *
+              UP TO 1 ROWS  INTO CORRESPONDING FIELDS OF gs_reguh2
               FROM reguh
               WHERE ZBUKR  EQ gs_bkpf-BUKRS
                 AND LIFNR  EQ gv_lifnr"gs_reguh-LIFNR
                 AND  VBLNR EQ gs_bkpf-BELNR
                 AND ZALDT  EQ gs_bkpf-BUDAT
-                AND  BELNR_DEV NE SPACE.
+                AND  BELNR_DEV NE SPACE ORDER BY PRIMARY KEY.
+
+              ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
               IF sy-subrc EQ 0.
                APPEND gs_reguh2 TO gt_reguh. "con la gt_reguh se vuelve a iterar desde la primera posterior ''
 
                 ELSE.
 
-               SELECT SINGLE BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR INTO CORRESPONDING FIELDS OF gs_bse_clr
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*               SELECT SINGLE BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR INTO CORRESPONDING FIELDS OF gs_bse_clr
+*                 FROM bse_clr
+*               WHERE BUKRS EQ  gs_bkpf-BUKRS
+*                 AND BELNR EQ gs_bkpf-belnr
+*                 AND GJAHR EQ gs_bkpf-GJAHR.
+*
+* NEW CODE
+               SELECT BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR
+               UP TO 1 ROWS  INTO CORRESPONDING FIELDS OF gs_bse_clr
                  FROM bse_clr
                WHERE BUKRS EQ  gs_bkpf-BUKRS
                  AND BELNR EQ gs_bkpf-belnr
-                 AND GJAHR EQ gs_bkpf-GJAHR.
+                 AND GJAHR EQ gs_bkpf-GJAHR ORDER BY PRIMARY KEY.
+
+               ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
                  IF sy-subrc EQ 0.
 
@@ -1172,11 +1576,24 @@ FORM LOGICA USING gs_Reguh LIKe gs_reguh
              ELSE. " Si no, se consulta la bse_Clr
                " SI NO ES ZP (BSC_CLR)
                "---------------------------------------------------------------------------------------
-               SELECT SINGLE BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR INTO CORRESPONDING FIELDS OF gs_bse_clr
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*               SELECT SINGLE BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR INTO CORRESPONDING FIELDS OF gs_bse_clr
+*                 FROM bse_clr
+*               WHERE BUKRS EQ  gs_bkpf-BUKRS
+*                 AND BELNR EQ gs_bkpf-belnr
+*                 AND GJAHR EQ gs_bkpf-GJAHR.
+*
+* NEW CODE
+               SELECT BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR
+               UP TO 1 ROWS  INTO CORRESPONDING FIELDS OF gs_bse_clr
                  FROM bse_clr
                WHERE BUKRS EQ  gs_bkpf-BUKRS
                  AND BELNR EQ gs_bkpf-belnr
-                 AND GJAHR EQ gs_bkpf-GJAHR.
+                 AND GJAHR EQ gs_bkpf-GJAHR ORDER BY PRIMARY KEY.
+
+               ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
                  IF sy-subrc EQ 0.
 
@@ -1237,33 +1654,73 @@ FORM LOGICA_CHQ USING gs_Reguh LIKe gs_reguh
         IF gs_reguh IS NOT INITIAL.
            lv_contador_p = lv_contador_p + 1.
 *          LOOP AT gt_bsak INTO gs_bsak.
-            SELECT  BUKRS BELNR GJAHR BLART BUDAT INTO CORRESPONDING FIELDS OF TABLE  gt_bkpf
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*            SELECT  BUKRS BELNR GJAHR BLART BUDAT INTO CORRESPONDING FIELDS OF TABLE  gt_bkpf
+*            FROM bkpf  " FOR ALL ENTRIES IN gt_bsak
+*             WHERE BUKRS  EQ gs_reguh-zbukr
+*               AND BELNR  EQ gs_reguh-vblnr
+*               AND GJAHR  EQ gs_reguh-zaldt+0(4).
+*
+* NEW CODE
+            SELECT BUKRS BELNR GJAHR BLART BUDAT
+ INTO CORRESPONDING FIELDS OF TABLE  gt_bkpf
             FROM bkpf  " FOR ALL ENTRIES IN gt_bsak
              WHERE BUKRS  EQ gs_reguh-zbukr
                AND BELNR  EQ gs_reguh-vblnr
-               AND GJAHR  EQ gs_reguh-zaldt+0(4).
+               AND GJAHR  EQ gs_reguh-zaldt+0(4) ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
               CLEAR: gt_reguh.
             LOOP AT gt_bkpf INTO gs_bkpf.
 *            como el resultado es ZP se hace consulta  a la REGUH
              IF  gs_bkpf-BLART EQ 'ZP'.
-              SELECT SINGLE * INTO CORRESPONDING FIELDS OF gs_reguh2
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*              SELECT SINGLE * INTO CORRESPONDING FIELDS OF gs_reguh2
+*              FROM reguh
+*              WHERE ZBUKR EQ gs_bkpf-BUKRS
+*                AND LIFNR EQ gs_reguh-LIFNR
+*                AND  VBLNR EQ gs_bkpf-BELNR
+*                AND ZALDT EQ gs_bkpf-BUDAT
+*                AND  BELNR_DEV NE SPACE.
+*
+* NEW CODE
+              SELECT *
+              UP TO 1 ROWS  INTO CORRESPONDING FIELDS OF gs_reguh2
               FROM reguh
               WHERE ZBUKR EQ gs_bkpf-BUKRS
                 AND LIFNR EQ gs_reguh-LIFNR
                 AND  VBLNR EQ gs_bkpf-BELNR
                 AND ZALDT EQ gs_bkpf-BUDAT
-                AND  BELNR_DEV NE SPACE.
+                AND  BELNR_DEV NE SPACE ORDER BY PRIMARY KEY.
+
+              ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
                IF sy-subrc EQ 0.
                APPEND gs_reguh2 TO gt_reguh. "con la gt_reguh se vuelve a iterar desde la primera posterior ''
 
                 ELSE.
-               SELECT SINGLE BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR INTO CORRESPONDING FIELDS OF gs_bse_clr
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*               SELECT SINGLE BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR INTO CORRESPONDING FIELDS OF gs_bse_clr
+*                 FROM bse_clr
+*               WHERE BUKRS EQ  gs_bkpf-BUKRS
+*                 AND BELNR EQ gs_bkpf-belnr
+*                 AND GJAHR EQ gs_bkpf-GJAHR.
+*
+* NEW CODE
+               SELECT BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR
+               UP TO 1 ROWS  INTO CORRESPONDING FIELDS OF gs_bse_clr
                  FROM bse_clr
                WHERE BUKRS EQ  gs_bkpf-BUKRS
                  AND BELNR EQ gs_bkpf-belnr
-                 AND GJAHR EQ gs_bkpf-GJAHR.
+                 AND GJAHR EQ gs_bkpf-GJAHR ORDER BY PRIMARY KEY.
+
+               ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
                  IF sy-subrc EQ 0.
 
@@ -1291,11 +1748,24 @@ FORM LOGICA_CHQ USING gs_Reguh LIKe gs_reguh
                ENDIF.
 
              ELSE. " Si no, se consulta la bse_Clr
-               SELECT SINGLE BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR INTO CORRESPONDING FIELDS OF gs_bse_clr
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*               SELECT SINGLE BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR INTO CORRESPONDING FIELDS OF gs_bse_clr
+*                 FROM bse_clr
+*               WHERE BUKRS EQ  gs_bkpf-BUKRS
+*                 AND BELNR EQ gs_bkpf-belnr
+*                 AND GJAHR EQ gs_bkpf-GJAHR.
+*
+* NEW CODE
+               SELECT BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR
+               UP TO 1 ROWS  INTO CORRESPONDING FIELDS OF gs_bse_clr
                  FROM bse_clr
                WHERE BUKRS EQ  gs_bkpf-BUKRS
                  AND BELNR EQ gs_bkpf-belnr
-                 AND GJAHR EQ gs_bkpf-GJAHR.
+                 AND GJAHR EQ gs_bkpf-GJAHR ORDER BY PRIMARY KEY.
+
+               ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
                  IF sy-subrc EQ 0.
 
@@ -1348,33 +1818,74 @@ FORM LOGICA_CHQ USING gs_Reguh LIKe gs_reguh
           lv_contador_p = lv_contador_p + 1.
            CLEAR: gt_reguh.
            LOOP AT gt_Alv_Aux INTO gs_Alv_aux.
-            SELECT SINGLE BUKRS BELNR GJAHR BLART BUDAT INTO CORRESPONDING FIELDS OF  gs_bkpf
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*            SELECT SINGLE BUKRS BELNR GJAHR BLART BUDAT INTO CORRESPONDING FIELDS OF  gs_bkpf
+*            FROM bkpf "FOR ALL ENTRIES IN gt_alv_aux
+*             WHERE BUKRS  EQ gs_alv_Aux-bukrs_clr
+*               AND BELNR  EQ gs_Alv_aux-BELNR_CLR
+*               AND GJAHR  EQ gs_alv_aux-GJAHR_CLR.
+*
+* NEW CODE
+            SELECT BUKRS BELNR GJAHR BLART BUDAT
+            UP TO 1 ROWS  INTO CORRESPONDING FIELDS OF  gs_bkpf
             FROM bkpf "FOR ALL ENTRIES IN gt_alv_aux
              WHERE BUKRS  EQ gs_alv_Aux-bukrs_clr
                AND BELNR  EQ gs_Alv_aux-BELNR_CLR
-               AND GJAHR  EQ gs_alv_aux-GJAHR_CLR.
+               AND GJAHR  EQ gs_alv_aux-GJAHR_CLR ORDER BY PRIMARY KEY.
+
+            ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
 *             CLEAR: gt_reguh.
 *              LOOP AT gt_bkpf INTO gs_bkpf.
 *            como el resultado es ZP se hace consulta  a la REGUH
              IF  gs_bkpf-BLART EQ 'ZP'.
-              SELECT SINGLE * INTO CORRESPONDING FIELDS OF gs_reguh2
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*              SELECT SINGLE * INTO CORRESPONDING FIELDS OF gs_reguh2
+*              FROM reguh
+*              WHERE ZBUKR  EQ gs_bkpf-BUKRS
+*                AND LIFNR  EQ gv_lifnr"gs_reguh-LIFNR
+*                AND  VBLNR EQ gs_bkpf-BELNR
+*                AND ZALDT  EQ gs_bkpf-BUDAT
+*                AND  BELNR_DEV NE SPACE.
+*
+* NEW CODE
+              SELECT *
+              UP TO 1 ROWS  INTO CORRESPONDING FIELDS OF gs_reguh2
               FROM reguh
               WHERE ZBUKR  EQ gs_bkpf-BUKRS
                 AND LIFNR  EQ gv_lifnr"gs_reguh-LIFNR
                 AND  VBLNR EQ gs_bkpf-BELNR
                 AND ZALDT  EQ gs_bkpf-BUDAT
-                AND  BELNR_DEV NE SPACE.
+                AND  BELNR_DEV NE SPACE ORDER BY PRIMARY KEY.
+
+              ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
               IF sy-subrc EQ 0.
                APPEND gs_reguh2 TO gt_reguh. "con la gt_reguh se vuelve a iterar desde la primera posterior ''
 
                 ELSE.
-               SELECT SINGLE BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR INTO CORRESPONDING FIELDS OF gs_bse_clr
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*               SELECT SINGLE BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR INTO CORRESPONDING FIELDS OF gs_bse_clr
+*                 FROM bse_clr
+*               WHERE BUKRS EQ  gs_bkpf-BUKRS
+*                 AND BELNR EQ gs_bkpf-belnr
+*                 AND GJAHR EQ gs_bkpf-GJAHR.
+*
+* NEW CODE
+               SELECT BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR
+               UP TO 1 ROWS  INTO CORRESPONDING FIELDS OF gs_bse_clr
                  FROM bse_clr
                WHERE BUKRS EQ  gs_bkpf-BUKRS
                  AND BELNR EQ gs_bkpf-belnr
-                 AND GJAHR EQ gs_bkpf-GJAHR.
+                 AND GJAHR EQ gs_bkpf-GJAHR ORDER BY PRIMARY KEY.
+
+               ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
                  IF sy-subrc EQ 0.
 
@@ -1403,11 +1914,24 @@ FORM LOGICA_CHQ USING gs_Reguh LIKe gs_reguh
                   ENDIF.
                ENDIF.
              ELSE. " Si no, se consulta la bse_Clr
-               SELECT SINGLE BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR INTO CORRESPONDING FIELDS OF gs_bse_clr
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*               SELECT SINGLE BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR INTO CORRESPONDING FIELDS OF gs_bse_clr
+*                 FROM bse_clr
+*               WHERE BUKRS EQ  gs_bkpf-BUKRS
+*                 AND BELNR EQ gs_bkpf-belnr
+*                 AND GJAHR EQ gs_bkpf-GJAHR.
+*
+* NEW CODE
+               SELECT BUKRS_CLR BELNR_CLR GJAHR_CLR AGZEI BUKRS BELNR GJAHR BUZEI SHKZG DMBTR
+               UP TO 1 ROWS  INTO CORRESPONDING FIELDS OF gs_bse_clr
                  FROM bse_clr
                WHERE BUKRS EQ  gs_bkpf-BUKRS
                  AND BELNR EQ gs_bkpf-belnr
-                 AND GJAHR EQ gs_bkpf-GJAHR.
+                 AND GJAHR EQ gs_bkpf-GJAHR ORDER BY PRIMARY KEY.
+
+               ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
                 IF sy-subrc EQ 0.
 
@@ -1478,15 +2002,32 @@ FORM llena_reguh_vvista USING gs_alv TYPE ty_Alv.
 
 CLEAR: gs_reguh_vv.
   "Consulta REGUH con los datos del ALV:
- SELECT SINGLE IDENTIF_PAGO HBKID HKTID RZAWE LAUFD LAUFI ZALDT FECHA_ENVIO USUARIO_ENVIO IND_PAGO
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+* SELECT SINGLE IDENTIF_PAGO HBKID HKTID RZAWE LAUFD LAUFI ZALDT FECHA_ENVIO USUARIO_ENVIO IND_PAGO
+*        FECHA_PAGO IND_DEVUELTO FECHA_DEVUELTO IND_RECHAZO FECHA_RECHAZO BELNR_DEV
+*        GJAHR_DEV IND_CUSTODIA FECHA_CUSTODIA MOTIVO_RECHAZO IND_ENTREGADO
+*       FECHA_ENTREGADO IND_RESCATADO FECHA_RESCATADO INTO gs_reguh_vv
+* FROM REGUH
+*  WHERE ZBUKR EQ gs_alv-bukrs_Clr
+*     AND LIFNR EQ gs_Alv-lifnr
+*     AND VBLNR EQ gs_Alv-belnr_clr
+*     AND ( ZALDT GE wa_zaldt-low AND ZALDT LE wa_zaldt-high ).
+*
+* NEW CODE
+ SELECT IDENTIF_PAGO HBKID HKTID RZAWE LAUFD LAUFI ZALDT FECHA_ENVIO USUARIO_ENVIO IND_PAGO
         FECHA_PAGO IND_DEVUELTO FECHA_DEVUELTO IND_RECHAZO FECHA_RECHAZO BELNR_DEV
         GJAHR_DEV IND_CUSTODIA FECHA_CUSTODIA MOTIVO_RECHAZO IND_ENTREGADO
-       FECHA_ENTREGADO IND_RESCATADO FECHA_RESCATADO INTO gs_reguh_vv
+       FECHA_ENTREGADO IND_RESCATADO FECHA_RESCATADO
+ UP TO 1 ROWS  INTO gs_reguh_vv
  FROM REGUH
   WHERE ZBUKR EQ gs_alv-bukrs_Clr
      AND LIFNR EQ gs_Alv-lifnr
      AND VBLNR EQ gs_Alv-belnr_clr
-     AND ( ZALDT GE wa_zaldt-low AND ZALDT LE wa_zaldt-high ).
+     AND ( ZALDT GE wa_zaldt-low AND ZALDT LE wa_zaldt-high ) ORDER BY PRIMARY KEY.
+
+ ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 *     AND ZALDT EQ r_zaldt.
 
    gs_Alv-vvistid        = gs_reguh_vv-VV_ValeVista.

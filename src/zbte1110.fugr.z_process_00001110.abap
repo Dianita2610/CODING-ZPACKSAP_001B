@@ -39,7 +39,21 @@ FUNCTION Z_PROCESS_00001110.
 *        da SHKZG neu in BSIP zu 4.0A
  if i_xblnr = space.
 
-      SELECT * into wa_bsip
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT * into wa_bsip
+*             from bsip
+*             where bukrs = i_bukrs
+*             and   lifnr = i_lifnr
+*             and   waers = i_waers
+*             and   xblnr = i_xblnr
+*             and   wrbtr = i_wrbtr
+*             and   bldat = i_bldat
+*             and   shkzg ne not_shkzg.
+*
+* NEW CODE
+      SELECT *
+ into wa_bsip
              from bsip
              where bukrs = i_bukrs
              and   lifnr = i_lifnr
@@ -47,7 +61,9 @@ FUNCTION Z_PROCESS_00001110.
              and   xblnr = i_xblnr
              and   wrbtr = i_wrbtr
              and   bldat = i_bldat
-             and   shkzg ne not_shkzg.
+             and   shkzg ne not_shkzg ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
 **     credit memos & invoice < 4.0
       check not ( i_shkzg = 'S' and wa_bsip-shkzg = space ).
@@ -61,20 +77,45 @@ FUNCTION Z_PROCESS_00001110.
 "---------------------------------------------------------------------------------------------------------
    CLEAR: loc_stblg, loc_stblg_mm , loc_subrc, dop_rc, wa_bkpf.
 
-   SELECT SINGLE * INTO wa_bkpf
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*   SELECT SINGLE * INTO wa_bkpf
+*      FROM bkpf
+*      WHERE belnr = wa_bsip-belnr
+*      AND   bukrs = wa_bsip-bukrs
+*      AND   gjahr = wa_bsip-gjahr
+*      AND   blart = I_BLART.   
+*
+* NEW CODE
+   SELECT *
+   UP TO 1 ROWS  INTO wa_bkpf
       FROM bkpf
       WHERE belnr = wa_bsip-belnr
       AND   bukrs = wa_bsip-bukrs
       AND   gjahr = wa_bsip-gjahr
-      AND   blart = I_BLART.   " AGRGADO FGT
+      AND   blart = I_BLART ORDER BY PRIMARY KEY.   
+
+   ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01" AGRGADO FGT
 
    loc_subrc = sy-subrc.
 
    IF wa_bkpf-awtyp = 'RMRP'.
 * Check, if original MM document was reversed
-    SELECT SINGLE stblg INTO loc_stblg_mm FROM rbkp
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE stblg INTO loc_stblg_mm FROM rbkp
+*         WHERE belnr = wa_bkpf-awkey(10)
+*           AND gjahr = wa_bkpf-awkey+10.
+*
+* NEW CODE
+    SELECT stblg
+    UP TO 1 ROWS  INTO loc_stblg_mm FROM rbkp
          WHERE belnr = wa_bkpf-awkey(10)
-           AND gjahr = wa_bkpf-awkey+10.
+           AND gjahr = wa_bkpf-awkey+10 ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
    ELSE.
     loc_stblg = wa_bkpf-stblg.
    ENDIF.
@@ -119,14 +160,29 @@ FUNCTION Z_PROCESS_00001110.
 
  ELSE.
 
-     SELECT * into wa_bsip
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*     SELECT * into wa_bsip
+*             from bsip
+*             where bukrs = i_bukrs
+*             and   lifnr = i_lifnr
+*             and   waers = i_waers
+*             and   xblnr = i_xblnr
+*             and   bldat = i_bldat
+*             and   shkzg ne not_shkzg.
+*
+* NEW CODE
+     SELECT *
+ into wa_bsip
              from bsip
              where bukrs = i_bukrs
              and   lifnr = i_lifnr
              and   waers = i_waers
              and   xblnr = i_xblnr
              and   bldat = i_bldat
-             and   shkzg ne not_shkzg.
+             and   shkzg ne not_shkzg ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
 *     credit memos & invoice < 4.0
       check not ( i_shkzg = 'S' and wa_bsip-shkzg = space ).
@@ -142,20 +198,45 @@ FUNCTION Z_PROCESS_00001110.
 "---------------------------------------------------------------------------------------------------------
    CLEAR: loc_stblg, loc_stblg_mm , loc_subrc, dop_rc, wa_bkpf.
 
-     SELECT SINGLE * INTO wa_bkpf
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*     SELECT SINGLE * INTO wa_bkpf
+*      FROM bkpf
+*      WHERE belnr = wa_bsip-belnr
+*      AND   bukrs = wa_bsip-bukrs
+*      AND   gjahr = wa_bsip-gjahr
+*      AND   blart = I_BLART.   
+*
+* NEW CODE
+     SELECT *
+     UP TO 1 ROWS  INTO wa_bkpf
       FROM bkpf
       WHERE belnr = wa_bsip-belnr
       AND   bukrs = wa_bsip-bukrs
       AND   gjahr = wa_bsip-gjahr
-      AND   blart = I_BLART.   " AGRGADO FGT
+      AND   blart = I_BLART ORDER BY PRIMARY KEY.   
+
+     ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01" AGRGADO FGT
 
      loc_subrc = sy-subrc.
 
    IF wa_bkpf-awtyp = 'RMRP'.
 * Check, if original MM document was reversed
-    SELECT SINGLE stblg INTO loc_stblg_mm FROM rbkp
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE stblg INTO loc_stblg_mm FROM rbkp
+*         WHERE belnr = wa_bkpf-awkey(10)
+*           AND gjahr = wa_bkpf-awkey+10.
+*
+* NEW CODE
+    SELECT stblg
+    UP TO 1 ROWS  INTO loc_stblg_mm FROM rbkp
          WHERE belnr = wa_bkpf-awkey(10)
-           AND gjahr = wa_bkpf-awkey+10.
+           AND gjahr = wa_bkpf-awkey+10 ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
    ELSE.
     loc_stblg = wa_bkpf-stblg.
    ENDIF.

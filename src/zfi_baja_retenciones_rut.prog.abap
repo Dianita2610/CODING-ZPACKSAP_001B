@@ -11,29 +11,71 @@
 *----------------------------------------------------------------------*
 FORM obtener_datos .
 
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT bukrs belnr gjahr xblnr blart budat
+*    INTO TABLE ti_bkpf
+*    FROM bkpf
+*    WHERE bukrs IN s_bukrs
+*      AND belnr IN s_belnr
+*      AND gjahr IN s_gjahr
+*      AND budat IN s_budat
+*      AND blart IN s_blart.
+*
+* NEW CODE
   SELECT bukrs belnr gjahr xblnr blart budat
+
     INTO TABLE ti_bkpf
     FROM bkpf
     WHERE bukrs IN s_bukrs
       AND belnr IN s_belnr
       AND gjahr IN s_gjahr
       AND budat IN s_budat
-      AND blart IN s_blart.
+      AND blart IN s_blart ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
   IF sy-subrc EQ 0.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT *
+*      INTO TABLE ti_with_item
+*      FROM with_item
+*      FOR ALL ENTRIES IN ti_bkpf
+*      WHERE bukrs EQ ti_bkpf-bukrs
+*        AND belnr EQ ti_bkpf-belnr
+*        AND gjahr EQ ti_bkpf-gjahr
+*        AND koart EQ 'K'.
+*
+* NEW CODE
     SELECT *
+
       INTO TABLE ti_with_item
       FROM with_item
       FOR ALL ENTRIES IN ti_bkpf
       WHERE bukrs EQ ti_bkpf-bukrs
         AND belnr EQ ti_bkpf-belnr
         AND gjahr EQ ti_bkpf-gjahr
-        AND koart EQ 'K'.
+        AND koart EQ 'K' ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
     IF sy-subrc EQ 0.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT lifnr stcd1
+*        INTO TABLE ti_lfa1
+*        FROM lfa1
+*        FOR ALL ENTRIES IN ti_with_item
+*        WHERE lifnr EQ ti_with_item-wt_acco.
+*
+* NEW CODE
       SELECT lifnr stcd1
+
         INTO TABLE ti_lfa1
         FROM lfa1
         FOR ALL ENTRIES IN ti_with_item
-        WHERE lifnr EQ ti_with_item-wt_acco.
+        WHERE lifnr EQ ti_with_item-wt_acco ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
       IF sy-subrc EQ 0.
         SORT ti_lfa1 BY lifnr.
         LOOP AT ti_bkpf INTO wa_bkpf.

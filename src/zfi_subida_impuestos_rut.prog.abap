@@ -153,22 +153,46 @@ FORM llenar_tabla .
         wa_lfa1 TYPE t_lfa1.
   DATA: v_doc TYPE lfa1-lifnr.
 
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT lifnr stcd1
+*    INTO TABLE ti_lfa1
+*    FROM lfa1
+*    FOR ALL ENTRIES IN ti_entrada
+*    WHERE stcd1 EQ ti_entrada-stcd1.
+*
+* NEW CODE
   SELECT lifnr stcd1
+
     INTO TABLE ti_lfa1
     FROM lfa1
     FOR ALL ENTRIES IN ti_entrada
-    WHERE stcd1 EQ ti_entrada-stcd1.
+    WHERE stcd1 EQ ti_entrada-stcd1 ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
   LOOP AT ti_lfa1 INTO wa_lfa1.
     wa_lfa1-koart = 'K'.
     MODIFY ti_lfa1 FROM wa_lfa1 INDEX sy-tabix.
   ENDLOOP.
 
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT kunnr stcd1
+*    APPENDING TABLE ti_lfa1
+*    FROM kna1
+*    FOR ALL ENTRIES IN ti_entrada
+*    WHERE stcd1 EQ ti_entrada-stcd1.
+*
+* NEW CODE
   SELECT kunnr stcd1
     APPENDING TABLE ti_lfa1
+
     FROM kna1
     FOR ALL ENTRIES IN ti_entrada
-    WHERE stcd1 EQ ti_entrada-stcd1.
+    WHERE stcd1 EQ ti_entrada-stcd1 ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
   SORT ti_lfa1 BY stcd1 koart.
   LOOP AT ti_entrada.
@@ -189,7 +213,22 @@ FORM llenar_tabla .
   IF s_belnr IS INITIAL AND
      s_bukrs IS INITIAL AND
      s_gjahr IS INITIAL.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT bukrs belnr gjahr blart budat xblnr
+*   INTO TABLE ti_bkpf
+*   FROM bkpf
+*   FOR ALL ENTRIES IN ti_entrada
+*   WHERE bukrs EQ ti_entrada-bukrs
+*     AND gjahr EQ ti_entrada-gjahr
+*     AND xblnr EQ ti_entrada-xblnr
+*     AND blart EQ ti_entrada-blart
+*     AND budat EQ ti_entrada-budat
+*     AND stblg EQ space.
+*
+* NEW CODE
     SELECT bukrs belnr gjahr blart budat xblnr
+
    INTO TABLE ti_bkpf
    FROM bkpf
    FOR ALL ENTRIES IN ti_entrada
@@ -198,15 +237,31 @@ FORM llenar_tabla .
      AND xblnr EQ ti_entrada-xblnr
      AND blart EQ ti_entrada-blart
      AND budat EQ ti_entrada-budat
-     AND stblg EQ space.
+     AND stblg EQ space ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
   ELSE.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT bukrs belnr gjahr blart budat xblnr
+*      INTO TABLE ti_bkpf
+*      FROM bkpf
+*      WHERE bukrs IN s_bukrs
+*        AND belnr IN s_belnr
+*        AND gjahr IN s_gjahr
+*        AND stblg EQ space.
+*
+* NEW CODE
     SELECT bukrs belnr gjahr blart budat xblnr
+
       INTO TABLE ti_bkpf
       FROM bkpf
       WHERE bukrs IN s_bukrs
         AND belnr IN s_belnr
         AND gjahr IN s_gjahr
-        AND stblg EQ space.
+        AND stblg EQ space ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
     IF sy-subrc EQ 0.
 ***Borramos los que no corresponden al archivo.
       LOOP AT ti_bkpf INTO wa_bkpf.

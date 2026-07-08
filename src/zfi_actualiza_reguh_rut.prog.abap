@@ -89,7 +89,21 @@ ENDFORM.                    " BAJAR_ARCHIVO
 *  <--  p2        text
 *----------------------------------------------------------------------*
 FORM buscar_datos .
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT *
+*    INTO TABLE ti_reguh
+*    FROM reguh
+*    FOR ALL ENTRIES IN ti_salida
+*    WHERE laufd EQ ti_salida-laufd
+*      AND laufi EQ ti_salida-laufi
+*      AND zbukr EQ ti_salida-zbukr
+*      AND lifnr EQ ti_salida-lifnr
+*      AND vblnr EQ ti_salida-vblnr.
+*
+* NEW CODE
   SELECT *
+
     INTO TABLE ti_reguh
     FROM reguh
     FOR ALL ENTRIES IN ti_salida
@@ -97,7 +111,9 @@ FORM buscar_datos .
       AND laufi EQ ti_salida-laufi
       AND zbukr EQ ti_salida-zbukr
       AND lifnr EQ ti_salida-lifnr
-      AND vblnr EQ ti_salida-vblnr.
+      AND vblnr EQ ti_salida-vblnr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
   IF sy-subrc EQ 0.
     SORT ti_salida BY laufd laufi zbukr lifnr vblnr.
     LOOP AT ti_reguh ASSIGNING <fs>.

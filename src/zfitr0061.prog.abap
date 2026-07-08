@@ -144,10 +144,22 @@ FORM buscar_datos .
 
   LOOP AT s_emis.
 
-    SELECT SINGLE *
-*      into
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE *
+**      into
+*      FROM zrangos_prescri
+*      WHERE motivoemision = s_emis-low.
+*
+* NEW CODE
+    SELECT *
+*
+    UP TO 1 ROWS       into
       FROM zrangos_prescri
-      WHERE motivoemision = s_emis-low.
+      WHERE motivoemision = s_emis-low ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     IF sy-subrc NE 0.
       MESSAGE: 'MOTIVO EMISION NO PRESCRIBE O MAL ESCRITO' TYPE 'E' DISPLAY LIKE 'I'.
@@ -203,10 +215,22 @@ FORM buscar_datos .
   LOOP AT ti_bsik INTO wa_bsik .
 
     CLEAR fecha_lim.
-    SELECT SINGLE dias
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE dias
+*      INTO dias
+*      FROM zrangos_prescri
+*      WHERE motivoemision = wa_bsik-zzmot_emis.
+*
+* NEW CODE
+    SELECT dias
+    UP TO 1 ROWS 
       INTO dias
       FROM zrangos_prescri
-      WHERE motivoemision = wa_bsik-zzmot_emis.
+      WHERE motivoemision = wa_bsik-zzmot_emis ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     fecha_lim = p_budat - dias.
 *--------------------------------------------------------------------*
@@ -215,34 +239,95 @@ FORM buscar_datos .
     MOVE-CORRESPONDING wa_bsik TO wa_salida.
     wa_salida-chect = wa_salida-xblnr.
 
-    SELECT SINGLE *
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE *
+*    FROM zmot_emis
+*    WHERE cta_cadvv EQ wa_bsik-hkont.
+*
+* NEW CODE
+    SELECT *
+    UP TO 1 ROWS 
     FROM zmot_emis
-    WHERE cta_cadvv EQ wa_bsik-hkont.
+    WHERE cta_cadvv EQ wa_bsik-hkont ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     IF sy-subrc EQ 0.
-      SELECT SINGLE nombre glosa
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*      SELECT SINGLE nombre glosa
+*      INTO (wa_salida-vv_chq, wa_salida-estado)
+*      FROM zfitr020_t06
+*      WHERE campo EQ 'CTA_CADVV'.
+*
+* NEW CODE
+      SELECT nombre glosa
+      UP TO 1 ROWS 
       INTO (wa_salida-vv_chq, wa_salida-estado)
       FROM zfitr020_t06
-      WHERE campo EQ 'CTA_CADVV'.
+      WHERE campo EQ 'CTA_CADVV' ORDER BY PRIMARY KEY.
+
+      ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     ENDIF.
 
 
-    SELECT SINGLE *
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE *
+*    FROM zmot_emis
+*    WHERE cta_cadf EQ wa_bsik-hkont.
+*
+* NEW CODE
+    SELECT *
+    UP TO 1 ROWS 
     FROM zmot_emis
-    WHERE cta_cadf EQ wa_bsik-hkont.
+    WHERE cta_cadf EQ wa_bsik-hkont ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     IF sy-subrc EQ 0.
-      SELECT SINGLE nombre glosa
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*      SELECT SINGLE nombre glosa
+*      INTO (wa_salida-vv_chq, wa_salida-estado)
+*      FROM zfitr020_t06
+*      WHERE campo EQ 'CTA_CADF'.
+*
+* NEW CODE
+      SELECT nombre glosa
+      UP TO 1 ROWS 
       INTO (wa_salida-vv_chq, wa_salida-estado)
       FROM zfitr020_t06
-      WHERE campo EQ 'CTA_CADF'.
+      WHERE campo EQ 'CTA_CADF' ORDER BY PRIMARY KEY.
+
+      ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     ENDIF.
 
-    SELECT SINGLE identif_pago
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE identif_pago
+*    INTO wa_salida-id_vv
+*    FROM reguh
+*    WHERE zbukr   EQ wa_bsik-bukrs
+*    AND lifnr     EQ wa_bsik-lifnr
+*    AND belnr_dev EQ wa_bsik-belnr
+*    AND gjahr_dev EQ wa_bsik-gjahr.
+*
+* NEW CODE
+    SELECT identif_pago
+    UP TO 1 ROWS 
     INTO wa_salida-id_vv
     FROM reguh
     WHERE zbukr   EQ wa_bsik-bukrs
     AND lifnr     EQ wa_bsik-lifnr
     AND belnr_dev EQ wa_bsik-belnr
-    AND gjahr_dev EQ wa_bsik-gjahr.
+    AND gjahr_dev EQ wa_bsik-gjahr ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
 
 
@@ -590,30 +675,76 @@ FORM carga_datos .
 
   CLEAR : v_cadf, v_cadvv.
 
-  SELECT SINGLE clase_doc cambio_estado
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE clase_doc cambio_estado
+*  INTO (l_clase_doc, l_nom_proceso)
+*  FROM zfitr020_t03
+*  WHERE id_proceso = '1004'. 
+*
+* NEW CODE
+  SELECT clase_doc cambio_estado
+  UP TO 1 ROWS 
   INTO (l_clase_doc, l_nom_proceso)
   FROM zfitr020_t03
-  WHERE id_proceso = '1004'. "XB; CADUCA FISICO
+  WHERE id_proceso = '1004' ORDER BY PRIMARY KEY. 
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01"XB; CADUCA FISICO
 
   l_fecha = p_budat.
 
   "se busca la cuenta de la contrapartida
-  SELECT SINGLE cta_pres_h cta_pres_d cta_cadpres INTO (l_cta_cadf, l_cta_pres_d, l_cta_cadpres)
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE cta_pres_h cta_pres_d cta_cadpres INTO (l_cta_cadf, l_cta_pres_d, l_cta_cadpres)
+*  FROM zmot_emis
+*  WHERE bukrs = wa_itab-bukrs
+*  AND zzmot_emis = wa_itab-zzmot_emis.
+*
+* NEW CODE
+  SELECT cta_pres_h cta_pres_d cta_cadpres
+  UP TO 1 ROWS  INTO (l_cta_cadf, l_cta_pres_d, l_cta_cadpres)
   FROM zmot_emis
   WHERE bukrs = wa_itab-bukrs
-  AND zzmot_emis = wa_itab-zzmot_emis.
+  AND zzmot_emis = wa_itab-zzmot_emis ORDER BY PRIMARY KEY.
 
-  SELECT SINGLE *
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
+
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE *
+*  FROM zmot_emis
+*  WHERE cta_cadf = wa_salida-hkont.
+*
+* NEW CODE
+  SELECT *
+  UP TO 1 ROWS 
   FROM zmot_emis
-  WHERE cta_cadf = wa_salida-hkont.
+  WHERE cta_cadf = wa_salida-hkont ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
   IF sy-subrc EQ 0.
     v_cadf = 'X'.
   ENDIF.
 
-  SELECT SINGLE *
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE *
+*  FROM zmot_emis
+*  WHERE cta_cadvv = wa_salida-hkont.
+*
+* NEW CODE
+  SELECT *
+  UP TO 1 ROWS 
   FROM zmot_emis
-  WHERE cta_cadvv = wa_salida-hkont.
+  WHERE cta_cadvv = wa_salida-hkont ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
   IF sy-subrc EQ 0.
     v_cadvv = 'X'  .
@@ -1110,9 +1241,20 @@ FORM convierte_mensaje  USING    p_sy_msgid
                                  p_sy_msgno
                         CHANGING return_message.
 
-  SELECT SINGLE * FROM t100 WHERE sprsl = 'S'
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE * FROM t100 WHERE sprsl = 'S'
+*                            AND   arbgb = sy-msgid
+*                            AND   msgnr = sy-msgno.
+*
+* NEW CODE
+  SELECT *
+  UP TO 1 ROWS  FROM t100 WHERE sprsl = 'S'
                             AND   arbgb = sy-msgid
-                            AND   msgnr = sy-msgno.
+                            AND   msgnr = sy-msgno ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
   IF sy-subrc = 0.
     return_message = t100-text.
     IF return_message CS '&1'.
@@ -1249,11 +1391,23 @@ ENDFORM.                    " JOB
 *
 *----------------------------------------------------------------------*
 FORM arma_rango .
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT cta_cadf cta_cadvv
+*  INTO CORRESPONDING FIELDS OF TABLE ti_zmot_emis
+*  FROM zmot_emis
+*  WHERE bukrs      IN s_bukrs
+*  AND zzmot_emis   IN s_emis.
+*
+* NEW CODE
   SELECT cta_cadf cta_cadvv
+
   INTO CORRESPONDING FIELDS OF TABLE ti_zmot_emis
   FROM zmot_emis
   WHERE bukrs      IN s_bukrs
-  AND zzmot_emis   IN s_emis.
+  AND zzmot_emis   IN s_emis ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
   LOOP AT ti_zmot_emis INTO wa_zmot_emis.
 

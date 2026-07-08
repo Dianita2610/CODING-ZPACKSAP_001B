@@ -50,13 +50,27 @@ FORM obtener_datos .
   gs_params-updmode = 'S'.
   gs_params-defsize = 'X'.
 
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT bukrs belnr gjahr xblnr
+*         budat blart bktxt
+*     INTO TABLE ti_bkpf
+*     FROM bkpf
+*     WHERE bukrs IN s_bukrs
+*       AND belnr IN s_belnr
+*       AND gjahr IN s_gjahr.
+*
+* NEW CODE
   SELECT bukrs belnr gjahr xblnr
          budat blart bktxt
+
      INTO TABLE ti_bkpf
      FROM bkpf
      WHERE bukrs IN s_bukrs
        AND belnr IN s_belnr
-       AND gjahr IN s_gjahr.
+       AND gjahr IN s_gjahr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
   IF sy-subrc EQ 0.
     CHECK p_test IS INITIAL.
     LOOP AT ti_bkpf INTO wa_bkpf.

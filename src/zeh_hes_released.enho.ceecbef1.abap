@@ -7,11 +7,30 @@ ENHANCEMENT 0 ZEH_HES_RELEASED.
 
   LOOP AT u_essr WHERE kzabn = 'X' AND loekz is initial.
 
-    SELECT SINGLE sub_packno FROM esll INTO lv_sub_packno
-      WHERE packno = u_essr-packno.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE sub_packno FROM esll INTO lv_sub_packno
+*      WHERE packno = u_essr-packno.
+*
+* NEW CODE
+    SELECT sub_packno
+    UP TO 1 ROWS  FROM esll INTO lv_sub_packno
+      WHERE packno = u_essr-packno ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
         IF sy-subrc EQ 0.
-          SELECT * FROM ml_esll INTO CORRESPONDING FIELDS OF TABLE lt_leistung
-            WHERE packno = lv_sub_packno.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*          SELECT * FROM ml_esll INTO CORRESPONDING FIELDS OF TABLE lt_leistung
+*            WHERE packno = lv_sub_packno.
+*
+* NEW CODE
+          SELECT *
+ FROM ml_esll INTO CORRESPONDING FIELDS OF TABLE lt_leistung
+            WHERE packno = lv_sub_packno ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
         ENDIF.
 
     CALL FUNCTION 'ZFU_MM_SEND_EMAIL_HES'

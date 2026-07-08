@@ -57,10 +57,22 @@ DATA: wa_ekko like ekko,
     RAISE no_existe_oc.
   ENDIF.
 
-  SELECT SINGLE *
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE *
+*    FROM ekko
+*    INTO wa_ekko
+*    WHERE ebeln EQ i_ekko-ebeln.
+*
+* NEW CODE
+  SELECT *
+  UP TO 1 ROWS 
     FROM ekko
     INTO wa_ekko
-    WHERE ebeln EQ i_ekko-ebeln.
+    WHERE ebeln EQ i_ekko-ebeln ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
   IF sy-subrc NE 0.
     RAISE no_existe_oc.
@@ -139,8 +151,17 @@ DATA: wa_ekko like ekko,
 *    ENDIF.
 *  ENDIF.
 
-  SELECT * INTO TABLE lt_tvarvc FROM tvarvc WHERE name EQ gc_copy_mail
-                                              AND low  EQ 'OC'.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT * INTO TABLE lt_tvarvc FROM tvarvc WHERE name EQ gc_copy_mail
+*                                              AND low  EQ 'OC'.
+*
+* NEW CODE
+  SELECT *
+ INTO TABLE lt_tvarvc FROM tvarvc WHERE name EQ gc_copy_mail
+                                              AND low  EQ 'OC' ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
     IF sy-subrc EQ 0.
       LOOP AT lt_tvarvc INTO ls_tvarvc.
         i_reclist-receiver   = ls_tvarvc-high.
@@ -156,8 +177,18 @@ DATA: wa_ekko like ekko,
 ***Accessing mail id of a vendor
 *  SELECT SINGLE smtp_addr FROM adr6 INTO i_reclist-receiver WHERE addrnumber EQ lv_adrnr.
 
-SELECT SINGLE * FROM t000 CLIENT SPECIFIED INTO w_t000
-  WHERE mandt EQ sy-mandt.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*SELECT SINGLE * FROM t000 CLIENT SPECIFIED INTO w_t000
+*  WHERE mandt EQ sy-mandt.
+*
+* NEW CODE
+SELECT *
+UP TO 1 ROWS  FROM t000 CLIENT SPECIFIED INTO w_t000
+  WHERE mandt EQ sy-mandt ORDER BY PRIMARY KEY.
+
+ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     IF w_t000-cccategory NE 'P'.
       CONCATENATE 'TESTING: OC' i_ekko-ebeln 'Liberada' INTO wa_doc_chng-obj_descr SEPARATED BY space.

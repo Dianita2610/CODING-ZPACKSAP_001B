@@ -78,10 +78,21 @@ FORM find_tabl USING    i_koart LIKE bseg-koart
   ENDCASE.
 *
   DO tabl-ntabl TIMES VARYING table FROM tabl-tab1 NEXT tabl-tab2.
-    SELECT * FROM dd03l
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT * FROM dd03l
+*             WHERE tabname   = table
+*             AND   fieldname = i_bedgx
+*             AND   as4local  = char_a.
+*
+* NEW CODE
+    SELECT *
+ FROM dd03l
              WHERE tabname   = table
              AND   fieldname = i_bedgx
-             AND   as4local  = char_a.
+             AND   as4local  = char_a ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
       EXIT.
     ENDSELECT.
     IF sy-subrc EQ 0.
@@ -379,8 +390,17 @@ FORM check_authority_bukrs.
   ENDIF.
 *
   authorit = '00'.
-  SELECT * FROM t001
-           WHERE bukrs IN bukrx.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT * FROM t001
+*           WHERE bukrs IN bukrx.
+*
+* NEW CODE
+  SELECT *
+ FROM t001
+           WHERE bukrs IN bukrx ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
     i001 = t001.
     APPEND i001.
     gjvtab-periv = t001-periv.
@@ -705,9 +725,19 @@ FORM select_t030.
   REFRESH i030_skv.
   CLEAR i030_skv.
   LOOP AT i001.
-    SELECT * FROM  t030
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT * FROM  t030
+*             WHERE ktopl =  i001-ktopl
+*               AND ktosl =  'SKV'.     
+*
+* NEW CODE
+    SELECT *
+ FROM  t030
              WHERE ktopl =  i001-ktopl
-               AND ktosl =  'SKV'.     " Skontoverrechnung
+               AND ktosl =  'SKV' ORDER BY PRIMARY KEY.     
+
+* END. 08-07-2026 - ATC - ATC-03" Skontoverrechnung
       i030_skv-bukrs = i001-bukrs.
       i030_skv-konts = t030-konts.
       COLLECT i030_skv.
@@ -716,9 +746,19 @@ FORM select_t030.
 * Lieferplänen
     IF i001-ktopl NE i030_were-ktopl.
       CLEAR i030_were.
-      SELECT * FROM  t030 INTO TABLE i030_were
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT * FROM  t030 INTO TABLE i030_were
+*               WHERE ktopl =  i001-ktopl
+*                 AND ktosl =  'WRX'.   
+*
+* NEW CODE
+      SELECT *
+ FROM  t030 INTO TABLE i030_were
                WHERE ktopl =  i001-ktopl
-                 AND ktosl =  'WRX'.   " WE/RE-Konto
+                 AND ktosl =  'WRX' ORDER BY PRIMARY KEY.   
+
+* END. 08-07-2026 - ATC - ATC-03" WE/RE-Konto
     ENDIF.
     LOOP AT i030_were.
 *       LOOP AT I001 WHERE KTOPL EQ I030_WERE-KTOPL.
@@ -787,7 +827,16 @@ ENDFORM.                               "INIT_LIST
 *----------------------------------------------------------------------*
 FORM check_waehrung.
   IF NOT zwaers IS INITIAL.
-    SELECT SINGLE * FROM tcurc WHERE waers = zwaers.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE * FROM tcurc WHERE waers = zwaers.
+*
+* NEW CODE
+    SELECT *
+    UP TO 1 ROWS  FROM tcurc WHERE waers = zwaers ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     IF sy-subrc = 0.
       bsis-waers = zwaers.
     ELSE.
@@ -880,11 +929,23 @@ FORM tdebi_fuellen.
   ENDIF.
 *----- Normale OP's ----------------------------------------------------
   IF x_shbkn EQ space AND x_kunnr NE space.
-    SELECT DISTINCT bukrs kunnr shkzg FROM bsid INTO tdebi
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT DISTINCT bukrs kunnr shkzg FROM bsid INTO tdebi
+*                            WHERE bukrs IN bukrx
+*                              AND kunnr IN kontd
+*                              AND umsks EQ space
+*                              AND gjahr IN gjahx.
+*
+* NEW CODE
+    SELECT DISTINCT bukrs kunnr shkzg
+ FROM bsid INTO tdebi
                             WHERE bukrs IN bukrx
                               AND kunnr IN kontd
                               AND umsks EQ space
-                              AND gjahr IN gjahx.
+                              AND gjahr IN gjahx ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
       CALL FUNCTION 'FI_WT_READ_KNBW'                       "500429
       EXPORTING i_kunnr = tdebi-kunnr                       "500429
                 i_bukrs = tdebi-bukrs                       "500429
@@ -905,12 +966,25 @@ FORM tdebi_fuellen.
   ENDIF.
 *----- Sonderhauptbuchvorgänge (außer 'A' und 'W') ---------------------
   IF x_shbkn NE space AND x_kunnr EQ space.
-    SELECT DISTINCT bukrs kunnr shkzg FROM bsid INTO tdebi
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT DISTINCT bukrs kunnr shkzg FROM bsid INTO tdebi
+*                            WHERE bukrs IN bukrx
+*                              AND kunnr IN kontd
+*                              AND umsks NE char_w           "401470
+*                              AND umskz NE space
+*                              AND gjahr IN gjahx.
+*
+* NEW CODE
+    SELECT DISTINCT bukrs kunnr shkzg
+ FROM bsid INTO tdebi
                             WHERE bukrs IN bukrx
                               AND kunnr IN kontd
                               AND umsks NE char_w           "401470
                               AND umskz NE space
-                              AND gjahr IN gjahx.
+                              AND gjahr IN gjahx ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
       CALL FUNCTION 'FI_WT_READ_KNBW'                       "500429
       EXPORTING i_kunnr = tdebi-kunnr                       "500429
                 i_bukrs = tdebi-bukrs                       "500429
@@ -938,11 +1012,23 @@ FORM tdebi_fuellen.
   ENDIF.
 *----- Normale OP's und Sonderhauptbuchvorgänge (außer 'A' und 'W')-----
   IF x_shbkn NE space AND x_kunnr NE space.
-    SELECT DISTINCT bukrs kunnr shkzg FROM bsid INTO tdebi
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT DISTINCT bukrs kunnr shkzg FROM bsid INTO tdebi
+*                            WHERE bukrs IN bukrx
+*                              AND kunnr IN kontd
+*                              AND umsks NE char_w           "401470
+*                              AND gjahr IN gjahx.
+*
+* NEW CODE
+    SELECT DISTINCT bukrs kunnr shkzg
+ FROM bsid INTO tdebi
                             WHERE bukrs IN bukrx
                               AND kunnr IN kontd
                               AND umsks NE char_w           "401470
-                              AND gjahr IN gjahx.
+                              AND gjahr IN gjahx ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
       CALL FUNCTION 'FI_WT_READ_KNBW'                       "500429
       EXPORTING i_kunnr = tdebi-kunnr                       "500429
                 i_bukrs = tdebi-bukrs                       "500429
@@ -991,11 +1077,23 @@ FORM tkredi_fuellen.
   ENDIF.
 *----- Normale OP's ----------------------------------------------------
   IF x_shblf EQ space AND x_lifnr NE space.
-    SELECT DISTINCT bukrs lifnr shkzg FROM bsik INTO tkredi
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT DISTINCT bukrs lifnr shkzg FROM bsik INTO tkredi
+*                            WHERE bukrs IN bukrx
+*                              AND lifnr IN kontk
+*                              AND umsks EQ space
+*                              AND gjahr IN gjahx.
+*
+* NEW CODE
+    SELECT DISTINCT bukrs lifnr shkzg
+ FROM bsik INTO tkredi
                             WHERE bukrs IN bukrx
                               AND lifnr IN kontk
                               AND umsks EQ space
-                              AND gjahr IN gjahx.
+                              AND gjahr IN gjahx ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
       APPEND tkredi.
     ENDSELECT.
     IF sy-subrc NE 0.
@@ -1006,12 +1104,25 @@ FORM tkredi_fuellen.
   ENDIF.
 *----- Sonderhauptbuchvorgänge (außer 'A' und 'W') ---------------------
   IF x_shblf NE space AND x_lifnr EQ space.
-    SELECT DISTINCT bukrs lifnr shkzg FROM bsik INTO tkredi
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT DISTINCT bukrs lifnr shkzg FROM bsik INTO tkredi
+*                            WHERE bukrs IN bukrx
+*                              AND lifnr IN kontk
+*                              AND umsks NE char_w           "401470
+*                              AND umskz NE space
+*                              AND gjahr IN gjahx.
+*
+* NEW CODE
+    SELECT DISTINCT bukrs lifnr shkzg
+ FROM bsik INTO tkredi
                             WHERE bukrs IN bukrx
                               AND lifnr IN kontk
                               AND umsks NE char_w           "401470
                               AND umskz NE space
-                              AND gjahr IN gjahx.
+                              AND gjahr IN gjahx ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
       APPEND tkredi.
     ENDSELECT.
     IF sy-subrc NE 0.
@@ -1029,11 +1140,23 @@ FORM tkredi_fuellen.
   ENDIF.
 *----- Normale OP's und Sonderhauptbuchvorgänge (außer 'A' und 'W')-----
   IF x_shblf NE space AND x_lifnr NE space.
-    SELECT DISTINCT bukrs lifnr shkzg FROM bsik INTO tkredi
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT DISTINCT bukrs lifnr shkzg FROM bsik INTO tkredi
+*                            WHERE bukrs IN bukrx
+*                              AND lifnr IN kontk
+*                              AND umsks NE char_w           "401470
+*                              AND gjahr IN gjahx.
+*
+* NEW CODE
+    SELECT DISTINCT bukrs lifnr shkzg
+ FROM bsik INTO tkredi
                             WHERE bukrs IN bukrx
                               AND lifnr IN kontk
                               AND umsks NE char_w           "401470
-                              AND gjahr IN gjahx.
+                              AND gjahr IN gjahx ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
       APPEND tkredi.
     ENDSELECT.
     IF sy-subrc NE 0.
@@ -1458,9 +1581,19 @@ FORM sperren_konto USING i_koart LIKE bseg-koart
 *     BUKRS/KOART darf in T042X nicht f.Zahlungsvorschlag gesperrt sein.
 *     SAPF124 darf beim Ausgleichen nicht mit Zahlpgm konkurrieren.
 *     Einträge in T042X von SAPF100 (F100XX) spielen keine Rolle.
-      SELECT * FROM t042x WHERE koart EQ i_koart
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT * FROM t042x WHERE koart EQ i_koart
+*                           AND  bukrs EQ i_bukrs
+*                           AND  laufi NE 'F100XX'.
+*
+* NEW CODE
+      SELECT *
+ FROM t042x WHERE koart EQ i_koart
                            AND  bukrs EQ i_bukrs
-                           AND  laufi NE 'F100XX'.
+                           AND  laufi NE 'F100XX' ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
         EXIT.
       ENDSELECT.
       IF sy-subrc IS INITIAL.
@@ -1886,14 +2019,29 @@ FORM read_bsid CHANGING e_subrc LIKE sy-subrc.
   IF x_avisd = space.
 *----- Normale OP's ----------------------------------------------------
     IF x_shbkn EQ space AND x_kunnr NE space.
-      SELECT * FROM bsid
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT * FROM bsid
+*                          WHERE bukrs = tdebi-bukrs
+*                            AND kunnr = tdebi-kunnr
+*                            AND umsks EQ space
+*                            AND zuonr IN so_zuonr
+*                            AND gjahr IN gjahx
+*                            AND belnr IN docnr
+*                            AND budat IN postdate.
+*
+* NEW CODE
+      SELECT *
+ FROM bsid
                           WHERE bukrs = tdebi-bukrs
                             AND kunnr = tdebi-kunnr
                             AND umsks EQ space
                             AND zuonr IN so_zuonr
                             AND gjahr IN gjahx
                             AND belnr IN docnr
-                            AND budat IN postdate.
+                            AND budat IN postdate ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
         CHECK bsid-xpypr = space.
 *----- Zur Stornierung vorgemerkte Posten ausschließen, ----------------
 *----- z.B. Abgrenzungsposten ------------------------------------------
@@ -1945,7 +2093,21 @@ FORM read_bsid CHANGING e_subrc LIKE sy-subrc.
 *----- Normale OP's und SHB-Vorgänge (außer 'A' und 'W') ---------------
     IF x_shbkn NE space AND x_kunnr NE space.
       ktopl = space.
-      SELECT * FROM bsid
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT * FROM bsid
+*                          WHERE bukrs = tdebi-bukrs
+*                            AND kunnr = tdebi-kunnr
+*                            AND umsks NE char_w             "401470
+*                            AND zuonr IN so_zuonr
+*                            AND gjahr IN gjahx
+*                            AND belnr IN docnr
+*                            AND budat IN postdate
+*                            AND ( umskz IN shbkd OR umskz = space ).
+*
+* NEW CODE
+      SELECT *
+ FROM bsid
                           WHERE bukrs = tdebi-bukrs
                             AND kunnr = tdebi-kunnr
                             AND umsks NE char_w             "401470
@@ -1953,7 +2115,9 @@ FORM read_bsid CHANGING e_subrc LIKE sy-subrc.
                             AND gjahr IN gjahx
                             AND belnr IN docnr
                             AND budat IN postdate
-                            AND ( umskz IN shbkd OR umskz = space ).
+                            AND ( umskz IN shbkd OR umskz = space ) ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
                                                             "355602
         CHECK bsid-xpypr = space.
 *----- Zur Stornierung vorgemerkte Posten ausschließen, ----------------
@@ -1968,8 +2132,17 @@ FORM read_bsid CHANGING e_subrc LIKE sy-subrc.
             READ TABLE i001 WITH KEY bukrs = tdebi-bukrs.
             ktopl = i001-ktopl.
           ENDIF.
-          SELECT * FROM t030 WHERE ktopl = ktopl
-                               AND ktosl = 'SGA'.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*          SELECT * FROM t030 WHERE ktopl = ktopl
+*                               AND ktosl = 'SGA'.
+*
+* NEW CODE
+          SELECT *
+ FROM t030 WHERE ktopl = ktopl
+                               AND ktosl = 'SGA' ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
             CHECK t030-komok(1) = 'D'.
             IF t030-komok+1(1) = bsid-umskz.
               rtc = 4.
@@ -2027,7 +2200,22 @@ FORM read_bsid CHANGING e_subrc LIKE sy-subrc.
 *----- Nur Sonderhauptbuchvorgänge (außer 'A' und 'W') -----------------
     IF x_shbkn NE space AND x_kunnr EQ space.
       ktopl = space.
-      SELECT * FROM bsid
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*      SELECT * FROM bsid
+*                          WHERE bukrs = tdebi-bukrs
+*                            AND kunnr = tdebi-kunnr
+*                            AND umsks NE char_w             "401470
+*                            AND umskz NE space
+*                            AND zuonr IN so_zuonr
+*                            AND umskz IN shbkd              "355602
+*                            AND gjahr IN gjahx
+*                            AND belnr IN docnr
+*                            AND budat IN postdate.
+*
+* NEW CODE
+      SELECT *
+ FROM bsid
                           WHERE bukrs = tdebi-bukrs
                             AND kunnr = tdebi-kunnr
                             AND umsks NE char_w             "401470
@@ -2036,7 +2224,9 @@ FORM read_bsid CHANGING e_subrc LIKE sy-subrc.
                             AND umskz IN shbkd              "355602
                             AND gjahr IN gjahx
                             AND belnr IN docnr
-                            AND budat IN postdate.
+                            AND budat IN postdate ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
         CHECK bsid-xpypr = space.
 *----- Zur Stornierung vorgemerkte Posten ausschließen, ----------------
 *----- z.B. Abgrenzungsposten ------------------------------------------
@@ -2050,8 +2240,17 @@ FORM read_bsid CHANGING e_subrc LIKE sy-subrc.
             READ TABLE i001 WITH KEY bukrs = tdebi-bukrs.
             ktopl = i001-ktopl.
           ENDIF.
-          SELECT * FROM t030 WHERE ktopl = ktopl
-                               AND ktosl = 'SGA'.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*          SELECT * FROM t030 WHERE ktopl = ktopl
+*                               AND ktosl = 'SGA'.
+*
+* NEW CODE
+          SELECT *
+ FROM t030 WHERE ktopl = ktopl
+                               AND ktosl = 'SGA' ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
             CHECK t030-komok(1) = 'D'.
             IF t030-komok+1(1) = bsid-umskz.
               rtc = 4.
@@ -2124,7 +2323,23 @@ FORM read_bsid CHANGING e_subrc LIKE sy-subrc.
     LOOP AT yt_avis09 INTO yt_avis09_zeile.
       lt_bsidkey = yt_avis09_zeile-items.
       LOOP AT lt_bsidkey INTO ls_bsidkey.
-        SELECT SINGLE * FROM  bsid
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*        SELECT SINGLE * FROM  bsid
+*               WHERE  bukrs  = ls_bsidkey-bukrs
+*               AND    kunnr  = ls_bsidkey-kunnr
+*               AND    umsks  = ls_bsidkey-umsks
+*               AND    umskz  = ls_bsidkey-umskz
+*               AND    augdt  = ls_bsidkey-augdt
+*               AND    augbl  = ls_bsidkey-augbl
+*               AND    zuonr  = ls_bsidkey-zuonr
+*               AND    gjahr  = ls_bsidkey-gjahr
+*               AND    belnr  = ls_bsidkey-belnr
+*               AND    buzei  = ls_bsidkey-buzei.
+*
+* NEW CODE
+        SELECT *
+        UP TO 1 ROWS  FROM  bsid
                WHERE  bukrs  = ls_bsidkey-bukrs
                AND    kunnr  = ls_bsidkey-kunnr
                AND    umsks  = ls_bsidkey-umsks
@@ -2134,7 +2349,10 @@ FORM read_bsid CHANGING e_subrc LIKE sy-subrc.
                AND    zuonr  = ls_bsidkey-zuonr
                AND    gjahr  = ls_bsidkey-gjahr
                AND    belnr  = ls_bsidkey-belnr
-               AND    buzei  = ls_bsidkey-buzei.
+               AND    buzei  = ls_bsidkey-buzei ORDER BY PRIMARY KEY.
+
+        ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
         IF sy-subrc = 0.
           bsid-xref3 = yt_avis09_zeile-avsid.
           CHECK bsid-gjahr IN gjahx.
@@ -2154,8 +2372,17 @@ FORM read_bsid CHANGING e_subrc LIKE sy-subrc.
               READ TABLE i001 WITH KEY bukrs = tdebi-bukrs.
               ktopl = i001-ktopl.
             ENDIF.
-            SELECT * FROM t030 WHERE ktopl = ktopl
-                                 AND ktosl = 'SGA'.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*            SELECT * FROM t030 WHERE ktopl = ktopl
+*                                 AND ktosl = 'SGA'.
+*
+* NEW CODE
+            SELECT *
+ FROM t030 WHERE ktopl = ktopl
+                                 AND ktosl = 'SGA' ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
               CHECK t030-komok(1) = 'D'.
               IF t030-komok+1(1) = bsid-umskz.
                 rtc = 4.
@@ -2249,14 +2476,29 @@ FORM read_bsik CHANGING e_subrc LIKE sy-subrc.
 
 *----- Normale OP's ----------------------------------------------------
   IF x_shblf EQ space AND x_lifnr NE space.
-    SELECT * FROM bsik
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT * FROM bsik
+*                        WHERE bukrs = tkredi-bukrs
+*                          AND lifnr = tkredi-lifnr
+*                          AND umsks EQ space
+*                          AND zuonr IN so_zuonr
+*                          AND gjahr IN gjahx
+*                          AND belnr IN docnr
+*                          AND budat IN postdate.
+*
+* NEW CODE
+    SELECT *
+ FROM bsik
                         WHERE bukrs = tkredi-bukrs
                           AND lifnr = tkredi-lifnr
                           AND umsks EQ space
                           AND zuonr IN so_zuonr
                           AND gjahr IN gjahx
                           AND belnr IN docnr
-                          AND budat IN postdate.
+                          AND budat IN postdate ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
       CHECK bsik-xpypr = space.
 *----- Zur Stornierung vorgemerkte Posten ausschließen, ----------------
 *----- z.B. Abgrenzungsposten ------------------------------------------
@@ -2310,7 +2552,21 @@ FORM read_bsik CHANGING e_subrc LIKE sy-subrc.
 *----- Normale OP's und Sonderhauptbuchvorgänge (außer 'A' und 'W')-----
   IF x_shblf NE space AND x_lifnr NE space.
     ktopl = space.
-    SELECT * FROM bsik
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT * FROM bsik
+*                        WHERE bukrs = tkredi-bukrs
+*                          AND lifnr = tkredi-lifnr
+*                          AND umsks NE char_w               "401470
+*                          AND zuonr IN so_zuonr
+*                          AND gjahr IN gjahx
+*                          AND belnr IN docnr
+*                          AND budat IN postdate
+*                          AND ( umskz IN shbkk OR umskz = space ).
+*
+* NEW CODE
+    SELECT *
+ FROM bsik
                         WHERE bukrs = tkredi-bukrs
                           AND lifnr = tkredi-lifnr
                           AND umsks NE char_w               "401470
@@ -2318,7 +2574,9 @@ FORM read_bsik CHANGING e_subrc LIKE sy-subrc.
                           AND gjahr IN gjahx
                           AND belnr IN docnr
                           AND budat IN postdate
-                          AND ( umskz IN shbkk OR umskz = space ).
+                          AND ( umskz IN shbkk OR umskz = space ) ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
                                                             "355602
       CHECK bsik-xpypr = space.
 *----- Zur Stornierung vorgemerkte Posten ausschließen, ----------------
@@ -2333,8 +2591,17 @@ FORM read_bsik CHANGING e_subrc LIKE sy-subrc.
           READ TABLE i001 WITH KEY bukrs = tkredi-bukrs.
           ktopl = i001-ktopl.
         ENDIF.
-        SELECT * FROM t030 WHERE ktopl = ktopl
-                             AND ktosl = 'SGA'.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*        SELECT * FROM t030 WHERE ktopl = ktopl
+*                             AND ktosl = 'SGA'.
+*
+* NEW CODE
+        SELECT *
+ FROM t030 WHERE ktopl = ktopl
+                             AND ktosl = 'SGA' ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
           CHECK t030-komok(1) = 'K'.
           IF t030-komok+1(1) = bsik-umskz.
             rtc = 4.
@@ -2390,7 +2657,22 @@ FORM read_bsik CHANGING e_subrc LIKE sy-subrc.
 *----- Nur Sonderhauptbuchvorgänge (außer 'A' und 'W') -----------------
   IF x_shblf NE space AND x_lifnr EQ space.
     ktopl = space.
-    SELECT * FROM bsik
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT * FROM bsik
+*                        WHERE bukrs = tkredi-bukrs
+*                          AND lifnr = tkredi-lifnr
+*                          AND umsks NE char_w               "401470
+*                          AND umskz NE space
+*                          AND zuonr IN so_zuonr
+*                          AND umskz IN shbkk                "355602
+*                          AND gjahr IN gjahx
+*                          AND belnr IN docnr
+*                          AND budat IN postdate.
+*
+* NEW CODE
+    SELECT *
+ FROM bsik
                         WHERE bukrs = tkredi-bukrs
                           AND lifnr = tkredi-lifnr
                           AND umsks NE char_w               "401470
@@ -2399,7 +2681,9 @@ FORM read_bsik CHANGING e_subrc LIKE sy-subrc.
                           AND umskz IN shbkk                "355602
                           AND gjahr IN gjahx
                           AND belnr IN docnr
-                          AND budat IN postdate.
+                          AND budat IN postdate ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
       CHECK bsik-xpypr = space.
 *----- Zur Stornierung vorgemerkte Posten ausschließen, ----------------
 *----- z.B. Abgrenzungsposten ------------------------------------------
@@ -2413,8 +2697,17 @@ FORM read_bsik CHANGING e_subrc LIKE sy-subrc.
           READ TABLE i001 WITH KEY bukrs = tkredi-bukrs.
           ktopl = i001-ktopl.
         ENDIF.
-        SELECT * FROM t030 WHERE ktopl = ktopl
-                             AND ktosl = 'SGA'.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*        SELECT * FROM t030 WHERE ktopl = ktopl
+*                             AND ktosl = 'SGA'.
+*
+* NEW CODE
+        SELECT *
+ FROM t030 WHERE ktopl = ktopl
+                             AND ktosl = 'SGA' ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
           CHECK t030-komok(1) = 'K'.
           IF t030-komok+1(1) = bsik-umskz.
             rtc = 4.
@@ -2488,14 +2781,29 @@ FORM read_bsis CHANGING e_subrc LIKE sy-subrc.
       REFRESH ibsis.                                        "454904
 * ---If account is not ledger group specific clearable
       IF tsako-xlgclr IS INITIAL.
-        SELECT * FROM bsis
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*        SELECT * FROM bsis
+*                         WHERE bukrs = tsako-bukrs
+*                           AND hkont = tsako-hkont
+*                           AND zuonr IN so_zuonr
+*                           AND gjahr IN gjahx
+*                           AND belnr IN docnr
+*                           AND budat IN postdate
+*                           AND xopvw EQ char_x.
+*
+* NEW CODE
+        SELECT *
+ FROM bsis
                          WHERE bukrs = tsako-bukrs
                            AND hkont = tsako-hkont
                            AND zuonr IN so_zuonr
                            AND gjahr IN gjahx
                            AND belnr IN docnr
                            AND budat IN postdate
-                           AND xopvw EQ char_x.
+                           AND xopvw EQ char_x ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
           CLEAR ibsis-ldgrp.
           PERFORM check_authority_add                       "516329
           USING bsis-blart bsis-gsber                       "516329
@@ -2519,14 +2827,29 @@ FORM read_bsis CHANGING e_subrc LIKE sy-subrc.
         ENDSELECT.
 * ---If account is ledger group specific clearable
       ELSE.
-        SELECT * FROM faglbsis
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*        SELECT * FROM faglbsis
+*                     WHERE bukrs = tsako-bukrs
+*                       AND hkont = tsako-hkont
+*                       AND zuonr IN so_zuonr
+*                       AND gjahr IN gjahx
+*                       AND belnr IN docnr
+*                       AND budat IN postdate
+*                       AND ldgrp IN p_lg.
+*
+* NEW CODE
+        SELECT *
+ FROM faglbsis
                      WHERE bukrs = tsako-bukrs
                        AND hkont = tsako-hkont
                        AND zuonr IN so_zuonr
                        AND gjahr IN gjahx
                        AND belnr IN docnr
                        AND budat IN postdate
-                       AND ldgrp IN p_lg.
+                       AND ldgrp IN p_lg ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
           MOVE-CORRESPONDING faglbsis TO bsis.
           ibsis-ldgrp = faglbsis-ldgrp.
           PERFORM check_authority_add                       "516329
@@ -3140,8 +3463,18 @@ ENDFORM.                               " XBSIS_XBSISGR_FUELLEN
 FORM fill_pswbt USING    i_bukrs i_waers i_dmbtr i_wrbtr i_flag
                 CHANGING e_pswbt.
   IF i_bukrs NE t001-bukrs.
-    SELECT SINGLE * FROM t001
-           WHERE bukrs EQ i_bukrs.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE * FROM t001
+*           WHERE bukrs EQ i_bukrs.
+*
+* NEW CODE
+    SELECT *
+    UP TO 1 ROWS  FROM t001
+           WHERE bukrs EQ i_bukrs ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
   ENDIF.
 *
   IF i_flag IS INITIAL.
@@ -3235,13 +3568,34 @@ FORM wrbtr_umrechnen USING koart
         old_wrbtr = xbsid-wrbtr.
 
 
-        SELECT SINGLE * FROM  bkpf
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*        SELECT SINGLE * FROM  bkpf
+*               WHERE  bukrs       = xbsid-bukrs
+*               AND    belnr       = xbsid-belnr
+*               AND    gjahr       = xbsid-gjahr.
+*
+* NEW CODE
+        SELECT *
+        UP TO 1 ROWS  FROM  bkpf
                WHERE  bukrs       = xbsid-bukrs
                AND    belnr       = xbsid-belnr
-               AND    gjahr       = xbsid-gjahr.
+               AND    gjahr       = xbsid-gjahr ORDER BY PRIMARY KEY.
+
+        ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
         CHECK sy-subrc = 0.
         IF xbsid-bukrs NE t001-bukrs.
-          SELECT SINGLE * FROM t001 WHERE bukrs = xbsid-bukrs.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*          SELECT SINGLE * FROM t001 WHERE bukrs = xbsid-bukrs.
+*
+* NEW CODE
+          SELECT *
+          UP TO 1 ROWS  FROM t001 WHERE bukrs = xbsid-bukrs ORDER BY PRIMARY KEY.
+
+          ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
           CHECK sy-subrc = 0.
         ENDIF.
 *------- Ausgleich in Hauswährung ohne erneute Kursumrechnung ? --------
@@ -3336,13 +3690,34 @@ FORM wrbtr_umrechnen USING koart
         old_wrbtr = xbsik-wrbtr.
 
 
-        SELECT SINGLE * FROM  bkpf
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*        SELECT SINGLE * FROM  bkpf
+*               WHERE  bukrs       = xbsik-bukrs
+*               AND    belnr       = xbsik-belnr
+*               AND    gjahr       = xbsik-gjahr.
+*
+* NEW CODE
+        SELECT *
+        UP TO 1 ROWS  FROM  bkpf
                WHERE  bukrs       = xbsik-bukrs
                AND    belnr       = xbsik-belnr
-               AND    gjahr       = xbsik-gjahr.
+               AND    gjahr       = xbsik-gjahr ORDER BY PRIMARY KEY.
+
+        ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
         CHECK sy-subrc = 0.
         IF xbsik-bukrs NE t001-bukrs.
-          SELECT SINGLE * FROM t001 WHERE bukrs = xbsik-bukrs.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*          SELECT SINGLE * FROM t001 WHERE bukrs = xbsik-bukrs.
+*
+* NEW CODE
+          SELECT *
+          UP TO 1 ROWS  FROM t001 WHERE bukrs = xbsik-bukrs ORDER BY PRIMARY KEY.
+
+          ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
           CHECK sy-subrc = 0.
         ENDIF.
 *------- Ausgleich in Hauswährung ohne erneute Kursumrechnung ? --------
@@ -3470,13 +3845,34 @@ FORM wrbtr_umrechnen USING koart
         old_wrbtr = xbsis-wrbtr.
 
 
-        SELECT SINGLE * FROM  bkpf
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*        SELECT SINGLE * FROM  bkpf
+*               WHERE  bukrs       = xbsis-bukrs
+*               AND    belnr       = xbsis-belnr
+*               AND    gjahr       = xbsis-gjahr.
+*
+* NEW CODE
+        SELECT *
+        UP TO 1 ROWS  FROM  bkpf
                WHERE  bukrs       = xbsis-bukrs
                AND    belnr       = xbsis-belnr
-               AND    gjahr       = xbsis-gjahr.
+               AND    gjahr       = xbsis-gjahr ORDER BY PRIMARY KEY.
+
+        ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
         CHECK sy-subrc = 0.
         IF xbsis-bukrs NE t001-bukrs.
-          SELECT SINGLE * FROM t001 WHERE bukrs = xbsis-bukrs.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*          SELECT SINGLE * FROM t001 WHERE bukrs = xbsis-bukrs.
+*
+* NEW CODE
+          SELECT *
+          UP TO 1 ROWS  FROM t001 WHERE bukrs = xbsis-bukrs ORDER BY PRIMARY KEY.
+
+          ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
           CHECK sy-subrc = 0.
         ENDIF.
 *------- Ausgleich in Hauswährung ohne erneute Kursumrechnung ? --------
@@ -3542,7 +3938,16 @@ ENDFORM.                               " WRBTR_UMRECHNEN
 *----------------------------------------------------------------------*
 FORM waehrung_pruefen USING    p_awaers.
   CHECK p_awaers NE space.
-  SELECT SINGLE * FROM tcurc WHERE waers = p_awaers.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE * FROM tcurc WHERE waers = p_awaers.
+*
+* NEW CODE
+  SELECT *
+  UP TO 1 ROWS  FROM tcurc WHERE waers = p_awaers ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
   IF sy-subrc NE 0.
     CLEAR p_awaers.
   ENDIF.
@@ -3839,8 +4244,18 @@ FORM mkpf_lesen.
   IF sy-subrc = 0.
     rcmkpf = 0.
   ELSE.
-    SELECT SINGLE * FROM mkpf WHERE mblnr = iekbe-belnr
-                                AND mjahr = iekbe-gjahr.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE * FROM mkpf WHERE mblnr = iekbe-belnr
+*                                AND mjahr = iekbe-gjahr.
+*
+* NEW CODE
+    SELECT *
+    UP TO 1 ROWS  FROM mkpf WHERE mblnr = iekbe-belnr
+                                AND mjahr = iekbe-gjahr ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
     IF sy-subrc = 0.
       rcmkpf = 0.
       rcappend = 0.
@@ -4129,11 +4544,24 @@ FORM read_bseg_neu USING    bukrs LIKE bseg-bukrs
                             gjahr LIKE bseg-gjahr
                             buzei LIKE bseg-buzei
                    CHANGING e_subrc.
-  SELECT SINGLE * FROM bseg
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE * FROM bseg
+*         WHERE bukrs = bukrs
+*         AND   belnr = belnr
+*         AND   gjahr = gjahr
+*         AND   buzei = buzei.
+*
+* NEW CODE
+  SELECT *
+  UP TO 1 ROWS  FROM bseg
          WHERE bukrs = bukrs
          AND   belnr = belnr
          AND   gjahr = gjahr
-         AND   buzei = buzei.
+         AND   buzei = buzei ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
   IF sy-subrc NE 0.
     e_subrc = sy-subrc.
     PERFORM record_fill
@@ -6518,10 +6946,22 @@ FORM nachricht_merken USING i_msgspra LIKE bdcmsgcoll-msgspra
                             i_dynam   LIKE bdcmsgcoll-dyname
                             i_dynum   LIKE bdcmsgcoll-dynumb
                             i_msgtp   LIKE bdcmsgcoll-msgtyp.
-  SELECT SINGLE * FROM t100
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE * FROM t100
+*         WHERE sprsl = i_msgspra
+*           AND arbgb = i_msgid
+*           AND msgnr = i_msgnr.
+*
+* NEW CODE
+  SELECT *
+  UP TO 1 ROWS  FROM t100
          WHERE sprsl = i_msgspra
            AND arbgb = i_msgid
-           AND msgnr = i_msgnr.
+           AND msgnr = i_msgnr ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
   IF sy-subrc NE 0.
     cha500 = text-312.
     REPLACE '&' WITH i_msgid INTO cha500.

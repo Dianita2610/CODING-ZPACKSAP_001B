@@ -141,7 +141,22 @@ WHERE KTOSL EQ 'BSX' OR ( KTOSL EQ 'GBB' AND ( KOMOK IN ( 'INV' , 'VNG' ) ) ) OR
 *AND bg~hkont NE r_hkont
 *AND bg~bukrs EQ p_bukrs.
 
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT *
+*  INTO CORRESPONDING FIELDS OF TABLE ti_bsis
+*  FROM bsis
+*  WHERE bukrs EQ p_bukrs
+*  AND hkont IN r_hkont
+*  AND budat IN s_fecha
+**
+*** V1 RVY 12-09-2019
+**  AND blart IN ('WA', 'WI').
+*  AND blart = 'WA'.
+*
+* NEW CODE
   SELECT *
+
   INTO CORRESPONDING FIELDS OF TABLE ti_bsis
   FROM bsis
   WHERE bukrs EQ p_bukrs
@@ -150,7 +165,9 @@ WHERE KTOSL EQ 'BSX' OR ( KTOSL EQ 'GBB' AND ( KOMOK IN ( 'INV' , 'VNG' ) ) ) OR
 *
 ** V1 RVY 12-09-2019
 *  AND blart IN ('WA', 'WI').
-  AND blart = 'WA'.
+  AND blart = 'WA' ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 ** V1 RVY 12-09-2019
 *
   IF sy-subrc EQ 0.
@@ -193,12 +210,26 @@ AND GJAHR EQ S_BUDAT-HIGH(4) ORDER BY PRIMARY KEY.
 
     wa_salida-iva =  ( wa_salida-wrbtr * 19 ) / 100.
 
-    SELECT SINGLE iva_prop
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*    SELECT SINGLE iva_prop
+*    INTO v_iva_prop
+*    FROM zfiivaprp
+*    WHERE bukrs     EQ p_bukrs
+*    AND fec_inico EQ s_budat-low
+*    AND fec_fin   EQ s_budat-high.
+*
+* NEW CODE
+    SELECT iva_prop
+    UP TO 1 ROWS 
     INTO v_iva_prop
     FROM zfiivaprp
     WHERE bukrs     EQ p_bukrs
     AND fec_inico EQ s_budat-low
-    AND fec_fin   EQ s_budat-high.
+    AND fec_fin   EQ s_budat-high ORDER BY PRIMARY KEY.
+
+    ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     wa_salida-iva_no_rec = wa_salida-iva * ( v_iva_prop / 100 ).
 
@@ -413,10 +444,21 @@ FORM contabilizar.
   wa_saknr-low = '7115100002'."'4211410500'."HCD 20190905
   APPEND wa_saknr TO rg_saknr.
 
-  SELECT bukrs saknr FROM skb1 INTO TABLE lt_skb1
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT bukrs saknr FROM skb1 INTO TABLE lt_skb1
+*    WHERE bukrs EQ p_bukrs
+*      AND saknr IN rg_saknr
+*      AND xintb EQ 'X'.
+*
+* NEW CODE
+  SELECT bukrs saknr
+ FROM skb1 INTO TABLE lt_skb1
     WHERE bukrs EQ p_bukrs
       AND saknr IN rg_saknr
-      AND xintb EQ 'X'.
+      AND xintb EQ 'X' ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 * } SCL26122017
   SORT ti_salida  ASCENDING BY hkont zzunid_pro kostl.
   REFRESH ti_agrup.
@@ -871,11 +913,24 @@ FORM convierte_mensaje  USING    p_sy_msgid
       p_sy_msgno
 CHANGING return_message.
 
-  SELECT SINGLE *
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE *
+*   FROM t100
+*   WHERE sprsl EQ 'S'
+*     AND arbgb EQ messtab-msgid
+*     AND msgnr EQ messtab-msgnr.
+*
+* NEW CODE
+  SELECT *
+  UP TO 1 ROWS 
    FROM t100
    WHERE sprsl EQ 'S'
      AND arbgb EQ messtab-msgid
-     AND msgnr EQ messtab-msgnr.
+     AND msgnr EQ messtab-msgnr ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
   IF sy-subrc = 0.
     return_message = t100-text.
     IF return_message CS '&1'.

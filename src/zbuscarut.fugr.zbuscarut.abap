@@ -34,13 +34,28 @@ REPLACE ALL OCCURRENCES OF '-' IN w_sortl WITH ''.
 
 CASE GKOAR_I.
     WHEN 'K'.
-      SELECT SINGLE LIFNR NAME1 NAME2 ADRNR NAME3 NAME4 KUNNR
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*      SELECT SINGLE LIFNR NAME1 NAME2 ADRNR NAME3 NAME4 KUNNR
+*      INTO (LIFNRTMP, NAME1, NAME2, ADRNR, NAME3, NAME4, KUNNR)
+*    FROM LFA1 CLIENT SPECIFIED
+*      WHERE  mandt = sy-mandt
+*              and ( sortl = w_sortl or sortl = STCD3 )
+*              and STCD1 = STCD3
+*              AND LAND1 = LAND1.
+*
+* NEW CODE
+      SELECT LIFNR NAME1 NAME2 ADRNR NAME3 NAME4 KUNNR
+      UP TO 1 ROWS 
       INTO (LIFNRTMP, NAME1, NAME2, ADRNR, NAME3, NAME4, KUNNR)
     FROM LFA1 CLIENT SPECIFIED
       WHERE  mandt = sy-mandt
               and ( sortl = w_sortl or sortl = STCD3 )
               and STCD1 = STCD3
-              AND LAND1 = LAND1.
+              AND LAND1 = LAND1 ORDER BY PRIMARY KEY.
+
+      ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
       IF LIFNRTMP IS INITIAL.
         CLEAR KUNNR.
         CLEAR NAME1.
@@ -50,12 +65,26 @@ CASE GKOAR_I.
         CLEAR NAME4.
         CLEAR LIFNR.
       ELSE.
-        SELECT SINGLE LIFNR AKONT LIFNR
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*        SELECT SINGLE LIFNR AKONT LIFNR
+*        INTO (LIFNR, NAME3, KUNNR)
+*        FROM LFB1 CLIENT SPECIFIED
+*        WHERE mandt = sy-mandt
+*              and LIFNR EQ LIFNRTMP
+*              AND BUKRS EQ BUKRS.
+*
+* NEW CODE
+        SELECT LIFNR AKONT LIFNR
+        UP TO 1 ROWS 
         INTO (LIFNR, NAME3, KUNNR)
         FROM LFB1 CLIENT SPECIFIED
         WHERE mandt = sy-mandt
               and LIFNR EQ LIFNRTMP
-              AND BUKRS EQ BUKRS.
+              AND BUKRS EQ BUKRS ORDER BY PRIMARY KEY.
+
+        ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
         IF LIFNR IS INITIAL.
           CLEAR NAME1.
           CLEAR NAME2.
@@ -69,13 +98,28 @@ CASE GKOAR_I.
         LIFNR = LIFNRTMP.
       ENDIF.
     WHEN 'D'.
-      SELECT SINGLE LIFNR NAME1 NAME2 ADRNR NAME3 NAME4 KUNNR
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*      SELECT SINGLE LIFNR NAME1 NAME2 ADRNR NAME3 NAME4 KUNNR
+*      INTO (LIFNR, NAME1, NAME2, ADRNR, NAME3, NAME4, KUNNRTMP)
+*    FROM KNA1 CLIENT SPECIFIED
+*      WHERE  mandt = sy-mandt
+*             and ( sortl = w_sortl or sortl = STCD3 )
+*             and STCD1 = STCD3
+*             AND LAND1 = LAND1.
+*
+* NEW CODE
+      SELECT LIFNR NAME1 NAME2 ADRNR NAME3 NAME4 KUNNR
+      UP TO 1 ROWS 
       INTO (LIFNR, NAME1, NAME2, ADRNR, NAME3, NAME4, KUNNRTMP)
     FROM KNA1 CLIENT SPECIFIED
       WHERE  mandt = sy-mandt
              and ( sortl = w_sortl or sortl = STCD3 )
              and STCD1 = STCD3
-             AND LAND1 = LAND1.
+             AND LAND1 = LAND1 ORDER BY PRIMARY KEY.
+
+      ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
                 IF KUNNRTMP IS INITIAL.
                   CLEAR KUNNR.
                   CLEAR NAME1.
@@ -85,12 +129,26 @@ CASE GKOAR_I.
                   CLEAR NAME4.
                   CLEAR LIFNR.
                 ELSE.
-                  SELECT SINGLE KUNNR AKONT KUNNR
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*                  SELECT SINGLE KUNNR AKONT KUNNR
+*                  INTO (LIFNR, NAME3, KUNNR)
+*                  FROM KNB1 CLIENT SPECIFIED
+*                  WHERE mandt = sy-mandt
+*                        and KUNNR EQ KUNNRTMP
+*                        AND BUKRS EQ BUKRS.
+*
+* NEW CODE
+                  SELECT KUNNR AKONT KUNNR
+                  UP TO 1 ROWS 
                   INTO (LIFNR, NAME3, KUNNR)
                   FROM KNB1 CLIENT SPECIFIED
                   WHERE mandt = sy-mandt
                         and KUNNR EQ KUNNRTMP
-                        AND BUKRS EQ BUKRS.
+                        AND BUKRS EQ BUKRS ORDER BY PRIMARY KEY.
+
+                  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
                   IF LIFNR IS INITIAL.
                     CLEAR NAME1.
                     CLEAR NAME2.

@@ -60,10 +60,22 @@ DATA: wa_essr   LIKE essr,
     RAISE no_existe_hes.
   ENDIF.
 
-  SELECT SINGLE *
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE *
+*    FROM essr
+*    INTO wa_essr
+*    WHERE lblni EQ i_essr-lblni.
+*
+* NEW CODE
+  SELECT *
+  UP TO 1 ROWS 
     FROM essr
     INTO wa_essr
-    WHERE lblni EQ i_essr-lblni.
+    WHERE lblni EQ i_essr-lblni ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
   IF sy-subrc NE 0.
     RAISE no_existe_hes.
@@ -93,8 +105,17 @@ DATA: wa_essr   LIKE essr,
           err_bad_otf           = 4
           OTHERS                = 5.
 
-  SELECT * INTO TABLE lt_tvarvc FROM tvarvc WHERE name EQ gc_copy_mail
-                                              AND low  EQ 'HES'.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*  SELECT * INTO TABLE lt_tvarvc FROM tvarvc WHERE name EQ gc_copy_mail
+*                                              AND low  EQ 'HES'.
+*
+* NEW CODE
+  SELECT *
+ INTO TABLE lt_tvarvc FROM tvarvc WHERE name EQ gc_copy_mail
+                                              AND low  EQ 'HES' ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
     IF sy-subrc EQ 0.
       LOOP AT lt_tvarvc INTO ls_tvarvc.
         i_reclist-receiver   = ls_tvarvc-high.
@@ -104,8 +125,18 @@ DATA: wa_essr   LIKE essr,
       ENDLOOP.
     ENDIF.
 
-SELECT SINGLE * FROM t000 CLIENT SPECIFIED INTO w_t000
-  WHERE mandt EQ sy-mandt.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*SELECT SINGLE * FROM t000 CLIENT SPECIFIED INTO w_t000
+*  WHERE mandt EQ sy-mandt.
+*
+* NEW CODE
+SELECT *
+UP TO 1 ROWS  FROM t000 CLIENT SPECIFIED INTO w_t000
+  WHERE mandt EQ sy-mandt ORDER BY PRIMARY KEY.
+
+ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 
     IF w_t000-cccategory NE 'P'.
       CONCATENATE 'TESTING: HES' i_essr-lblni 'Liberada' INTO wa_doc_chng-obj_descr SEPARATED BY space.

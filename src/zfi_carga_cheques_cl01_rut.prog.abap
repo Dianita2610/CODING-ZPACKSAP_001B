@@ -146,17 +146,41 @@ KOART EQ 'D' ) ORDER BY PRIMARY KEY .
 *End of change: ReSQ Correction for Addition ORDER BY PRIMARY KEY 24/12/2019 EY_DES04 ECDK917080 *
   IF sy-subrc EQ 0.
     SORT ti_bseg BY bukrs belnr gjahr.
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT lifnr ort01
+*      INTO TABLE ti_lfa1
+*      FROM lfa1
+*      FOR ALL ENTRIES IN ti_bseg
+*      WHERE lifnr EQ ti_bseg-lifnr.
+*
+* NEW CODE
     SELECT lifnr ort01
+
       INTO TABLE ti_lfa1
       FROM lfa1
       FOR ALL ENTRIES IN ti_bseg
-      WHERE lifnr EQ ti_bseg-lifnr.
+      WHERE lifnr EQ ti_bseg-lifnr ORDER BY PRIMARY KEY.
 
+* END. 08-07-2026 - ATC - ATC-03
+
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT kunnr ort01
+*      APPENDING TABLE ti_lfa1
+*      FROM kna1
+*      FOR ALL ENTRIES IN ti_bseg
+*      WHERE kunnr EQ ti_bseg-kunnr.
+*
+* NEW CODE
     SELECT kunnr ort01
       APPENDING TABLE ti_lfa1
+
       FROM kna1
       FOR ALL ENTRIES IN ti_bseg
-      WHERE kunnr EQ ti_bseg-kunnr.
+      WHERE kunnr EQ ti_bseg-kunnr ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
     SORT ti_lfa1 BY lifnr.
   ENDIF.

@@ -70,12 +70,25 @@ END-OF-SELECTION.
 ****          OR   AAFAP <> AAFAG  )
 ****  ENDEXEC.
 
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*SELECT *
+*  FROM anlc
+*  INTO TABLE xanlc
+*  WHERE bukrs = pa_bukrs
+*    AND gjahr = pa_abjhr
+*    AND afabe = pa_afabe.
+*
+* NEW CODE
 SELECT *
+
   FROM anlc
   INTO TABLE xanlc
   WHERE bukrs = pa_bukrs
     AND gjahr = pa_abjhr
-    AND afabe = pa_afabe.
+    AND afabe = pa_afabe ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 **mod fin
 LOOP AT xanlc.
   IF xanlc-nafap = xanlc-nafag AND

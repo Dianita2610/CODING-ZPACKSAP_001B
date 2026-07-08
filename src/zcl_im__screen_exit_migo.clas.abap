@@ -46,8 +46,18 @@ endmethod.
 method IF_EX_MB_MIGO_BADI~HOLD_DATA_LOAD.
   DATA: ls_migo_badi_hold TYPE migo_badi_hold.
 * Select hold data from database
-  SELECT SINGLE * FROM migo_badi_hold INTO ls_migo_badi_hold
-  WHERE guid = i_guid.
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE * FROM migo_badi_hold INTO ls_migo_badi_hold
+*  WHERE guid = i_guid.
+*
+* NEW CODE
+  SELECT *
+  UP TO 1 ROWS  FROM migo_badi_hold INTO ls_migo_badi_hold
+  WHERE guid = i_guid ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
 * Get internal structure gs_exdata_header from data buffer
   IMPORT gs_exdata_header TO gs_exdata_header FROM DATA BUFFER
         ls_migo_badi_hold-hold_string_head.
@@ -328,9 +338,20 @@ endmethod.
 method IF_EX_MB_MIGO_BADI~STATUS_AND_HEADER.
 * In case of 'Display Material document' select external header data
   IF NOT g_no_input IS INITIAL.
-  SELECT SINGLE * FROM migo_badi_examp2 INTO gs_exdata_header
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*  SELECT SINGLE * FROM migo_badi_examp2 INTO gs_exdata_header
+*  WHERE mblnr = is_gohead-mblnr
+*  AND   mjahr = is_gohead-mjahr.
+*
+* NEW CODE
+  SELECT *
+  UP TO 1 ROWS  FROM migo_badi_examp2 INTO gs_exdata_header
   WHERE mblnr = is_gohead-mblnr
-  AND   mjahr = is_gohead-mjahr.
+  AND   mjahr = is_gohead-mjahr ORDER BY PRIMARY KEY.
+
+  ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
   ENDIF.
 endmethod.
 ENDCLASS.

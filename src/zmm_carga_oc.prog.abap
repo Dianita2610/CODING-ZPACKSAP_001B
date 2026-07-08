@@ -303,13 +303,27 @@ FORM cargar_tablas.
 
   IF NOT lt_tabla[] IS INITIAL.
 
+* BEGIN. 08-07-2026 - ATC - ATC-03
+* OLD CODE
+*    SELECT *
+*      INTO TABLE lt_t685a
+*      FROM t685a
+*      FOR ALL ENTRIES IN lt_tabla
+*      WHERE kappl = 'M'
+*        AND kschl = lt_tabla-kschlp
+*        AND kposi = 'X'.
+*
+* NEW CODE
     SELECT *
+
       INTO TABLE lt_t685a
       FROM t685a
       FOR ALL ENTRIES IN lt_tabla
       WHERE kappl = 'M'
         AND kschl = lt_tabla-kschlp
-        AND kposi = 'X'.
+        AND kposi = 'X' ORDER BY PRIMARY KEY.
+
+* END. 08-07-2026 - ATC - ATC-03
 
     SORT lt_t685a BY kschl ASCENDING.
     DELETE ADJACENT DUPLICATES FROM lt_t685a.
@@ -571,7 +585,7 @@ FORM cargar_tablas.
 
     CLEAR lv_exppurchaseorder.
     FREE lt_return.
-    CALL FUNCTION 'BAPI_PO_CREATE1'
+    CALL FUNCTION 'BAPI_PO_CREATE1' "#EC CI_USAGE_OK[2438131]
       EXPORTING
         poheader         = ls_poheader
         poheaderx        = ls_poheaderx
@@ -631,9 +645,20 @@ FORM cargar_tablas.
           wait = 'X'.
 
       DO 5 TIMES.
-        SELECT SINGLE *
+* BEGIN. 08-07-2026 - ATC - ATC-01
+* OLD CODE
+*        SELECT SINGLE *
+*          FROM ekko
+*          WHERE ebeln = lv_exppurchaseorder.
+*
+* NEW CODE
+        SELECT *
+        UP TO 1 ROWS 
           FROM ekko
-          WHERE ebeln = lv_exppurchaseorder.
+          WHERE ebeln = lv_exppurchaseorder ORDER BY PRIMARY KEY.
+
+        ENDSELECT.
+* END. 08-07-2026 - ATC - ATC-01
         IF sy-subrc = 0.
           EXIT.
         ELSE.
@@ -642,7 +667,7 @@ FORM cargar_tablas.
       ENDDO.
 
       FREE lt_return_a.
-      CALL FUNCTION 'BAPI_PO_CHANGE'
+      CALL FUNCTION 'BAPI_PO_CHANGE' "#EC CI_USAGE_OK[2438131]
         EXPORTING
           purchaseorder = lv_exppurchaseorder
 *       IMPORTING
